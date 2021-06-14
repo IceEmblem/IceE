@@ -1,7 +1,8 @@
+const { watchIcetf } = require('./watchIcetf');
 const { start } = require('./start');
 const { exec } = require('child_process');
 
-
+watchIcetf('web');
 start('web');
 
 const cmd = `cd packages/ice-react-start && yarn start`;

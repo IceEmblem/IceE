@@ -1,6 +1,8 @@
+const { watchIcetf } = require('./watchIcetf');
 const { start } = require('./start');
 const { exec } = require('child_process');
 
+watchIcetf('native');
 start('native');
 
 // 要执行的 yarn 命令

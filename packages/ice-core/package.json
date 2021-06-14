@@ -1,0 +1,9 @@
+{
+  "name": "ice-core",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "icetf": "0.1.0"
+  }
+}

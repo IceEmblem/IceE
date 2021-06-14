@@ -1,0 +1,26 @@
+{
+  "name": "NewIceE",
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "@babel/preset-react": "^7.13.13",
+    "@babel/preset-typescript": "^7.13.0",
+    "@types/react": "^17.0.5",
+    "react": "^17.0.2",
+    "typescript": "^4.2.4"
+  },
+  "scripts": {
+    "start:android": "node icee_config/startRN -android",
+    "start:ios": "node icee_config/startRN -ios",
+    "start:rn": "node icee_config/startRN -start",
+    "start:web": "node icee_config/startWeb"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "cql <1373611035@qq.com>",
+  "license": "MIT"
+}

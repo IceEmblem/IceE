@@ -42,7 +42,12 @@ module.exports.getModules = getModules;
 // 监听模块
 function watchModule(module, getOutDir) {
     const { exec } = require('child_process');
+    const fs = require('fs')
 
+    const source = `${rootPath}packages/${module}/src`;
+    if(!fs.existsSync(source)){
+        return;
+    }
     let outDir = null;
     if(getOutDir){
         outDir = getOutDir(module);
@@ -51,7 +56,7 @@ function watchModule(module, getOutDir) {
         outDir = `${rootPath}packages/${module}/dist`;
     }
 
-    const cmd = `${rootPath}node_modules/.bin/babel ${rootPath}packages/${module}/src -w --out-dir ${outDir} --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx`;
+    const cmd = `${rootPath}node_modules/.bin/babel ${source} -w --out-dir ${outDir} --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx`;
     console.log(`模块 ${module} :`, cmd);
 
     const babel = exec(cmd, {

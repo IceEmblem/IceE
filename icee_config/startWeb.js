@@ -1,3 +1,5 @@
+const {watchIcetf} = require('./watchIcetf');
+
 const { buildWebModule, watchWebModules, getModules } = require('./module');
 const path = require('path');
 const { exec } = require('child_process');
@@ -33,9 +35,12 @@ function copyModules() {
     });
 }
 
+watchIcetf('ice-react-start');
 copyModules();
 buildWebModule();
-watchWebModules();
+watchWebModules((module) => {
+    return rootPath + `/packages/ice-react-start/node_modules/${module}/dist`
+});
 
 const cmd = `cd packages/ice-react-start && yarn start`;
 

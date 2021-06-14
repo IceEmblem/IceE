@@ -1,3 +1,5 @@
+const {watchIcetf} = require('./watchIcetf');
+
 const { buildRNModule, watchRNModules, getModules } = require('./module');
 const path = require('path');
 const { exec } = require('child_process');
@@ -9,6 +11,7 @@ const rootPath = path.resolve(__dirname, '../');
 // 拷贝模块到 ice-rn-start 的 node_modules 目录（rn 不支持快捷方式，所以使用拷贝的方式）
 function copyModules() {
     let modules = getModules(rootPath + '/packages/ice-rn-start/package.json');
+    modules.push('icetf');
 
     modules.forEach((module) => {
         let source = rootPath + `/packages/${module}`;
@@ -33,6 +36,8 @@ function copyModules() {
     });
 }
 
+// 监听 Icetf 的变化
+watchIcetf('ice-rn-start');
 copyModules();
 buildRNModule();
 watchRNModules((module) => {

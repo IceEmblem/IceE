@@ -1,0 +1,1 @@
+export { Provider as IEProvider } from 'react-redux'

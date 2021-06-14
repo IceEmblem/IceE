@@ -1,4 +1,4 @@
-const { buildModule, watchModules, getModules } = require('./module');
+const { buildModuleFileOfStartPackage, watchModules, getModules } = require('./module');
 const path = require('path');
 const fs = require('fs')
 const {copyDir, rmdir} = require('./utiliy');
@@ -42,7 +42,7 @@ function start(platform){
         startPackageName = 'ice-rn-start';
     }
 
-    buildModule(startPackageName);
+    buildModuleFileOfStartPackage(startPackageName);
 
     if(platform == 'web'){
         watchModules(startPackageName)

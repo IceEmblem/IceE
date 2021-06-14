@@ -5,8 +5,5 @@
   "dependencies": {
     "ice-core": "^0.1.0",
     "icetf": "^0.1.0"
-  },
-  "installConfig": {
-    "hoistingLimits": "workspaces"
   }
 }

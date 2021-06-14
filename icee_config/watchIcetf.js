@@ -1,6 +1,5 @@
 const { watchModule } = require('./module');
 const path = require('path');
-const { exec } = require('child_process');
 const fs = require('fs')
 const {copyDir, rmdir} = require('./utiliy');
 
@@ -12,10 +11,12 @@ function watchIcetf(platform){
 
     if(platform == 'web'){
         startPackageName = 'ice-react-start';
+        watchModule('icetf');
+        return;
     }
-    else{
-        startPackageName = 'ice-rn-start';
-    }
+    
+    // rn 处理流程
+    startPackageName = 'ice-rn-start';
 
     let source = rootPath + `/packages/icetf`;
     let dist = rootPath + `/packages/${startPackageName}/node_modules/icetf`;
@@ -39,6 +40,6 @@ function watchIcetf(platform){
 
     watchModule('icetf', (module) => {
         return rootPath + `/packages/${startPackageName}/node_modules/${module}/dist`
-    })
+    });
 }
 module.exports.watchIcetf = watchIcetf;

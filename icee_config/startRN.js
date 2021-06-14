@@ -1,48 +1,7 @@
-const {watchIcetf} = require('./watchIcetf');
-
-const { buildRNModule, watchRNModules, getModules } = require('./module');
-const path = require('path');
+const { start } = require('./start');
 const { exec } = require('child_process');
-const fs = require('fs')
-const {copyDir, rmdir} = require('./utiliy');
 
-const rootPath = path.resolve(__dirname, '../');
-
-// 拷贝模块到 ice-rn-start 的 node_modules 目录（rn 不支持快捷方式，所以使用拷贝的方式）
-function copyModules() {
-    let modules = getModules(rootPath + '/packages/ice-rn-start/package.json');
-    modules.push('icetf');
-
-    modules.forEach((module) => {
-        let source = rootPath + `/packages/${module}`;
-        let dist = rootPath + `/packages/ice-rn-start/node_modules/${module}`;
-
-        if(!fs.existsSync(source)){
-            return;
-        }
-        
-        if(fs.existsSync(dist)){
-            try{
-                // 有可能dist是一个快捷方式，可以直接删除
-                fs.rmdirSync(dist);
-            }
-            catch{
-                // 否则递归删除
-                rmdir(dist)
-            }
-        }
-
-        copyDir(source, dist, ['node_modules']);
-    });
-}
-
-// 监听 Icetf 的变化
-watchIcetf('ice-rn-start');
-copyModules();
-buildRNModule();
-watchRNModules((module) => {
-    return rootPath + `/packages/ice-rn-start/node_modules/${module}/dist`
-});
+start('native');
 
 // 要执行的 yarn 命令
 let yarnCmd = null;

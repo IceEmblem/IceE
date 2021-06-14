@@ -1,7 +1,5 @@
 // 当前执行的根路径
 const rootPath = __dirname.replace(/icee_config$/, '');
-const webPackagePath = rootPath + 'packages/ice-react-start/package.json';
-const rnPackagePath = rootPath + 'packages/ice-rn-start/package.json';
 
 // 生成模块列表文件
 function buildModuleFile(modules, moduleOutputPath) {
@@ -74,38 +72,20 @@ function watchModule(module, getOutDir) {
 }
 module.exports.watchModule = watchModule;
 
-// 监听Web模块
-function watchWebModules(getOutDir = null) {
-    let modules = getModules(webPackagePath);
+// 监听模块
+function watchModules(startPackageName, getOutDir = null){
+    let modules = getModules(rootPath + `packages/${startPackageName}/package.json`);
     modules.forEach(module => {
         watchModule(module, getOutDir);
     })
 }
-module.exports.watchWebModules = watchWebModules;
+module.exports.watchModules = watchModules;
 
-// 监听RN模块
-function watchRNModules(getOutDir = null) {
-    let modules = getModules(rnPackagePath);
-    modules.forEach(module => {
-        watchModule(module, getOutDir);
-    })
-}
-module.exports.watchRNModules = watchRNModules;
-
-// 生成Web模块列表
-function buildWebModule() {
+// 生成模块列表
+function buildModule(startPackageName) {
     buildModuleFile(
-        getModules(webPackagePath),
-        rootPath + 'packages/ice-react-start/src/ModuleList.js'
+        getModules(rootPath + `packages/${startPackageName}/package.json`),
+        rootPath + `packages/${startPackageName}/src/ModuleList.js`
     );
 }
-module.exports.buildWebModule = buildWebModule;
-
-// 生成RN模块列表
-function buildRNModule() {
-    buildModuleFile(
-        getModules(rnPackagePath),
-        rootPath + 'packages/ice-rn-start/src/ModuleList.js'
-    );
-}
-module.exports.buildRNModule = buildRNModule;
+module.exports.buildModule = buildModule;

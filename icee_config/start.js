@@ -1,4 +1,4 @@
-const { buildRNModule, buildWebModule, watchRNModules, watchWebModules, getModules } = require('./module');
+const { buildModule, watchModules, getModules } = require('./module');
 const path = require('path');
 const fs = require('fs')
 const {copyDir, rmdir} = require('./utiliy');
@@ -37,23 +37,21 @@ function start(platform){
     let startPackageName = null;
     if(platform == 'web'){
         startPackageName = 'ice-react-start';
-        buildWebModule();
     }
     else{
         startPackageName = 'ice-rn-start';
-        buildRNModule();
     }
 
-    copyModules(startPackageName);
-    
-    const getOutDir = (module) => {
-        return rootPath + `/packages/${startPackageName}/node_modules/${module}/dist`
-    };
+    buildModule(startPackageName);
+
     if(platform == 'web'){
-        watchWebModules(getOutDir)
+        watchModules(startPackageName)
     }
     else{
-        watchRNModules(getOutDir);
+        copyModules(startPackageName);
+        watchModules(startPackageName, (module) => {
+            return rootPath + `/packages/${startPackageName}/node_modules/${module}/dist`
+        });
     }
 }
 module.exports.start = start;

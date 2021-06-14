@@ -75,10 +75,10 @@ function watchModule(module, getOutDir) {
 module.exports.watchModule = watchModule;
 
 // 监听Web模块
-function watchWebModules() {
+function watchWebModules(getOutDir = null) {
     let modules = getModules(webPackagePath);
     modules.forEach(module => {
-        watchModule(module);
+        watchModule(module, getOutDir);
     })
 }
 module.exports.watchWebModules = watchWebModules;

@@ -1,6 +1,7 @@
 # IceE
 
-[![icetf version](images/npmv.jpg)](https://www.npmjs.com/package/icetf)
+[![icee version](https://img.shields.io/badge/icee-0.1.0-red)](https://github.com/IceEmblem/IceE)
+[![icetf version](https://img.shields.io/badge/icetf-0.1.0-yellowgreen)](https://www.npmjs.com/package/icetf)
 
 IceE 是一个基于 React 的三端框架（web，android，ios），基于模块化的设计，monorepo 项目，React 和 ReactNative 多 package 项目，让你的项目更加清晰
 

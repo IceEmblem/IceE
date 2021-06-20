@@ -1,4 +1,4 @@
-const {createModule, babelBuildModules} = require('./icee_config/module')
+const {createModule, babelBuildModules, copyModules} = require('./icee_config/module')
 
 // 创建模块
 function createM(cmd, name){
@@ -17,6 +17,7 @@ function babelBuildM(cmd){
     }
     else{
         babelBuildModules('ice-rn-start');
+        copyModules('ice-rn-start');
     }
 }
 

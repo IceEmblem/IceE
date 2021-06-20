@@ -180,3 +180,33 @@ function createModule(moduleName, startPackageName) {
     fs.writeFileSync(`${rootPath}packages/${startPackageName}/package.json`, JSON.stringify(startPackage, null, "\t"));
 }
 module.exports.createModule = createModule;
+
+// 拷贝模块到 ice-rn-start 的 node_modules 目录（快捷键映射总会存在一些问题，这里直接拷贝）
+function copyModules(startPackageName) {
+    const {copyDir, rmdir} = require('./utiliy');
+
+    let modules = getModules(rootPath + `/packages/${startPackageName}/package.json`);
+
+    modules.forEach((module) => {
+        let source = rootPath + `/packages/${module}`;
+        let dist = rootPath + `/packages/${startPackageName}/node_modules/${module}`;
+
+        if(!fs.existsSync(source)){
+            return;
+        }
+        
+        if(fs.existsSync(dist)){
+            try{
+                // 有可能dist是一个快捷方式，可以直接删除
+                fs.rmdirSync(dist);
+            }
+            catch{
+                // 否则递归删除
+                rmdir(dist)
+            }
+        }
+
+        copyDir(source, dist, ['node_modules']);
+    });
+}
+module.exports.copyModules = copyModules;

@@ -1,23 +1,27 @@
-const {createModule, babelBuildModules, copyModules} = require('./icee_config/module')
+const {babelBuildModules, copyModules} = require('./icee_config/module');
+const {createModule} = require('./icee_config/createModule');
 
 // 创建模块
 function createM(cmd, name){
     if(cmd == 'cw'){
-        createModule(name, 'ice-react-start');
+        createModule(name, 'web');
+    }
+    else if(cmd == 'cn'){
+        createModule(name, 'native');
     }
     else{
-        createModule(name, 'ice-rn-start');
+        createModule(name, 'common');
     }
 }
 
 // 打包所有模块
 function babelBuildM(cmd){
     if(cmd == 'bw'){
-        babelBuildModules('ice-react-start');
+        babelBuildModules('web');
     }
     else{
-        babelBuildModules('ice-rn-start');
-        copyModules('ice-rn-start');
+        babelBuildModules('native');
+        copyModules('native');
     }
 }
 
@@ -31,6 +35,9 @@ node icee cw xxx
 # 创建 rn 包
 node icee cn xxx
 
+# 创建通用包
+node icee cc xxx
+
 # babel 编译所有 web package
 node icee bw
 
@@ -42,7 +49,7 @@ node icee bn
     return;
 }
 
-if(process.argv[2] == 'cw' || process.argv[2] == 'cn'){
+if(process.argv[2] == 'cw' || process.argv[2] == 'cn' || process.argv[2] == 'cc'){
     if(process.argv <= 3){
         console.log('请输入包名');
         return;

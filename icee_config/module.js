@@ -1,9 +1,8 @@
-// 当前执行的根路径
-const rootPath = __dirname.replace(/icee_config$/, '');
+const { paths, getPackagePath, getPackageFilePath } = require('./paths');
 
 // 获取模块列表
-function getModules(packagePath) {
-    let dependenciesObj = require(packagePath).dependencies;
+function getModules(packageFilePath) {
+    let dependenciesObj = require(packageFilePath).dependencies;
 
     let dependencies = Object.keys(dependenciesObj);
 
@@ -16,10 +15,18 @@ function getModules(packagePath) {
 
     return iceModules;
 }
-module.exports.getModules = getModules;
 
 // 生成模块列表文件
-function buildModuleFile(modules, moduleOutputPath) {
+function buildModuleListFile(platform) {
+    let modules = getModules(platform == 'web' ?
+        paths.webStartPackageFile :
+        paths.nativeStartPackageFile
+    );
+
+    let moduleOutputPath = platform == 'web' ?
+        `${paths.webStart}/src/ModuleList.js` :
+        `${paths.nativeStart}/src/ModuleList.js`;
+
     var fs = require("fs");
 
     let importListStr = "// -----该文件由 Webpack 编译时动态生成，请勿直接更改-----\n\n";
@@ -37,23 +44,14 @@ function buildModuleFile(modules, moduleOutputPath) {
 
     fs.writeFileSync(moduleOutputPath, importListStr + moduleListStr);
 }
-module.exports.buildModuleFile = buildModuleFile;
-
-// 生成模块列表
-function buildModuleFileOfStartPackage(startPackageName) {
-    buildModuleFile(
-        getModules(rootPath + `packages/${startPackageName}/package.json`),
-        rootPath + `packages/${startPackageName}/src/ModuleList.js`
-    );
-}
-module.exports.buildModuleFileOfStartPackage = buildModuleFileOfStartPackage;
+module.exports.buildModuleListFile = buildModuleListFile;
 
 // 监听模块
 function watchModule(module, getOutDir, isWatch = true) {
     const { exec } = require('child_process');
     const fs = require('fs')
 
-    const source = `${rootPath}packages/${module}/src`;
+    const source = `${getPackagePath(module)}/src`;
     if (!fs.existsSync(source)) {
         return;
     }
@@ -62,14 +60,14 @@ function watchModule(module, getOutDir, isWatch = true) {
         outDir = getOutDir(module);
     }
     else {
-        outDir = `${rootPath}packages/${module}/dist`;
+        outDir = `${getPackagePath(module)}/dist`;
     }
 
-    const cmd = `${rootPath}node_modules/.bin/babel ${source} ${isWatch ? '-w' : ''} --out-dir ${outDir} --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx`;
+    const cmd = `${paths.rootPath}/node_modules/.bin/babel ${source} ${isWatch ? '-w' : ''} --out-dir ${outDir} --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx`;
     console.log(`模块 ${module} :`, cmd);
 
     const babel = exec(cmd, {
-        cwd: rootPath,
+        cwd: paths.rootPath,
     });
 
     babel.stdout.on('data', (data) => {
@@ -84,11 +82,13 @@ function watchModule(module, getOutDir, isWatch = true) {
         console.log(`模块 ${module} 已退出，退出码：${code}`);
     });
 }
-module.exports.watchModule = watchModule;
 
 // 监听模块
-function watchModules(startPackageName, getOutDir = null) {
-    let modules = getModules(rootPath + `packages/${startPackageName}/package.json`);
+function watchModules(platform, getOutDir = null) {
+    let modules = getModules(platform == 'web' ?
+        paths.webStartPackageFile :
+        paths.nativeStartPackageFile
+    );
     modules.forEach(module => {
         watchModule(module, getOutDir);
     })
@@ -96,87 +96,50 @@ function watchModules(startPackageName, getOutDir = null) {
 module.exports.watchModules = watchModules;
 
 // babel 打包模块
-function babelBuildModules(startPackageName) {
-    let modules = getModules(rootPath + `packages/${startPackageName}/package.json`);
+function babelBuildModules(platform) {
+    let modules = getModules(platform == 'web' ?
+        paths.webStartPackageFile :
+        paths.nativeStartPackageFile
+    );
     modules.forEach(module => {
         watchModule(module, null, false);
     })
 }
 module.exports.babelBuildModules = babelBuildModules;
 
-// platform: 'web' | 'native'
-const packageTemplet = {
-    "name": "",
-    "version": "0.1.0",
-    "main": "dist/index.js",
-    "license": "MIT"
-};
-const moduleTemplet = `
-import {BaseModule, ModuleFactory} from 'icetf'
-import {Module as CoreModule} from 'ice-core';
+// 拷贝模块到 ice-rn-start 的 node_modules 目录（快捷键映射总会存在一些问题，这里直接拷贝）
+function copyModules(platform) {
+    const {copyDir, rmdir} = require('./utiliy');
 
-export default class Module extends BaseModule {
-    initialize() {
-    }
-}
+    let modules = getModules(platform == 'web' ?
+        paths.webStartPackageFile :
+        paths.nativeStartPackageFile
+    );
 
-new ModuleFactory().register(Module, [CoreModule]);
-`;
-const indexTemplet = `
-export { default as Module } from './Module';
-`;
-function createModule(moduleName, startPackageName) {
-    const fs = require("fs");
+    modules.forEach((module) => {
+        let source = getPackagePath(module);
+        let startPackagePath = platform == 'web' ?
+            paths.webStart :
+            paths.nativeStart;
+    
+        let dist = startPackagePath + `/node_modules/${module}`;
 
-    // 包名前缀
-    let fullModuleName = null;
-    // 如果是 RN 包
-    if (startPackageName == 'ice-rn-start') {
-        fullModuleName = `ice-rn-${moduleName}`;
-    }
-    else{
-        fullModuleName = `ice-react-${moduleName}`;
-    }
-
-
-    let packageDirPath = `${rootPath}packages/${fullModuleName}`;
-
-    if (fs.existsSync(packageDirPath)) {
-        throw new Error('创建失败，包已存在');
-    }
-
-    // 创建目录
-    fs.mkdirSync(packageDirPath);
-    fs.mkdirSync(`${packageDirPath}/src`);
-
-    // 写入module文件
-    fs.writeFileSync(`${packageDirPath}/src/Module.js`, moduleTemplet);
-    // 写入index文件
-    fs.writeFileSync(`${packageDirPath}/src/index.js`, indexTemplet);
-
-    let startPackage = require(`${rootPath}packages/${startPackageName}/package.json`);
-
-    // 写入package.json文件
-    let package = { ...packageTemplet };
-    package.name = fullModuleName;
-    package.version = startPackage.version;
-    package.dependencies = {
-        "icetf": `^${startPackage.version}`,
-        "ice-core": `^${startPackage.version}`
-    }
-
-    // 如果是 RN 包
-    if (startPackageName == 'ice-rn-start') {
-        package.installConfig = {
-            "hoistingLimits": "workspaces"
+        if(!fs.existsSync(source)){
+            return;
         }
-    }
+        
+        if(fs.existsSync(dist)){
+            try{
+                // 有可能dist是一个快捷方式，可以直接删除
+                fs.rmdirSync(dist);
+            }
+            catch{
+                // 否则递归删除
+                rmdir(dist)
+            }
+        }
 
-    // 写入 package.json 文件
-    fs.writeFileSync(packageDirPath + '/package.json', JSON.stringify(package, null, "\t"));
-
-    // 更新start模块的package.json
-    startPackage.dependencies[fullModuleName] = `^${startPackage.version}`;
-    fs.writeFileSync(`${rootPath}packages/${startPackageName}/package.json`, JSON.stringify(startPackage, null, "\t"));
+        copyDir(source, dist, ['node_modules']);
+    });
 }
-module.exports.createModule = createModule;
+module.exports.copyModules = copyModules;

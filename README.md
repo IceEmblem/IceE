@@ -80,7 +80,7 @@ node icee bn
 </br></br>
 
 ## 文档
-框架文档：https://blog.csdn.net/dabusidede/category_10348509.html（文档已过时，后面我在补上）
+框架文档：https://blog.csdn.net/dabusidede/article/details/119010741
 </br></br>
 
 ## 关于 Ios

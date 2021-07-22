@@ -1,4 +1,5 @@
 const { paths, getPackagePath, getPackageFilePath } = require('./paths');
+var fs = require("fs");
 
 // 获取模块列表
 function getModules(packageFilePath) {
@@ -26,8 +27,6 @@ function buildModuleListFile(platform) {
     let moduleOutputPath = platform == 'web' ?
         `${paths.webStart}/src/ModuleList.js` :
         `${paths.nativeStart}/src/ModuleList.js`;
-
-    var fs = require("fs");
 
     let importListStr = "// -----该文件由 Webpack 编译时动态生成，请勿直接更改-----\n\n";
     let moduleListStr = "";
@@ -82,6 +81,7 @@ function watchModule(module, getOutDir, isWatch = true) {
         console.log(`模块 ${module} 已退出，退出码：${code}`);
     });
 }
+module.exports.watchModule = watchModule;
 
 // 监听模块
 function watchModules(platform, getOutDir = null) {

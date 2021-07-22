@@ -1,25 +1,18 @@
 const { watchModule } = require('./module');
-const path = require('path');
-const fs = require('fs')
+const paths = require('./paths');
+const fs = require('fs');
 const {copyDir, rmdir} = require('./utiliy');
-
-const rootPath = path.resolve(__dirname, '../');
 
 // platform: 'web' | 'native'
 function watchIcetf(platform){
-    let startPackageName = null;
-
     if(platform == 'web'){
-        startPackageName = 'ice-react-start';
         watchModule('icetf');
         return;
     }
     
     // rn 处理流程
-    startPackageName = 'ice-rn-start';
-
-    let source = rootPath + `/packages/icetf`;
-    let dist = rootPath + `/packages/${startPackageName}/node_modules/icetf`;
+    let source = paths.getPackagePath('icetf');
+    let dist = `${paths.paths.nativeStart}/node_modules/icetf`;
 
     if(!fs.existsSync(source)){
         return;
@@ -39,7 +32,7 @@ function watchIcetf(platform){
     copyDir(source, dist, ['node_modules']);
 
     watchModule('icetf', (module) => {
-        return rootPath + `/packages/${startPackageName}/node_modules/${module}/dist`
+        return paths.paths.nativeStart + `/node_modules/${module}/dist`
     });
 }
 module.exports.watchIcetf = watchIcetf;

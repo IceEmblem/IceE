@@ -9038,6 +9038,14 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"ice-common@workspace:packages/ice-common":
+  version: 0.0.0-use.local
+  resolution: "ice-common@workspace:packages/ice-common"
+  dependencies:
+    icetf: ^0.1.0
+  languageName: unknown
+  linkType: soft
+
 "ice-core@^0.1.0, ice-core@workspace:packages/ice-core":
   version: 0.0.0-use.local
   resolution: "ice-core@workspace:packages/ice-core"

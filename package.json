@@ -17,7 +17,9 @@
     "start:android": "node icee_config/startRN -android",
     "start:ios": "node icee_config/startRN -ios",
     "start:rn": "node icee_config/startRN -start",
-    "start:web": "node icee_config/startWeb"
+    "start:web": "node icee_config/startWeb",
+    "build:icetf": "tsc --project packages/icetf",
+    "build:icecommon": "node_modules/.bin/babel packages/ice-common/src --out-dir packages/ice-common/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx"
   },
   "version": "1.0.0",
   "main": "index.js",

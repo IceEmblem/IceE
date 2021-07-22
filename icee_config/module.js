@@ -1,4 +1,5 @@
 const { paths, getPackagePath, getPackageFilePath } = require('./paths');
+const fs = require('fs')
 
 // 获取模块列表
 function getModules(packageFilePath) {
@@ -49,7 +50,6 @@ module.exports.buildModuleListFile = buildModuleListFile;
 // 监听模块
 function watchModule(module, getOutDir, isWatch = true) {
     const { exec } = require('child_process');
-    const fs = require('fs')
 
     const source = `${getPackagePath(module)}/src`;
     if (!fs.existsSync(source)) {

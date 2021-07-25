@@ -46,7 +46,7 @@ function buildModuleListFile(platform) {
 module.exports.buildModuleListFile = buildModuleListFile;
 
 // 监听模块
-function watchModule(module, getOutDir, isWatch = true) {
+function watchModule(module, getOutDir, isDev = true) {
     const { exec } = require('child_process');
 
     const source = `${getPackagePath(module)}/src`;
@@ -61,7 +61,7 @@ function watchModule(module, getOutDir, isWatch = true) {
         outDir = `${getPackagePath(module)}/dist`;
     }
 
-    const cmd = `${paths.rootPath}/node_modules/.bin/babel ${source} ${isWatch ? '-w' : ''} --out-dir ${outDir} --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx`;
+    const cmd = `${paths.rootPath}/node_modules/.bin/babel ${source} ${isDev ? '-w -s' : ''} --out-dir ${outDir} --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx`;
     console.log(`模块 ${module} :`, cmd);
 
     const babel = exec(cmd, {

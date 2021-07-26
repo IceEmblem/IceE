@@ -46,7 +46,7 @@ export default class Module extends BaseModule
     }
 }
 
-new ModuleFactory().register(Module, [CoreModule]);
+ModuleFactory.register(Module, [CoreModule]);
 ```
 3. 根目录执行 yarn start:web 运行web站点，访问 /mytest，就可以查看刚才的页面了
 4. 根目录执行 node icee bw 生成 web 包（如果是 Native 包则执行 node icee bn），进入到模块目录，执行 npm publish 发布你的模块，这样其他人就可以直接安装并使用你的模块了

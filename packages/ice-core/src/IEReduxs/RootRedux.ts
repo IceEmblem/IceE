@@ -1,11 +1,12 @@
-import { BaseIceRedux } from 'icetf'
+import { BaseIceRedux } from 'icetf';
+import { reducer } from "./Reducer";
 
 class Redux extends BaseIceRedux {
+    reducer = reducer;
+
     constructor() {
         super("Root");
     }
 }
 
-const RootRedux = new Redux();
-
-export default RootRedux
+export default new Redux();

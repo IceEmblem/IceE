@@ -18,7 +18,7 @@
     "start:ios": "node icee_config/startRN -ios",
     "start:rn": "node icee_config/startRN -start",
     "start:web": "node icee_config/startWeb",
-    "build:icetf": "tsc --project packages/icetf",
+    "build:icetf": "npx tsc --project packages/icetf",
     "build:icecommon": "node_modules/.bin/babel packages/ice-common/src --out-dir packages/ice-common/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
     "build:icereacttest": "node_modules/.bin/babel packages/ice-react-test/src --out-dir packages/ice-react-test/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
     "build:icerntest": "node_modules/.bin/babel packages/ice-rn-test/src --out-dir packages/ice-rn-test/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx"

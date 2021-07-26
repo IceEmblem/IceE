@@ -1,5 +1,7 @@
-export class BaseIERedux {
+export class BaseIceRedux {
     modelName: string;
+
+    constructor(modelName: string);
 
     reducer: (state: any, action: any) => any;
 

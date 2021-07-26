@@ -11,9 +11,8 @@ export default class extends React.Component<{
     }
 
     componentDidMount() {
-        let moduleFactory = new ModuleFactory();
         // 运行所有模块
-        moduleFactory.init().then(() => {
+        ModuleFactory.init().then(() => {
             // 运行完成后
             this.setState({isShow: true})
         });

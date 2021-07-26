@@ -2,7 +2,7 @@ var moduleDatas: Array<any> = [];
 // 已排序的模块
 var sortedModuleDatas: Array<any> = [];
 
-export default class ModuleFactory
+class ModuleFactory
 {
     register(moduleType: any, dependModuleTypes: any)
     {
@@ -103,3 +103,5 @@ export default class ModuleFactory
         return moduleData.module.postInitialize();
     }
 }
+
+export default new ModuleFactory();

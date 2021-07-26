@@ -1,10 +1,9 @@
 {
   "name": "ice-rn-test",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "main": "dist/index.js",
   "dependencies": {
-    "ice-core": "^0.1.0",
-    "icetf": "^0.1.0"
+    "icetf": "^0.3.0"
   },
   "installConfig": {
     "hoistingLimits": "workspaces"

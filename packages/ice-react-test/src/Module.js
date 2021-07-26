@@ -10,6 +10,6 @@ export default class TestModule extends BaseModule
 }
 
 // 向模块工厂组成本模块，本模块依赖于 CoreModule 模块
-new ModuleFactory().register(TestModule, [
+ModuleFactory.register(TestModule, [
     CoreModule
 ]);

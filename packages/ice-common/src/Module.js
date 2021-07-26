@@ -5,4 +5,4 @@ export default class Module extends BaseModule {
     }
 }
 
-new ModuleFactory().register(Module, []);
+ModuleFactory.register(Module, []);

@@ -16,4 +16,4 @@ export default class Module extends BaseModule {
     }
 }
 
-new ModuleFactory().register(Module, [...ModuleList, CoreModule]);
+ModuleFactory.register(Module, [...ModuleList, CoreModule]);

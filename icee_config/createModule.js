@@ -17,7 +17,7 @@ export default class Module extends BaseModule {
     }
 }
 
-new ModuleFactory().register(Module, [CoreModule]);
+ModuleFactory.register(Module, [CoreModule]);
 `;
 const indexTemplet = `
 export { default as Module } from './Module';

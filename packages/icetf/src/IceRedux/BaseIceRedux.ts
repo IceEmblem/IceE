@@ -19,8 +19,8 @@ export default abstract class BaseIERedux {
     connect(
         mapStateToProps: any,
         mapDispatchToProps: any,
-        mergeProps: any,
-        options: any) {
+        mergeProps?: any,
+        options?: any) {
         let ieMapStateToProps = (state: any, ownProps: any) => mapStateToProps(state[this.modelName], ownProps);
         let ieMapDispatchToProps = (dispatch: (action: any) => any, ownProps: any) => {
             // 封装 dispatch

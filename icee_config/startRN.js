@@ -1,5 +1,6 @@
 const { start } = require('./start');
 const { exec } = require('child_process');
+const { getRNPackageName } = require('./paths');
 
 start('native');
 
@@ -17,7 +18,7 @@ else if(process.argv.some(e => e == '-test')){
 else{
     yarnCmd = 'yarn start'
 }
-const cmd = `cd packages/ice-rn-start && ${yarnCmd}`;
+const cmd = `cd packages/${getRNPackageName('start')} && ${yarnCmd}`;
 
 // 执行命令
 const execCmd = exec(cmd);
@@ -31,5 +32,5 @@ execCmd.stderr.on('data', (data) => {
 });
 
 execCmd.on('close', (code) => {
-    console.log(`ice-rn-start 已退出，退出码：${code}`);
+    console.log(`${getRNPackageName('start')} 已退出，退出码：${code}`);
 });

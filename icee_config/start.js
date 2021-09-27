@@ -1,4 +1,4 @@
-const { buildModuleListFile, watchModules, copyModules } = require('./module');
+const { watchModules, copyModules } = require('./module');
 const { paths, getPackagePath, getPackageFilePath } = require('./paths');
 const path = require('path');
 
@@ -6,8 +6,6 @@ const rootPath = path.resolve(__dirname, '../');
 
 // platform: 'web' | 'native'
 function start(platform){
-    buildModuleListFile(platform);
-
     if(platform == 'web'){
         watchModules(platform)
     }

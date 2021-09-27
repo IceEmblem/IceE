@@ -91,5 +91,8 @@ node icee bn
 Web 和 Native 都使用 react-router，但似乎 react-router 在 Native 不够流畅，后面会替换掉
 </br></br>
 
+## 未解决问题
+1. start 模块无法通过 import logo from 'images/logo.ico'; 的方式导入静态文件
+
 ## 加入项目
 项目目前由我一人维护，有兴趣加入项目可以联系我哈，邮箱：137361035@qq.com，qq：137361035

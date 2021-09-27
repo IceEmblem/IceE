@@ -7,14 +7,14 @@ function getModules(packageFilePath) {
 
     let dependencies = Object.keys(dependenciesObj);
 
-    let iceModules = [];
+    let modules = [];
     dependencies.forEach(item => {
-        if (item.startsWith('ice-')) {
-            iceModules.push(item);
+        if (item.startsWith(paths.packagePre)) {
+            modules.push(item);
         }
     });
 
-    return iceModules;
+    return modules;
 }
 
 // 生成模块列表文件

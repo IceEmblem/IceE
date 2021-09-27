@@ -1,11 +1,12 @@
 const { watchIcetf } = require('./watchIcetf');
 const { start } = require('./start');
 const { exec } = require('child_process');
+const { getWebPackageName } = require('./paths');
 
 watchIcetf('web');
 start('web');
 
-const cmd = `cd packages/ice-react-start && yarn start`;
+const cmd = `cd packages/${getWebPackageName('start')} && yarn start`;
 
 const execCmd = exec(cmd);
 
@@ -18,5 +19,5 @@ execCmd.stderr.on('data', (data) => {
 });
 
 execCmd.on('close', (code) => {
-    console.log(`ice-react-start 已退出，退出码：${code}`);
+    console.log(`${getWebPackageName('start')} 已退出，退出码：${code}`);
 });

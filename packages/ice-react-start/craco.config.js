@@ -1,6 +1,7 @@
 // craco.config.js 文件
 
 const path = require('path');
+const serverProxy = require('http-proxy-middleware');
 
 module.exports = {
     reactScriptsVersion: "react-scripts" /* (default value) */,
@@ -28,5 +29,19 @@ module.exports = {
         }
     },
     devServer: { /* Any devServer configuration options: https://webpack.js.org/configuration/dev-server/#devserver. */ },
-    devServer: (devServerConfig, { env, paths, proxy, allowedHost }) => { return devServerConfig; }
+    devServer: (devServerConfig, { env, paths, proxy, allowedHost }) => {
+        devServerConfig.before = function (app) {
+            // Api代理
+            app.use(
+                serverProxy(
+                    '/api/', {
+                    target: 'http://localhost:5000/',
+                    changeOrigin: true
+                }
+                )
+            )
+        }
+
+        return devServerConfig;
+    }
 };

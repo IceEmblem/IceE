@@ -1,7 +1,7 @@
 # IceE
 
-[![icee version](https://img.shields.io/badge/icee-0.2.0-red)](https://github.com/IceEmblem/IceE)
-[![icetf version](https://img.shields.io/badge/icetf-0.2.0-yellowgreen)](https://www.npmjs.com/package/icetf)
+[![icee version](https://img.shields.io/badge/icee-0.3.1-red)](https://github.com/IceEmblem/IceE)
+[![icetf version](https://img.shields.io/badge/icetf-0.3.1-yellowgreen)](https://www.npmjs.com/package/icetf)
 
 IceE 是一个基于 React 的三端框架（web，android，ios），基于模块化的设计，monorepo 项目，React 和 ReactNative 多 package 项目，让你的项目更加清晰
 </br></br>
@@ -90,6 +90,9 @@ node icee bn
 ## 关于ReactNative的路由
 Web 和 Native 都使用 react-router，但似乎 react-router 在 Native 不够流畅，后面会替换掉
 </br></br>
+
+## 未解决问题
+1. start 模块无法通过 import logo from 'images/logo.ico'; 的方式导入静态文件
 
 ## 加入项目
 项目目前由我一人维护，有兴趣加入项目可以联系我哈，邮箱：137361035@qq.com，qq：137361035

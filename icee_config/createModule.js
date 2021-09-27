@@ -1,4 +1,5 @@
-const { paths, getPackagePath } = require('./paths');
+const { paths, getPackagePath, getComPackageName, getWebPackageName, getRNPackageName } = require('./paths');
+const { buildModuleListFile } = require('./module');
 const fs = require("fs");
 
 // platform: 'web' | 'native' | 'common'
@@ -9,8 +10,8 @@ const packageTemplet = {
     "license": "MIT"
 };
 const moduleTemplet = `
-import {BaseModule, ModuleFactory} from 'icetf'
-import {Module as CoreModule} from 'ice-core';
+import {BaseModule, ModuleFactory} from 'icetf';
+import {Module as CoreModule} from '${getComPackageName('core')}';
 
 export default class Module extends BaseModule {
     initialize() {
@@ -47,8 +48,8 @@ function buildModule(fullModuleName, version, platform) {
     package.version = version;
     package.dependencies = {
         "icetf": `^${version}`,
-        "ice-core": `^${version}`
     }
+    package.dependencies[getComPackageName('core')] = `^${version}`;
 
     // 如果是 RN 包
     if (platform == 'native') {
@@ -79,24 +80,28 @@ function createModule(moduleName, platform)
 
     // 如果是 RN 包
     if (platform == 'native') {
-        fullModuleName = `ice-rn-${moduleName}`;
+        fullModuleName = getRNPackageName(moduleName);
         version = require(paths.nativeStartPackageFile).version;
 
         updateStartPackage(fullModuleName, version, paths.nativeStartPackageFile);
+        buildModuleListFile(platform);
     }
     // 如果是 Web 包
     else if(platform == 'web') {
-        fullModuleName = `ice-react-${moduleName}`;
+        fullModuleName = getWebPackageName(moduleName);
         version = require(paths.webStartPackageFile).version;
 
         updateStartPackage(fullModuleName, version, paths.webStartPackageFile);
+        buildModuleListFile(platform);
     }
     // 否则是通用包
     else {
-        fullModuleName = `ice-${moduleName}`;
+        fullModuleName = getComPackageName(moduleName);
 
         updateStartPackage(fullModuleName, version, paths.nativeStartPackageFile);
+        buildModuleListFile('native');
         updateStartPackage(fullModuleName, version, paths.webStartPackageFile);
+        buildModuleListFile('web');
     }
 
     buildModule(fullModuleName, version, platform);

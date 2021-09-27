@@ -11,8 +11,8 @@ export class BaseIceRedux {
     connect(
         mapStateToProps: any,
         mapDispatchToProps: any,
-        mergeProps: any,
-        options: any): any;
+        mergeProps?: any,
+        options?: any): any;
 }
 
 export namespace IceReduxFactroy {

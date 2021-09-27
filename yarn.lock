@@ -8892,6 +8892,14 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"ice-common@workspace:packages/ice-common":
+  version: 0.0.0-use.local
+  resolution: "ice-common@workspace:packages/ice-common"
+  dependencies:
+    icetf: ^0.3.0
+  languageName: unknown
+  linkType: soft
+
 "ice-core@^0.3.2, ice-core@workspace:packages/ice-core":
   version: 0.0.0-use.local
   resolution: "ice-core@workspace:packages/ice-core"
@@ -8916,9 +8924,25 @@ fsevents@^1.2.7:
   languageName: unknown
   linkType: soft
 
-"icetf@npm:^0.3.2":
-  version: 0.3.2
-  resolution: "icetf@npm:0.3.2"
+"ice-react-test@workspace:packages/ice-react-test":
+  version: 0.0.0-use.local
+  resolution: "ice-react-test@workspace:packages/ice-react-test"
+  dependencies:
+    icetf: ^0.3.0
+  languageName: unknown
+  linkType: soft
+
+"ice-rn-test@workspace:packages/ice-rn-test":
+  version: 0.0.0-use.local
+  resolution: "ice-rn-test@workspace:packages/ice-rn-test"
+  dependencies:
+    icetf: ^0.3.0
+  languageName: unknown
+  linkType: soft
+
+"icetf@^0.3.0, icetf@^0.3.2, icetf@workspace:packages/icetf":
+  version: 0.0.0-use.local
+  resolution: "icetf@workspace:packages/icetf"
   dependencies:
     "@ant-design/colors": ^6.0.0
     "@types/react": ^17.0.5
@@ -8928,9 +8952,8 @@ fsevents@^1.2.7:
     redux: ^4.0.1
     redux-thunk: ^2.3.0
     typescript: ^4.2.4
-  checksum: 101ce75dcf462cfd2f7518613690a42a8f9da0de85de12f8c0026c04a29072004223e59cb38f00a285ddb6b60575e253a253893d8ff8f2e6c9be3f2fab24a128
-  languageName: node
-  linkType: hard
+  languageName: unknown
+  linkType: soft
 
 "iconv-lite@npm:0.4.24":
   version: 0.4.24

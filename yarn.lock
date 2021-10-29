@@ -3555,8 +3555,7 @@ __metadata:
     babel-jest: 26.6.3
     babel-plugin-module-resolver: ^4.1.0
     eslint: 7.14.0
-    ice-core: ^0.3.2
-    icetf: ^0.3.2
+    ice-core: ^1.0.0
     jest: 26.6.3
     metro-react-native-babel-preset: 0.64.0
     native-base: ^2.15.2
@@ -8892,11 +8891,11 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"ice-core@^0.3.2, ice-core@workspace:packages/ice-core":
+"ice-core@^1.0.0, ice-core@workspace:packages/ice-core":
   version: 0.0.0-use.local
   resolution: "ice-core@workspace:packages/ice-core"
   dependencies:
-    icetf: ^0.3.2
+    icetf: ^0.3.5
   languageName: unknown
   linkType: soft
 
@@ -8908,17 +8907,16 @@ fsevents@^1.2.7:
     "@testing-library/jest-dom": ^5.11.4
     "@testing-library/react": ^11.1.0
     "@testing-library/user-event": ^12.1.10
-    ice-core: ^0.3.2
-    icetf: ^0.3.2
+    ice-core: ^1.0.0
     react-dom: ^17.0.2
     react-router-dom: ^5.2.0
     react-scripts: 4.0.3
   languageName: unknown
   linkType: soft
 
-"icetf@npm:^0.3.2":
-  version: 0.3.2
-  resolution: "icetf@npm:0.3.2"
+"icetf@npm:^0.3.5":
+  version: 0.3.5
+  resolution: "icetf@npm:0.3.5"
   dependencies:
     "@ant-design/colors": ^6.0.0
     "@types/react": ^17.0.5
@@ -8928,7 +8926,7 @@ fsevents@^1.2.7:
     redux: ^4.0.1
     redux-thunk: ^2.3.0
     typescript: ^4.2.4
-  checksum: 101ce75dcf462cfd2f7518613690a42a8f9da0de85de12f8c0026c04a29072004223e59cb38f00a285ddb6b60575e253a253893d8ff8f2e6c9be3f2fab24a128
+  checksum: 6d73d5f1bda2718c400e146d10161a5093ac31b067dee90051715490518381cf80251f24f7c1d6ecbcf66d0779ce0067d1efa8531fe3a8df7ba79c24881fc9d7
   languageName: node
   linkType: hard
 

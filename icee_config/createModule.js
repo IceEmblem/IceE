@@ -47,7 +47,7 @@ function buildModule(fullModuleName, version, platform) {
     package.name = fullModuleName;
     package.version = version;
     package.dependencies = {
-        "icetf": `^${version}`,
+        // "icetf": `^${version}`,
     }
     package.dependencies[getComPackageName('core')] = `^${version}`;
 

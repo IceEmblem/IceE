@@ -11,15 +11,6 @@ export default class Module extends BaseModule
         IceFetch.registerFetch((fetchData: any) => {
             return fetch(fetchData.url, fetchData.header)
         });
-
-        // 注册一个结果处理器，使用 IceFetch 请求的结果会先通过该处理器处理
-        // responst: fetch 请求结果
-        // fetchData: fetch 请求的数据
-        // actionType: redux 的 action 类型
-        // 返回值: 处理后的数据，会作为下一个 handler 的 responst
-        IceFetch.registerHandler((responst: Response, fetchData: any, actionType: string) => {
-            return responst;
-        })
     }
 
     initialize(){

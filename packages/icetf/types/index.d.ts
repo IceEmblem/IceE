@@ -25,9 +25,8 @@ export namespace IceFetch {
     let Receive: string;
 
     function registerFetch(fetch: (fetchData: any) => Promise<Response>): void;
-    function registerHandler(action: (responst: Response, fetchData: any, actionType: string) => any): void;
-    function createThunkAction(fetchData: any, actionType: string): (dispatch: any) => Promise<any>;
-    function ieReduxFetch(fetchData: any): Promise<any>;
+    function createThunkAction<TAction extends { type: string }>(fetchData: any, action: TAction): (dispatch: any) => Promise<any>;
+    function fetch(fetchData: any): Promise<any>;
 }
 
 export namespace MiddlewareFactory {

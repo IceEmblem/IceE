@@ -15,7 +15,7 @@ export interface FetchAction {
 
 // Icetf fetch 请求封装
 // IceFetch 发送请求时会向 redux 发送 action
-class IceFetch {
+class IceFetch<TAction extends { type: string }> {
 
     // 请求 action 的类型
     readonly Request = "IEFecth_Request";
@@ -30,13 +30,10 @@ class IceFetch {
     private fecthSign: number = 0;
 
     // fetch 请求，必须要先注册 fetch 才能使用其他功能
-    private fetch: (fetchData: any) => Promise<Response> = (fetchData: any) => {
+    private fetchFun: (fetchData: any) => Promise<Response> = (fetchData: any) => {
         console.error('无法使用fetch，请先注册fetch函数');
         throw new Error('无法使用fetch，请先注册fetch函数');
     };
-
-    // 请求结果处理器
-    private handlers: Array<(responst: Response, fetchData: any, actionType: string) => any> = [];
 
     // 生成请求 action
     private createRequest(postData: any, fecthSign: number): FetchAction {
@@ -61,9 +58,9 @@ class IceFetch {
     }
 
     // 生成接收 action
-    private createReceive(data: any, actionType: string, fecthSign: number): FetchAction {
+    private createReceive(data: any, action: TAction, fecthSign: number): FetchAction {
         return {
-            type: actionType,
+            ...action,
             data: data,
             error: null,
             isFetch: true,
@@ -73,37 +70,23 @@ class IceFetch {
 
     // 注册 fetch
     registerFetch(fetch: (fetchData: any) => Promise<Response>){
-        this.fetch = fetch;
-    }
-
-    // 注册 fetch 请求结果处理器
-    registerHandler(action: (responst: Response, fetchData: any, actionType: string) => any) {
-        this.handlers.push(action);
+        this.fetchFun = fetch;
     }
 
     // 创建 ThunkAction
-    createThunkAction(fetchData: any, actionType: string) {
+    createThunkAction(fetchData: any, action: TAction) {
         return (dispatch: any) => {
             let curFecthSign = this.fecthSign++;
             dispatch(this.createRequest(fetchData, curFecthSign));
 
-            return this.fetch(fetchData).then(
-                response => {
-                    let result: any = response;
-                    this.handlers.forEach(handler => {
-                        result = handler(result, fetchData, actionType);
-                    });
-
-                    return result;
-                }
-            ).catch(
+            return this.fetchFun(fetchData).catch(
                 (errorData: Error) => {
                     dispatch(this.createError(errorData.message, curFecthSign));
                     return Promise.reject(errorData.message);
                 }
             ).then(
                 value => {
-                    dispatch(this.createReceive(value, actionType, curFecthSign));
+                    dispatch(this.createReceive(value, action, curFecthSign));
                     return value;
                 }
             )
@@ -111,8 +94,8 @@ class IceFetch {
     }
 
     // 普通的 fetch 请求，该方法在请求和接受时也会向 redux 发送 action
-    ieReduxFetch(fetchData: any) {
-        return this.createThunkAction(fetchData, this.Receive)(IEStore.ieStore.dispatch);
+    fetch(fetchData: any) {
+        return this.createThunkAction(fetchData, { type: this.Receive } as TAction)(IEStore.ieStore.dispatch);
     }
 }
 

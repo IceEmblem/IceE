@@ -64,9 +64,9 @@ function buildModule(fullModuleName, version, platform) {
 
     // 如果是 RN 包
     if (platform == 'native') {
-        package.installConfig = {
-            "hoistingLimits": "workspaces"
-        }
+        // package.installConfig = {
+        //     "hoistingLimits": "workspaces"
+        // }
     }
 
     // 写入 package.json 文件
@@ -95,7 +95,6 @@ function createModule(moduleName, platform)
         version = require(paths.nativeStartPackageFile).version;
 
         updateStartPackage(fullModuleName, version, paths.nativeStartPackageFile);
-        buildModuleListFile(platform);
     }
     // 如果是 Web 包
     else if(platform == 'web') {
@@ -103,16 +102,13 @@ function createModule(moduleName, platform)
         version = require(paths.webStartPackageFile).version;
 
         updateStartPackage(fullModuleName, version, paths.webStartPackageFile);
-        buildModuleListFile(platform);
     }
     // 否则是通用包
     else {
         fullModuleName = getComPackageName(moduleName);
 
         updateStartPackage(fullModuleName, version, paths.nativeStartPackageFile);
-        buildModuleListFile('native');
         updateStartPackage(fullModuleName, version, paths.webStartPackageFile);
-        buildModuleListFile('web');
     }
 
     buildModule(fullModuleName, version, platform);

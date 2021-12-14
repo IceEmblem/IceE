@@ -8895,7 +8895,7 @@ fsevents@^1.2.7:
   version: 0.0.0-use.local
   resolution: "ice-core@workspace:packages/ice-core"
   dependencies:
-    icetf: ^0.4.5
+    icetf: ^0.4.6
   languageName: unknown
   linkType: soft
 
@@ -8914,9 +8914,9 @@ fsevents@^1.2.7:
   languageName: unknown
   linkType: soft
 
-"icetf@npm:^0.4.5":
-  version: 0.4.5
-  resolution: "icetf@npm:0.4.5"
+"icetf@npm:^0.4.6":
+  version: 0.4.6
+  resolution: "icetf@npm:0.4.6"
   dependencies:
     "@ant-design/colors": ^6.0.0
     "@types/react": ^17.0.5
@@ -8926,7 +8926,7 @@ fsevents@^1.2.7:
     redux: ^4.0.1
     redux-thunk: ^2.3.0
     typescript: ^4.2.4
-  checksum: 2e8f3ad24fe74106023507b2f4a48031648eb680326013bae7d412970fe4373b2a0df1065d303143dbcde6636c783b425f45034203d547f67cbe41af6e8243e8
+  checksum: 3681ce7d2162d03c2179a464c70ae0d17410c999664211a3ef6977ac73305f39c8fd796c618dc491452f7f261f245751ca7f8db75e3c12dfc476acc1e4708559
   languageName: node
   linkType: hard
 

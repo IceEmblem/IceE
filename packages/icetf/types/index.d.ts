@@ -63,9 +63,12 @@ export namespace ModuleFactory {
 }
 
 export class Page {
-    name:string;
-    url:string;
-    component:ReactNode;
+    constructor(
+        public name:string, 
+        public url:string,
+        public component:ReactNode)
+    {
+    }
 }
 
 export namespace PageProvider {

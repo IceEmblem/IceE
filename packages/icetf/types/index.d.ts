@@ -1,22 +1,39 @@
+type Reducer = (state: any, action: any) => any;
+
 export class BaseIceRedux {
     modelName: string;
 
     constructor(modelName: string);
 
-    reducer: (state: any, action: any) => any;
+    reducer: Reducer;
 
-    setReducer(reducer: (state: any, action: any) => any): void;
+    rootReducer: Reducer | null = null;
 
     // 使用 BaseIERedux 应使用 BaseIERedux.connect 而不是 react-redux 的 connect 方法
     connect(
-        mapStateToProps: any,
-        mapDispatchToProps: any,
+        mapStateToProps: (state: any, ownProps: any, globalState: any) => any,
+        mapDispatchToProps: (dispatch: (action: any) => any, ownProps: any) => any,
         mergeProps?: any,
         options?: any): any;
 }
 
 export namespace IceReduxFactroy {
     function register(iceRedux: BaseIceRedux): void;
+}
+
+export interface FetchAction {
+    // 动作类型
+    type: string,
+    // 发送数据或接收的数据
+    data: any,
+    // 错误消息
+    error: string | null,
+    // 异常本体
+    ex: Error | null,
+    // 是否属于 Fetch 类型
+    isFetch: boolean,
+    // fetch 标识
+    fecthSign: number,
 }
 
 export namespace IceFetch {
@@ -57,8 +74,8 @@ export namespace PageProvider {
 }
 
 export namespace IEStore {
-    let ieStore: any;
-    function createIEStore(): void;
+    let store: any;
+    function createStore(): void;
     function register(iceRedux: BaseIceRedux): void;
 }
 

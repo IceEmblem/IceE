@@ -5,15 +5,15 @@ import IceReduxFactroy from './IceRedux/IceReduxFactroy'
 import BaseIceRedux from './IceRedux/BaseIceRedux';
 
 class IEStore  {
-    ieStore: any = undefined;
+    store: any = undefined;
 
-    createIEStore() {
+    createStore() {
         var middlewares = [
             thunkMiddleware, // 这里添加了一个thunk中间件，他会处理thunk action
             ...(MiddlewareFactory.getMiddlewares())
         ];
         
-        this.ieStore = createStore(
+        this.store = createStore(
             IceReduxFactroy.createRootReducer<any>(),
             applyMiddleware(...middlewares));
     }

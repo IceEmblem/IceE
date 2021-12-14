@@ -7,10 +7,12 @@ export interface FetchAction {
     data: any,
     // 错误消息
     error: string | null,
+    // 异常本体
+    ex: Error | null,
     // 是否属于 Fetch 类型
     isFetch: boolean,
     // fetch 标识
-    fecthSign: number
+    fecthSign: number,
 }
 
 // Icetf fetch 请求封装
@@ -41,17 +43,19 @@ class IceFetch<TAction extends { type: string }> {
             type: this.Request,
             data: postData,
             error: null,
+            ex: null,
             isFetch: true,
             fecthSign: fecthSign
         }
     }
 
     // 生成错误 action
-    private createError(error: string, fecthSign: number): FetchAction {
+    private createError(error: string, fecthSign: number, ex: Error): FetchAction {
         return {
             type: this.ErrorAction,
             data: null,
             error: error,
+            ex: ex,
             isFetch: true,
             fecthSign: fecthSign
         }
@@ -63,6 +67,7 @@ class IceFetch<TAction extends { type: string }> {
             ...action,
             data: data,
             error: null,
+            ex: null,
             isFetch: true,
             fecthSign: fecthSign
         }
@@ -81,8 +86,8 @@ class IceFetch<TAction extends { type: string }> {
 
             return this.fetchFun(fetchData).catch(
                 (errorData: Error) => {
-                    dispatch(this.createError(errorData.message, curFecthSign));
-                    return Promise.reject(errorData.message);
+                    dispatch(this.createError(errorData.message, curFecthSign, errorData));
+                    throw errorData;
                 }
             ).then(
                 value => {
@@ -95,7 +100,7 @@ class IceFetch<TAction extends { type: string }> {
 
     // 普通的 fetch 请求，该方法在请求和接受时也会向 redux 发送 action
     fetch(fetchData: any) {
-        return this.createThunkAction(fetchData, { type: this.Receive } as TAction)(IEStore.ieStore.dispatch);
+        return this.createThunkAction(fetchData, { type: this.Receive } as TAction)(IEStore.store.dispatch);
     }
 }
 

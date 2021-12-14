@@ -25,7 +25,7 @@ export default class extends React.Component<{
 
         let Router = this.props.router;
 
-        return <Provider store={IEStore.ieStore}>
+        return <Provider store={IEStore.store}>
             <Router pages={PageProvider.pages} />
         </Provider>
     }

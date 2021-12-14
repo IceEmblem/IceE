@@ -1,11 +1,10 @@
 {
-  "name": "ice-rn-test",
-  "version": "0.3.0",
-  "main": "dist/index.js",
-  "dependencies": {
-    "icetf": "^0.3.0"
-  },
-  "installConfig": {
-    "hoistingLimits": "workspaces"
-  }
+	"name": "ice-rn-test",
+	"version": "1.0.0",
+	"main": "dist/index.js",
+	"types": "types/index.d.ts",
+	"license": "MIT",
+	"dependencies": {
+		"ice-core": "^1.0.0"
+	}
 }

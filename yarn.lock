@@ -3556,6 +3556,7 @@ __metadata:
     babel-plugin-module-resolver: ^4.1.0
     eslint: 7.14.0
     ice-core: ^1.0.0
+    ice-rn-test: ^1.0.0
     jest: 26.6.3
     metro-react-native-babel-preset: 0.64.0
     native-base: ^2.15.2
@@ -8916,15 +8917,32 @@ fsevents@^1.2.7:
     "@testing-library/react": ^11.1.0
     "@testing-library/user-event": ^12.1.10
     ice-core: ^1.0.0
+    ice-react-test: ^1.0.0
     react-dom: ^17.0.2
     react-router-dom: ^5.2.0
     react-scripts: 4.0.3
   languageName: unknown
   linkType: soft
 
-"icetf@npm:^0.4.5":
-  version: 0.4.5
-  resolution: "icetf@npm:0.4.5"
+"ice-react-test@^1.0.0, ice-react-test@workspace:packages/ice-react-test":
+  version: 0.0.0-use.local
+  resolution: "ice-react-test@workspace:packages/ice-react-test"
+  dependencies:
+    ice-core: ^1.0.0
+  languageName: unknown
+  linkType: soft
+
+"ice-rn-test@^1.0.0, ice-rn-test@workspace:packages/ice-rn-test":
+  version: 0.0.0-use.local
+  resolution: "ice-rn-test@workspace:packages/ice-rn-test"
+  dependencies:
+    ice-core: ^1.0.0
+  languageName: unknown
+  linkType: soft
+
+"icetf@^0.4.5, icetf@workspace:packages/icetf":
+  version: 0.0.0-use.local
+  resolution: "icetf@workspace:packages/icetf"
   dependencies:
     "@ant-design/colors": ^6.0.0
     "@types/react": ^17.0.5
@@ -8934,7 +8952,22 @@ fsevents@^1.2.7:
     redux: ^4.0.1
     redux-thunk: ^2.3.0
     typescript: ^4.2.4
-  checksum: 2e8f3ad24fe74106023507b2f4a48031648eb680326013bae7d412970fe4373b2a0df1065d303143dbcde6636c783b425f45034203d547f67cbe41af6e8243e8
+  languageName: unknown
+  linkType: soft
+
+"icetf@npm:^0.3.0":
+  version: 0.3.5
+  resolution: "icetf@npm:0.3.5"
+  dependencies:
+    "@ant-design/colors": ^6.0.0
+    "@types/react": ^17.0.5
+    "@types/react-redux": ^7.1.16
+    react: ^17.0.2
+    react-redux: ^7.0.2
+    redux: ^4.0.1
+    redux-thunk: ^2.3.0
+    typescript: ^4.2.4
+  checksum: 6d73d5f1bda2718c400e146d10161a5093ac31b067dee90051715490518381cf80251f24f7c1d6ecbcf66d0779ce0067d1efa8531fe3a8df7ba79c24881fc9d7
   languageName: node
   linkType: hard
 

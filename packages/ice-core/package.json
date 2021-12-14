@@ -2,8 +2,9 @@
   "name": "ice-core",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "icetf": "^0.3.5"
+    "icetf": "^0.4.5"
   }
 }

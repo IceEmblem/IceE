@@ -7,10 +7,11 @@ const packageTemplet = {
     "name": "",
     "version": "0.1.0",
     "main": "dist/index.js",
+    "types": "types/index.d.ts",
     "license": "MIT"
 };
-const moduleTemplet = `
-import {BaseModule, ModuleFactory} from 'icetf';
+const moduleTemplet = 
+`import {BaseModule, ModuleFactory} from 'icetf';
 import {Module as CoreModule} from '${getComPackageName('core')}';
 
 export default class Module extends BaseModule {
@@ -20,8 +21,15 @@ export default class Module extends BaseModule {
 
 ModuleFactory.register(Module, [CoreModule]);
 `;
-const indexTemplet = `
-export { default as Module } from './Module';
+const indexTemplet = 
+`export { default as Module } from './Module';
+`;
+const indexDTSTemplet = 
+`import React from 'react';
+import { BaseModule } from 'icetf';
+
+export declare class Module extends BaseModule {
+}
 `;
 
 // 生成模块
@@ -36,11 +44,14 @@ function buildModule(fullModuleName, version, platform) {
     // 创建目录
     fs.mkdirSync(packageDirPath);
     fs.mkdirSync(`${packageDirPath}/src`);
+    fs.mkdirSync(`${packageDirPath}/types`);
 
     // 写入module文件
     fs.writeFileSync(`${packageDirPath}/src/Module.js`, moduleTemplet);
     // 写入index文件
     fs.writeFileSync(`${packageDirPath}/src/index.js`, indexTemplet);
+    // 写入index.d.ts文件
+    fs.writeFileSync(`${packageDirPath}/types/index.d.ts`, indexDTSTemplet);
 
     // 写入package.json文件
     let package = { ...packageTemplet };

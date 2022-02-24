@@ -12,6 +12,10 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3"
   },
+  "iceeConfig": {
+    "dependencies": ["ice-core"],
+    "hoistDependencies": false
+  },
   "scripts": {
     "start": "craco start",
     "build": "craco build",

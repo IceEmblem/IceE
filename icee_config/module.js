@@ -1,32 +1,16 @@
-const { paths, getPackagePath, getPackageFilePath } = require('./paths');
+const { paths, getPackagePath } = require('./paths');
 const fs = require('fs')
 
 // 获取模块列表
-function getModules(packageFilePath) {
-    let dependenciesObj = require(packageFilePath).dependencies;
-
-    let dependencies = Object.keys(dependenciesObj);
-
-    let modules = [];
-    dependencies.forEach(item => {
-        if (item.startsWith(paths.packagePre)) {
-            modules.push(item);
-        }
-    });
-
-    return modules;
+function getModules(module) {
+    return require(`${getPackagePath(module)}/package.json`).iceeConfig.dependencies;
 }
 
 // 生成模块列表文件
-function buildModuleListFile(platform) {
-    let modules = getModules(platform == 'web' ?
-        paths.webStartPackageFile :
-        paths.nativeStartPackageFile
-    );
+function buildModuleListFile(startModule) {
+    let modules = getModules(startModule);
 
-    let moduleOutputPath = platform == 'web' ?
-        `${paths.webStart}/src/ModuleList.js` :
-        `${paths.nativeStart}/src/ModuleList.js`;
+    let moduleOutputPath = `${getPackagePath(startModule)}/src/ModuleList.js`;
 
     let importListStr = "// -----该文件由 Webpack 编译时动态生成，请勿直接更改-----\n\n";
     let moduleListStr = "";
@@ -46,18 +30,19 @@ function buildModuleListFile(platform) {
 module.exports.buildModuleListFile = buildModuleListFile;
 
 // 监听模块
-function watchModule(module, getOutDir, isDev = true) {
+function watchModule(module, customizeOutDir, isDev = true) {
     const { exec } = require('child_process');
 
     const source = `${getPackagePath(module)}/src`;
     if (!fs.existsSync(source)) {
         return;
     }
-    let outDir = null;
-    if (getOutDir) {
-        outDir = getOutDir(module);
+
+    let outDir;
+    if(customizeOutDir){
+        outDir = customizeOutDir(module);
     }
-    else {
+    else{
         outDir = `${getPackagePath(module)}/dist`;
     }
 
@@ -82,24 +67,18 @@ function watchModule(module, getOutDir, isDev = true) {
 }
 module.exports.watchModule = watchModule;
 
-// 监听模块
-function watchModules(platform, getOutDir = null) {
-    let modules = getModules(platform == 'web' ?
-        paths.webStartPackageFile :
-        paths.nativeStartPackageFile
-    );
+// 监听入口模块所依赖的的模块列表
+function watchModules(startModule, customizeOutDir = null) {
+    let modules = getModules(startModule);
     modules.forEach(module => {
-        watchModule(module, getOutDir);
+        watchModule(module, customizeOutDir);
     })
 }
 module.exports.watchModules = watchModules;
 
-// babel 打包模块
-function babelBuildModules(platform) {
-    let modules = getModules(platform == 'web' ?
-        paths.webStartPackageFile :
-        paths.nativeStartPackageFile
-    );
+// 打包入口模块所依赖的的模块列表
+function babelBuildModules(startModule) {
+    let modules = getModules(startModule);
     modules.forEach(module => {
         watchModule(module, null, false);
     })
@@ -107,21 +86,15 @@ function babelBuildModules(platform) {
 module.exports.babelBuildModules = babelBuildModules;
 
 // 拷贝模块到 ice-rn-start 的 node_modules 目录（快捷键映射总会存在一些问题，这里直接拷贝）
-function copyModules(platform) {
+function copyModules(startModule) {
     const {copyDir, rmdir} = require('./utiliy');
 
-    let modules = getModules(platform == 'web' ?
-        paths.webStartPackageFile :
-        paths.nativeStartPackageFile
-    );
+    let modules = getModules(startModule);
 
     modules.forEach((module) => {
         let source = getPackagePath(module);
-        let startPackagePath = platform == 'web' ?
-            paths.webStart :
-            paths.nativeStart;
     
-        let dist = startPackagePath + `/node_modules/${module}`;
+        let dist = getPackagePath(startModule) + `/node_modules/${module}`;
 
         if(!fs.existsSync(source)){
             return;

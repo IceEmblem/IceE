@@ -1,4 +1,4 @@
-const { paths, getPackagePath, getComPackageName, getWebPackageName, getRNPackageName } = require('./paths');
+const { paths, getPackagePath, getComPackageName, getRNPackageName, coreName } = require('./paths');
 const { buildModuleListFile } = require('./module');
 const fs = require("fs");
 
@@ -32,8 +32,10 @@ export declare class Module extends BaseModule {
 }
 `;
 
-// 生成模块
-function buildModule(fullModuleName, version, platform) {
+// 创建模块
+function createModule(fullModuleName) 
+{
+    let corePackageVersion = require(`${getPackagePath(coreName)}/package.json`).version;
 
     let packageDirPath = getPackagePath(fullModuleName);
 
@@ -56,61 +58,13 @@ function buildModule(fullModuleName, version, platform) {
     // 写入package.json文件
     let package = { ...packageTemplet };
     package.name = fullModuleName;
-    package.version = version;
+    package.version = corePackageVersion;
     package.dependencies = {
         // "icetf": `^${version}`,
     }
-    package.dependencies[getComPackageName('core')] = `^${version}`;
-
-    // 如果是 RN 包
-    if (platform == 'native') {
-        // package.installConfig = {
-        //     "hoistingLimits": "workspaces"
-        // }
-    }
+    package.dependencies[coreName] = `^${corePackageVersion}`;
 
     // 写入 package.json 文件
     fs.writeFileSync(packageDirPath + '/package.json', JSON.stringify(package, null, "\t"));
-}
-
-// 更新 start 模块的 package.json
-function updateStartPackage(fullModuleName, version, startPackageFilePath) {
-
-    let startPackage = require(startPackageFilePath);
-    startPackage.dependencies[fullModuleName] = `^${version}`;
-
-    fs.writeFileSync(startPackageFilePath, JSON.stringify(startPackage, null, "\t"));
-}
-
-// 创建模块
-function createModule(moduleName, platform) 
-{
-    // 包名前缀
-    let fullModuleName = null;
-    let version = '0.1.0';
-
-    // 如果是 RN 包
-    if (platform == 'native') {
-        fullModuleName = getRNPackageName(moduleName);
-        version = require(paths.nativeStartPackageFile).version;
-
-        updateStartPackage(fullModuleName, version, paths.nativeStartPackageFile);
-    }
-    // 如果是 Web 包
-    else if(platform == 'web') {
-        fullModuleName = getWebPackageName(moduleName);
-        version = require(paths.webStartPackageFile).version;
-
-        updateStartPackage(fullModuleName, version, paths.webStartPackageFile);
-    }
-    // 否则是通用包
-    else {
-        fullModuleName = getComPackageName(moduleName);
-
-        updateStartPackage(fullModuleName, version, paths.nativeStartPackageFile);
-        updateStartPackage(fullModuleName, version, paths.webStartPackageFile);
-    }
-
-    buildModule(fullModuleName, version, platform);
 }
 module.exports.createModule = createModule;

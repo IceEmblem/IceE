@@ -15,10 +15,9 @@
     "typescript": "^4.2.4"
   },
   "scripts": {
-    "start:android": "node icee_config/startRN -android",
-    "start:ios": "node icee_config/startRN -ios",
-    "start:rn": "node icee_config/startRN -start",
-    "start:web": "node icee_config/startWeb"
+    "start:android": "node icee -s 'yarn android' ice-rn-start",
+    "start:ios": "node icee -s 'yarn ios' ice-rn-start",
+    "start:web": "node icee -s 'yarn start' ice-react-start"
   },
   "version": "1.0.0",
   "main": "index.js",

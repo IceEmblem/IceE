@@ -13,7 +13,9 @@
     "react-scripts": "4.0.3"
   },
   "iceeConfig": {
-    "dependencies": ["ice-core"],
+    "dependencies": [
+      "ice-core"
+    ],
     "hoistDependencies": false
   },
   "scripts": {

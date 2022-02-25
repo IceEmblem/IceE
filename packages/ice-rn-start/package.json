@@ -30,7 +30,9 @@
     "react-test-renderer": "17.0.1"
   },
   "iceeConfig": {
-    "dependencies": ["ice-core"],
+    "dependencies": [
+      "ice-core"
+    ],
     "hoistDependencies": true
   },
   "jest": {

@@ -1,20 +1,29 @@
-const { watchModule } = require('./module');
-const paths = require('./paths');
+const { compileModule } = require('./module');
+const {getPackagePath} = require('./paths');
 const fs = require('fs');
 const {copyDir, rmdir} = require('./utiliy');
 
 // platform: 'web' | 'native'
-function watchIcetf(platform){
-    if(platform == 'web'){
-        watchModule('icetf');
+function watchIcetf(startModule){
+    let package = require(`${getPackagePath(startModule)}/package.json`);
+    if(!package.iceeConfig){
+        console.error(`请为项目${startModule}配置iceeConfig字段`);
+        return;
+    }
+
+    let hoistDependencies = require(`${getPackagePath(startModule)}/package.json`).iceeConfig.hoistDependencies;
+
+    if(!hoistDependencies){
+        compileModule('icetf', null, true);
         return;
     }
     
     // rn 处理流程
-    let source = paths.getPackagePath('icetf');
-    let dist = `${paths.paths.nativeStart}/node_modules/icetf`;
+    let source = getPackagePath('icetf');
+    let dist = `${getPackagePath(startModule)}/node_modules/icetf`;
 
     if(!fs.existsSync(source)){
+        console.log("icetf不存在");
         return;
     }
     
@@ -31,8 +40,8 @@ function watchIcetf(platform){
 
     copyDir(source, dist, ['node_modules']);
 
-    watchModule('icetf', (module) => {
-        return paths.paths.nativeStart + `/node_modules/${module}/dist`
-    });
+    compileModule('icetf', (module) => {
+        return `${getPackagePath(startModule)}/node_modules/${module}/dist`
+    }, true);
 }
 module.exports.watchIcetf = watchIcetf;

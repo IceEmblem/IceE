@@ -25,7 +25,8 @@ yarn start:ios
 </br></br>
 
 ## 安装一个现有的模块
-1. 进入 /packages/ice-react-start 目录，执行 yarn add ice-react-test 安装一个模块
+1. 进入 /packages/ice-react-start 目录，执行 yarn add ice-react-test 安装一个包
+2. 根目录执行 node icee mlw 将包导入为模块
 2. 根目录执行 yarn start:web 运行web站点，访问 /Test，就可以看到模块提供的页面了
 </br></br>
 
@@ -92,7 +93,7 @@ Web 和 Native 都使用 react-router，但似乎 react-router 在 Native 不够
 </br></br>
 
 ## 未解决问题
-1. start 模块无法通过 import logo from 'images/logo.ico'; 的方式导入静态文件
+1. 图片的存放问题，临时解决方案：将图片放在 core 模块的 src 目录下，其他模块直接引用即可
 
 ## 加入项目
 项目目前由我一人维护，有兴趣加入项目可以联系我哈，邮箱：137361035@qq.com，qq：137361035

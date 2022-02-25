@@ -1,91 +1,72 @@
-const {babelBuildModules, copyModules, buildModuleListFile} = require('./icee_config/module');
-const {createModule} = require('./icee_config/createModule');
-
-// 创建模块
-function createM(cmd, name){
-    if(cmd == 'cw'){
-        createModule(name, 'web');
-        buildModuleListFile('web');
-    }
-    else if(cmd == 'cn'){
-        createModule(name, 'native');
-        buildModuleListFile('native');
-    }
-    else{
-        createModule(name, 'common');
-        buildModuleListFile('web');
-        buildModuleListFile('native');
-    }
-}
-
-// 打包所有模块
-function babelBuildM(cmd){
-    if(cmd == 'bw'){
-        babelBuildModules('web');
-        buildModuleListFile('web');
-    }
-    else{
-        babelBuildModules('native');
-        copyModules('native');
-        buildModuleListFile('native');
-    }
-}
-
-// 生成 ModuleList 文件
-function buildModuleList(cmd){
-    if(cmd == 'mlw'){
-        buildModuleListFile('web');
-    }
-    else{
-        buildModuleListFile('native');
-    }
-}
+const {start, createModule, compileStartModule, buildModuleListFile, quoteModule} = require('./icee_config/start');
 
 // 命令提示
 if(process.argv.length <= 2){
     console.log(
 `
-# 创建 web 包
-node icee cw xxx
+# 调试
+node icee -s "入口模块名运行命令" "入口模块名"
 
-# 创建 rn 包
-node icee cn xxx
+# 创建包
+node icee -c "模块名"
 
-# 创建通用包
-node icee cc xxx
+# 引用包
+node icee -q "模块名" "入口模块名"
 
-# babel 编译所有 web package
-node icee bw
+# babel 编译项目所依赖的包
+node icee -b "入口模块名"
 
-# babel 编译所有 rn package
-node icee bn
-
-# 从 web package.json 安装的包导入模块
-node icee mlw
-
-# 从 rn package.json 安装的包导入模块
-node icee mln
+# 生成 ModuleList.js 文件
+node icee -ml "入口模块名"
 `
     );
     return;
 }
 
-if(process.argv[2] == 'cw' || process.argv[2] == 'cn' || process.argv[2] == 'cc'){
-    if(process.argv <= 3){
-        console.log('请输入包名');
+if(process.argv[2] == '-s'){
+    if(process.argv <= 4){
+        console.error('无效的参数');
         return;
     }
-    createM(process.argv[2], process.argv[3]);
+
+    start(process.argv[4], process.argv[3])
     return;
 }
 
-if(process.argv[2] == 'bw' || process.argv[2] == 'bn'){
-    babelBuildM(process.argv[2]);
+if(process.argv[2] == '-c'){
+    if(process.argv <= 3){
+        console.error('请输入包名');
+        return;
+    }
+    createModule(process.argv[3]);
     return;
 }
 
-if(process.argv[2] == 'mlw' || process.argv[2] == 'mln'){
-    buildModuleList(process.argv[2]);
+if(process.argv[2] == '-q'){
+    if(process.argv <= 4){
+        console.error('无效的参数');
+        return;
+    }
+
+    quoteModule(process.argv[4], process.argv[3])
+    return;
+}
+
+if(process.argv[2] == '-b'){
+    if(process.argv <= 3){
+        console.error('请输入包名');
+        return;
+    }
+    compileStartModule(process.argv[3]);
+    return;
+}
+
+if(process.argv[2] == '-ml'){
+    if(process.argv <= 3){
+        console.error('请输入包名');
+        return;
+    }
+    buildModuleListFile(process.argv[3]);
     return;
 }
 

@@ -125,3 +125,18 @@ function copyModules(startModule) {
     });
 }
 module.exports.copyModules = copyModules;
+
+// 入口模块引用模块
+function quoteModule(startModule, module) {
+    let modulePackage = require(`${getPackagePath(module)}/package.json`);
+
+    let startPackageFilePath = `${getPackagePath(startModule)}/package.json`;
+    let startPackage = require(startPackageFilePath);
+    startPackage.dependencies[module] = `^${modulePackage.version}`;
+    startPackage.iceeConfig.dependencies.push(module);
+
+    fs.writeFileSync(startPackageFilePath, JSON.stringify(startPackage, null, "\t"));
+
+    buildModuleListFile(startModule);
+}
+module.exports.quoteModule = quoteModule;

@@ -1,44 +1,35 @@
-const {start, createModule, compileStartModule, buildModuleListFile} = require('./icee_config/start');
+const {start, createModule, compileStartModule, buildModuleListFile, quoteModule} = require('./icee_config/start');
 
 // 命令提示
 if(process.argv.length <= 2){
     console.log(
 `
 # 调试
-node icee -s "项目运行命令" "项目名"
+node icee -s "入口模块名运行命令" "入口模块名"
 
 # 创建包
-node icee -c "项目名"
+node icee -c "模块名"
+
+# 引用包
+node icee -q "模块名" "入口模块名"
 
 # babel 编译项目所依赖的包
-node icee -b "项目名"
+node icee -b "入口模块名"
 
 # 生成 ModuleList.js 文件
-node icee -ml "项目名"
+node icee -ml "入口模块名"
 `
     );
     return;
 }
 
 if(process.argv[2] == '-s'){
-    if(process.argv <= 5){
+    if(process.argv <= 4){
         console.error('无效的参数');
         return;
     }
-    
-    // 项目名
-    let startCmdIndex = process.argv.findIndex(e => e == '-c');
-    if(startCmdIndex < 0){
-        console.error('请输入入口项目运行命令');
-        return;
-    }
-    let startModule = process.argv[process.argv.length - 1];
 
-    // 项目运行命令
-    let startCmd = process.argv[startCmdIndex + 1];
-    
-    start(startModule, startCmd)
-
+    start(process.argv[4], process.argv[3])
     return;
 }
 
@@ -48,6 +39,16 @@ if(process.argv[2] == '-c'){
         return;
     }
     createModule(process.argv[3]);
+    return;
+}
+
+if(process.argv[2] == '-q'){
+    if(process.argv <= 4){
+        console.error('无效的参数');
+        return;
+    }
+
+    quoteModule(process.argv[4], process.argv[3])
     return;
 }
 

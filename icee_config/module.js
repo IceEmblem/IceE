@@ -80,13 +80,13 @@ function watchModules(startModule, customizeOutDir = null) {
 module.exports.watchModules = watchModules;
 
 // 打包入口模块所依赖的的模块列表
-function compileModules(startModule, onexit) {
+function compileModules(startModule, onexitCallback) {
     let modules = getModules(startModule);
     let runingNum = modules.length;
     let onexit = () => {
         runingNum--;
-        if(runingNum <= 0 && onexit) {
-            onexit();
+        if(runingNum <= 0 && onexitCallback) {
+            onexitCallback();
         }
     }
     modules.forEach(module => {

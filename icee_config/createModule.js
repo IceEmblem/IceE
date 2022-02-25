@@ -1,5 +1,4 @@
-const { paths, getPackagePath, getComPackageName, getRNPackageName, coreName } = require('./paths');
-const { buildModuleListFile } = require('./module');
+const { getPackagePath, coreName } = require('./paths');
 const fs = require("fs");
 
 // platform: 'web' | 'native' | 'common'
@@ -12,7 +11,7 @@ const packageTemplet = {
 };
 const moduleTemplet = 
 `import {BaseModule, ModuleFactory} from 'icetf';
-import {Module as CoreModule} from '${getComPackageName('core')}';
+import {Module as CoreModule} from '${coreName}';
 
 export default class Module extends BaseModule {
     initialize() {

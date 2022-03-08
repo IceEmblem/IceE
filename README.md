@@ -26,14 +26,16 @@ yarn start:ios
 
 ## 安装一个现有的模块
 1. 进入 /packages/ice-react-start 目录，执行 yarn add ice-react-test 安装一个包
-2. 根目录执行 node icee mlw 将包导入为模块
-2. 根目录执行 yarn start:web 运行web站点，访问 /Test，就可以看到模块提供的页面了
+2. 根目录执行 node icee -q "ice-react-test" "ice-react-start" 将包引入 ice-react-start
+3. 根目录执行 yarn start:web 运行web站点，访问 /Test，就可以看到模块提供的页面了
 </br></br>
 
 ## 编写一个模块
 如何编写一个模块，并发布给其他人使用？
-1. 执行 node icee cw mytest 创建 Web mytest 包，执行 yarn install 安装包
-2. 进入 /packages/ice-react-mytest，修改 Module.js 文件
+1. 执行 node icee -c "ice-react-mytest" 创建 ice-react-mytest 包
+2. 执行 node icee -q "ice-react-mytest" "ice-react-start" 将包引入 ice-react-start
+3. 执行 yarn install 安装包
+4. 进入 /packages/ice-react-mytest，修改 Module.js 文件
 ```javescript
 import React from 'react'
 import {BaseModule, PageProvider, ModuleFactory, Page} from 'icetf'
@@ -49,25 +51,110 @@ export default class Module extends BaseModule
 
 ModuleFactory.register(Module, [CoreModule]);
 ```
-3. 根目录执行 yarn start:web 运行web站点，访问 /mytest，就可以查看刚才的页面了
-4. 根目录执行 node icee bw 生成 web 包（如果是 Native 包则执行 node icee bn），进入到模块目录，执行 npm publish 发布你的模块，这样其他人就可以直接安装并使用你的模块了
+5. 根目录执行 yarn start:web 运行web站点，访问 /mytest，就可以查看刚才的页面了
+6. 根目录执行 node icee -b "ice-react-start" 生成 ice-react-start 所依赖的报，进入到 ice-react-mytest 模块目录，执行 npm publish 发布你的模块，这样其他人就可以直接安装并使用你的模块了
 </br></br>
+
+## 新增一个入口项目
+你已经有了PC和RN端程序，现在想要新增一个H5端程序，如何实现？跟着如下示例走起 
+1. 进入packages目录，新增你的项目，示例：我们使用 npx create-react-app ice-mobile-start 生成项目 ice-mobile-start
+2. 我们在 ice-mobile-start -> package.json 下增加一个配置 iceeConfig，hoistDependencies 字段指示是否将引用的模块复制到入口模块的node_modules下
+```json
+{
+    "scripts": {
+        ...
+    },
+    "iceeConfig": {
+		"dependencies": [
+            "ice-core"
+		],
+		"hoistDependencies": false
+	},
+}
+```
+3. 删除 ice-mobile-start -> src 目录下所用文件
+4. ice-mobile-start -> package.json -> dependencies 下添加包依赖 "react-router-dom": "^5.2.0" 和 "ice-core": "^1.0.0"
+5. 添加 ice-mobile-start -> src -> index.js 文件
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { IEApp } from 'icetf';
+
+// 导入当前模块
+import './Module'
+
+const Router = ({pages}) => (
+    <BrowserRouter>
+        <Switch>
+            {pages.map(item => (<Route key={item.url} path={item.url} component={item.component} />))}
+        </Switch>
+    </BrowserRouter>
+)
+
+class App extends React.Component {
+    render() {
+        return <IEApp router={Router} />
+    }
+}
+
+ReactDOM.render(
+    <App />,
+    document.getElementById('root'));
+```
+6. 添加 ice-mobile-start -> src -> Module.js 文件
+```javascript
+import React from 'react';
+import {PageProvider, Page, BaseModule, ModuleFactory, MiddlewareFactory} from 'icetf';
+import ModuleList from './ModuleList';
+
+export default class StartModule extends BaseModule
+{
+    initialize(){
+        // 注册首页
+        PageProvider.register(new Page("Home", "/", () => (
+            <div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <p>Hello World!!!</p>
+            </div>
+        )));
+    }
+}
+
+// ModuleList 为当前区域的所有模块，ModuleList 在 js 编译阶段生成
+ModuleFactory.register(StartModule, [...ModuleList]);
+```
+7. 添加 ice-mobile-start -> src -> ModuleList.js 文件
+```javascript
+// -----该文件由 Webpack 编译时动态生成，请勿直接更改-----
+
+import { Module as icecore } from "ice-core";
+
+const moduleList = [icecore,];
+export default moduleList;
+
+```
+8. 执行yarn install
+9. 至此，我们已经添加了一个入口项目，你可以执行 node icee -s 'yarn start' ice-mobile-start 运行新项目
+10. 最后想说的是，其实你可以复制一份 ice-react-start 并改个名就可以了，不需要上面这么多步骤
 
 ## 命令
 **执行如下命令查看所有命令** </br>
 node icee
 
-**创建 Web package** </br>
-node icee cw Test
+**调试** </br>
+node icee -s "入口模块名运行命令" "入口模块名"
 
-**创建 Native package** </br>
-node icee cn Test
+**创建包** </br>
+node icee -c "模块名"
 
-**编译 web 端的所有 package** </br>
-node icee bw
+**引用包** </br>
+node icee -q "模块名" "入口模块名"
 
-**编译 rn 端的所有 package** </br>
-node icee bn
+**babel 编译项目所依赖的包** </br>
+node icee -b "入口模块名"
+
+**生成 ModuleList.js 文件** </br>
+node icee -ml "入口模块名"
 </br></br>
 
 ## 打包

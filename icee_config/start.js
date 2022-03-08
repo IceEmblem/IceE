@@ -89,11 +89,6 @@ module.exports.quoteModule = function(startModule, module) {
         console.log(`${startModule}不存在，请检查模块名是否正确`);
         return;
     }
-
-    if(!checkModuleExit(module)){
-        console.log(`${module}不存在，请检查模块名是否正确`);
-        return;
-    }
     
     quoteModule(startModule, module)
 }

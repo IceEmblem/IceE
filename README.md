@@ -5,7 +5,6 @@
 
 IceE 是一个基于 React 的多项目框架，你可以在该框架中添加多个启动项目（如：create-react-app，react-native 等），IceE 基于模块化的设计，monorepo 项目，其项目结构如下：
 ![](./images/icee.png)
-</br></br>
 
 
 ## 开始使用
@@ -160,17 +159,13 @@ node icee -ml "入口模块名"
 </br></br>
 
 ## 打包
-**打包web**
-1. 执行 node icee bw 生成 web 模块
-2. 进入 ice-react-start 目录执行 yarn build
+1. 执行 node icee -b "入口模块名" 编译项目所依赖的包
+2. 进入项目执行项目的打包命令
 
-**打包native**
-1. 执行 node icee bn 生成 native 模块
-2. 根据 ReactNative 的打包流程进行打包
 </br></br>
 
 ## 文档
-框架文档：https://blog.csdn.net/dabusidede/article/details/119010741
+框架文档：https://blog.csdn.net/dabusidede/article/details/119010741 (待更新)
 </br></br>
 
 ## 关于 Ios

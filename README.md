@@ -26,7 +26,7 @@ yarn start:ios
 </br></br>
 
 ## 安装一个现有的模块
-1. 进入 /packages/ice-react-start 目录，执行 yarn add ice-react-test 安装一个包
+1. 根目录执行 yarn workspace ice-react-start add ice-react-test 安装一个包
 2. 根目录执行 node icee -q "ice-react-test" "ice-react-start" 将包引入 ice-react-start
 3. 根目录执行 yarn start:web 运行web站点，访问 /Test，就可以看到模块提供的页面了
 </br></br>
@@ -143,7 +143,7 @@ export default moduleList;
 node icee
 
 **调试** </br>
-node icee -s "入口模块名运行命令" "入口模块名"
+node icee -s "入口模块运行命令" "入口模块名"
 
 **创建包** </br>
 node icee -c "模块名"
@@ -167,6 +167,116 @@ node icee -ml "入口模块名"
 ## 文档
 框架文档：https://blog.csdn.net/dabusidede/article/details/119010741 (待更新)
 </br></br>
+
+## 现有的模块
+### ice-common
+#### 安装
+1. 添加包 yarn workspace ice-core add ice-common </br>
+2. 引入模块 node icee -q ice-common ice-react-start </br>
+3. 在 ice-react-start 中注册缓存方法（ice-common 需要用到缓存，所以需要在入口处设置缓存方法） </br>
+```javascript
+import { Storage } from 'ice-common';
+
+export default class StartModule extends BaseModule {
+    preInitialize() {
+        // 初始化 Storage
+        Storage.setItem = (key, value) => {
+            localStorage.setItem(key, value);
+            return Promise.resolve();
+        }
+        Storage.getItem = (key) => {
+            return Promise.resolve(localStorage.getItem(key));
+        }
+        Storage.removeItem = (key) => {
+            localStorage.removeItem(key);
+            return Promise.resolve();
+        }
+    }
+}
+```
+4. 在 ice-core 中添加依赖关系
+```javascript
+import { BaseModule, ModuleFactory } from 'icetf';
+import { Module as IceModule } from 'ice-common';
+
+export default class Module extends BaseModule {
+    ...
+}
+
+// 添加依赖关系
+ModuleFactory.register(Module, [
+    IceModule
+]);
+```
+5. 运行项目 yarn start:web </br>
+
+#### 功能介绍
+1. Storage 提供缓存 </br>
+```javascript
+export namespace Storage {
+    let setItem: (key: string, value: string) => Promise<void>;
+    let getItem: (key: string) => Promise<string | null>;
+    let removeItem: (key: string) => Promise<void>;
+}
+```
+2. token 管理 </br>
+```javascript
+export namespace Token {
+    let token: string | null;
+    function init(): Promise<void>;
+    function setToken(token: string): void;
+}
+```
+3. Lang 多语言管理 </br>
+```javascript
+export namespace Lang {
+    let lang: string;
+    function init(): Promise<void>;
+    function register(language: string, textObject: any): void;
+    function registerCallback(call: (lang: string) => void): void;
+    function removeCallback(call: (lang: string) => void) : void;
+    function t(name: string): string;
+    function changeLanguage(lng: string): void;
+}
+```
+示例：
+```javascript
+// 在初始化时注册多语言
+export default class Module extends BaseModule {
+    preInitialize() {
+        // 注册多语言
+        Lang.register('zh_cn', {
+            submit: '提交',
+            cancel: '取消',
+        });
+        Lang.register('en_gb', {
+            submit: 'Submit',
+            cancel: 'Cancel',
+        });
+    }
+}
+
+// 显示文本
+console.log(Lang.t('submit'));
+
+// 切换语言，默认语言为 zh_cn，即 zh_cn 是必须的
+Lang.changeLanguage('en_gb');
+```
+4. Tool 使用工具类 </br>
+```javascript
+export declare class Tool {
+    static imageToBase64String(file: any, setBase64StringFun: (base64: string) => void): false | undefined;
+    static fileToBase64String(file: any, setBase64StringFun: (base64: string) => void): void;
+    static deepCopy(obj: any): any;
+    static guid(): string;
+    static dateFormat(inputDate: Date | string | null, fmt?: string): string | null;
+    static getUrlVariable(urlSearch: string, variable: string): string | undefined;
+    static random(): number;
+    static sum(arr: Array<number>);
+}
+```
+
+注：所有类的 init() 都需要要执行，ice-common 模块初始化时会自己执行 </br>
 
 ## 关于 Ios
 由于我没有 ios 开发环境，所以 ios 的可能存在一些问题

@@ -5,7 +5,7 @@ if(process.argv.length <= 2){
     console.log(
 `
 # 调试
-node icee -s "入口模块名运行命令" "入口模块名"
+node icee -s "入口模块运行命令" "入口模块名"
 
 # 创建包
 node icee -c "模块名"

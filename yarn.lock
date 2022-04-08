@@ -1772,6 +1772,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.17.2":
+  version: 7.17.9
+  resolution: "@babel/runtime@npm:7.17.9"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: 69455c26017d0bd8e269c073c9da73238b25115f6eb655433f5411707ed6fe5f714f9b698cd1fcb7e89f5822e7b994db0bce394e54a89e6900fd7f0fb2c9927a
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.0.0, @babel/template@npm:^7.10.4, @babel/template@npm:^7.12.13, @babel/template@npm:^7.3.3":
   version: 7.12.13
   resolution: "@babel/template@npm:7.12.13"
@@ -8697,7 +8706,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"html-escaper@npm:^2.0.0":
+"html-escaper@npm:^2.0.0, html-escaper@npm:^2.0.2":
   version: 2.0.2
   resolution: "html-escaper@npm:2.0.2"
   checksum: a216ae96fa647155ce31ebf14e45b602eb84ab7b4a99d329d85d855d8a74d54c0c4146ac7eb4ada2761d3e22c067e73d6c66b54faefee37229ac025cfc97a513
@@ -8718,6 +8727,15 @@ fsevents@^1.2.7:
   bin:
     html-minifier-terser: cli.js
   checksum: d05dea891f5977a35691306b1fb40438cffd6620c2f5a69d7ecb67bfa836af1d36c24978edd1616dc6d27e230561bd756c5f11b3054e6ebf2f8448289e3ca73d
+  languageName: node
+  linkType: hard
+
+"html-parse-stringify@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "html-parse-stringify@npm:3.0.1"
+  dependencies:
+    void-elements: 3.1.0
+  checksum: 26de837d271ef79e8c54fc50c17ab1f870b539202d2a593905d3933484bd5b9c30afe57d23a7e0468ef370573e6c0e83b8d8e81bd803858a27ff5acbaa1d9032
   languageName: node
   linkType: hard
 
@@ -8891,11 +8909,22 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"i18next@npm:^21.0.1":
+  version: 21.6.14
+  resolution: "i18next@npm:21.6.14"
+  dependencies:
+    "@babel/runtime": ^7.17.2
+  checksum: b77d8d6e5bf42b42cd6e0a1f0696a09fc2f9a92d28899eec87ee776d4cd89cea46e1a54e1a35dd92d68f1c509b25b214c0dd8a9023262ca81ff3bf34b59f0a42
+  languageName: node
+  linkType: hard
+
 "ice-common@workspace:packages/ice-common":
   version: 0.0.0-use.local
   resolution: "ice-common@workspace:packages/ice-common"
   dependencies:
-    icetf: ^0.3.0
+    i18next: ^21.0.1
+    icetf: ^0.4.0
+    react-i18next: ^11.12.0
   languageName: unknown
   linkType: soft
 
@@ -8938,7 +8967,7 @@ fsevents@^1.2.7:
   languageName: unknown
   linkType: soft
 
-"icetf@^0.4.6, icetf@workspace:packages/icetf":
+"icetf@^0.4.0, icetf@^0.4.6, icetf@workspace:packages/icetf":
   version: 0.0.0-use.local
   resolution: "icetf@workspace:packages/icetf"
   dependencies:
@@ -8952,22 +8981,6 @@ fsevents@^1.2.7:
     typescript: ^4.2.4
   languageName: unknown
   linkType: soft
-
-"icetf@npm:^0.3.0":
-  version: 0.3.5
-  resolution: "icetf@npm:0.3.5"
-  dependencies:
-    "@ant-design/colors": ^6.0.0
-    "@types/react": ^17.0.5
-    "@types/react-redux": ^7.1.16
-    react: ^17.0.2
-    react-redux: ^7.0.2
-    redux: ^4.0.1
-    redux-thunk: ^2.3.0
-    typescript: ^4.2.4
-  checksum: 6d73d5f1bda2718c400e146d10161a5093ac31b067dee90051715490518381cf80251f24f7c1d6ecbcf66d0779ce0067d1efa8531fe3a8df7ba79c24881fc9d7
-  languageName: node
-  linkType: hard
 
 "iconv-lite@npm:0.4.24":
   version: 0.4.24
@@ -14252,6 +14265,25 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"react-i18next@npm:^11.12.0":
+  version: 11.16.2
+  resolution: "react-i18next@npm:11.16.2"
+  dependencies:
+    "@babel/runtime": ^7.14.5
+    html-escaper: ^2.0.2
+    html-parse-stringify: ^3.0.1
+  peerDependencies:
+    i18next: ">= 19.0.0"
+    react: ">= 16.8.0"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 2b94c6fbf6e8562a1fbc065689c4f2fa4be5d301af3ea17508e787ad65d2303924d320b998648bb53e13ead64416cc8be143e3d23c88f2b54bd4ae8b47622135
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.12.0 || ^17.0.0, react-is@npm:^17.0.1":
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
@@ -17425,6 +17457,13 @@ typescript@^4.2.4:
   version: 1.1.2
   resolution: "vm-browserify@npm:1.1.2"
   checksum: fc571a62d2cf797ae8773ebb3cb0d2bea50ed02059e128dd9087975929fce4c80a6485ce1aaf7d44ef69db99dfdcde50b6be5d5eb73b296660d761c32fb544fe
+  languageName: node
+  linkType: hard
+
+"void-elements@npm:3.1.0":
+  version: 3.1.0
+  resolution: "void-elements@npm:3.1.0"
+  checksum: ed0f78f1434f4a5588078861815b3ebdbb0913e5129c3f1b37a3408a9f7c772d28702846316734e758ba40cad4e85371e50160d92d7968b86f12bf7227a1c6c9
   languageName: node
   linkType: hard
 

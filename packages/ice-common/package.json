@@ -1,9 +1,12 @@
 {
 	"name": "ice-common",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"main": "dist/index.js",
+	"types": "types/index.d.ts",
 	"license": "MIT",
 	"dependencies": {
-		"icetf": "^0.3.0"
+		"i18next": "^21.0.1",
+		"icetf": "^0.4.0",
+		"react-i18next": "^11.12.0"
 	}
 }

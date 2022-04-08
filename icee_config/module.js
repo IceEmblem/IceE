@@ -1,6 +1,18 @@
 const { paths, getPackagePath } = require('./paths');
 const fs = require('fs');
 
+// 检查模式是否存在
+function checkModuleExit(module) {
+    let path = `${getPackagePath(module)}/package.json`;
+
+    if (fs.existsSync(path)) {
+        return true;
+    }
+
+    return false;
+}
+module.exports.checkModuleExit = checkModuleExit;
+
 // 获取模块列表
 function getModules(module) {
     return require(`${getPackagePath(module)}/package.json`).iceeConfig.dependencies;
@@ -128,11 +140,12 @@ module.exports.copyModules = copyModules;
 
 // 入口模块引用模块
 function quoteModule(startModule, module) {
-    let modulePackage = require(`${getPackagePath(module)}/package.json`);
-
     let startPackageFilePath = `${getPackagePath(startModule)}/package.json`;
     let startPackage = require(startPackageFilePath);
-    startPackage.dependencies[module] = `^${modulePackage.version}`;
+    if(!startPackage.dependencies[module] && checkModuleExit(module)){
+        let modulePackage = require(`${getPackagePath(module)}/package.json`);
+        startPackage.dependencies[module] = `^${modulePackage.version}`;
+    }
     startPackage.iceeConfig.dependencies.push(module);
 
     fs.writeFileSync(startPackageFilePath, JSON.stringify(startPackage, null, "\t"));

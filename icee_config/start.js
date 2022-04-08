@@ -1,20 +1,9 @@
-const { watchModules, copyModules, compileModules, buildModuleListFile, quoteModule } = require('./module');
+const { watchModules, copyModules, compileModules, buildModuleListFile, quoteModule, checkModuleExit } = require('./module');
 const { getPackagePath } = require('./paths');
 const { execCmd } = require('./utiliy');
 const {createModule} = require('./createModule');
 const fs = require("fs");
 const { watchIcetf } = require('./watchIcetf');
-
-// 检查模式是否存在
-function checkModuleExit(module) {
-    let path = `${getPackagePath(module)}/package.json`;
-
-    if (fs.existsSync(path)) {
-        return true;
-    }
-
-    return false;
-}
 
 // 调试
 function start(startModule, startCmd) {
@@ -91,11 +80,6 @@ module.exports.buildModuleListFile = function(startModule) {
 module.exports.quoteModule = function(startModule, module) {
     if(!checkModuleExit(startModule)){
         console.log(`${startModule}不存在，请检查模块名是否正确`);
-        return;
-    }
-
-    if(!checkModuleExit(module)){
-        console.log(`${module}不存在，请检查模块名是否正确`);
         return;
     }
     

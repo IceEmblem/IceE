@@ -1,19 +1,8 @@
-const { watchModules, copyModules, compileModules, buildModuleListFile, quoteModule } = require('./module');
+const { watchModules, copyModules, compileModules, buildModuleListFile, quoteModule, checkModuleExit } = require('./module');
 const { getPackagePath } = require('./paths');
 const { execCmd } = require('./utiliy');
 const {createModule} = require('./createModule');
 const fs = require("fs");
-
-// 检查模式是否存在
-function checkModuleExit(module) {
-    let path = `${getPackagePath(module)}/package.json`;
-
-    if (fs.existsSync(path)) {
-        return true;
-    }
-
-    return false;
-}
 
 // 调试
 function start(startModule, startCmd) {

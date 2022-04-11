@@ -276,7 +276,7 @@ export declare class Tool {
 }
 ```
 
-注：所有类的 init() 都需要要执行，ice-common 模块初始化时会自己执行 </br>
+注：所有类的 init() 都不需要执行，ice-common 模块初始化时会自己执行 </br>
 
 ## 关于 Ios
 由于我没有 ios 开发环境，所以 ios 的可能存在一些问题

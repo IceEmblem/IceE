@@ -3,8 +3,6 @@ import { View, Text } from 'react-native'
 import {PageProvider, Page, BaseModule, ModuleFactory} from 'icetf'
 import {Module as CoreModule} from 'ice-core';
 
-import ModuleList from './ModuleList'
-
 export default class Module extends BaseModule {
     initialize() {
         // 注册首页
@@ -16,4 +14,6 @@ export default class Module extends BaseModule {
     }
 }
 
-ModuleFactory.register(Module, [...ModuleList, CoreModule]);
+ModuleFactory.register(Module, [
+    CoreModule
+]);

@@ -27,17 +27,49 @@ yarn start:ios
 
 ## 安装一个现有的模块
 1. 根目录执行 yarn workspace ice-react-start add ice-react-test 安装一个包
-2. 根目录执行 node icee -q "ice-react-test" "ice-react-start" 将包引入 ice-react-start
+2. 在 ice-react-start 的 Module 添加依赖
+```javascript
+import { Module as IceTestModule } from 'ice-react-test';
+
+export default class StartModule extends BaseModule
+{
+    initialize(){
+        ...
+    }
+}
+
+// 添加IceTestModule的依赖
+ModuleFactory.register(StartModule, [
+    ...
+    IceTestModule
+]);
+```
 3. 根目录执行 yarn start:web 运行web站点，访问 /Test，就可以看到模块提供的页面了
 </br></br>
 
 ## 编写一个模块
 如何编写一个模块，并发布给其他人使用？
 1. 执行 node icee -c "ice-react-mytest" 创建 ice-react-mytest 包
-2. 执行 node icee -q "ice-react-mytest" "ice-react-start" 将包引入 ice-react-start
-3. 执行 yarn install 安装包
+2. 执行 yarn workspace ice-react-start add ice-react-mytest 在 ice-react-start 添加包引用
+3. 在 ice-react-start 的 Module 添加依赖
+```javascript
+import { Module as MyTestModule } from 'ice-react-mytest';
+
+export default class StartModule extends BaseModule
+{
+    initialize(){
+        ...
+    }
+}
+
+// 添加MyTestModule的依赖
+ModuleFactory.register(StartModule, [
+    ...
+    MyTestModule
+]);
+```
 4. 进入 /packages/ice-react-mytest，修改 Module.js 文件
-```javescript
+```javascript
 import React from 'react'
 import {BaseModule, PageProvider, ModuleFactory, Page} from 'icetf'
 import {Module as CoreModule} from 'ice-core';
@@ -57,7 +89,8 @@ ModuleFactory.register(Module, [CoreModule]);
 </br></br>
 
 ## 新增一个入口项目
-你已经有了PC和RN端程序，现在想要新增一个H5端程序，如何实现？跟着如下示例走起 
+你已经有了PC和RN端程序，现在想要新增一个H5端程序，如何实现？跟着如下示例走起
+在开始示例之前，我们先删除 ice-react-start 和 ice-rn-start 2个入口项目（因为目前这2个入口项目使用的react还是17版本，现在的react已经18了，为防止版本冲突，直接删除），删除并不会对框架造成任何影响
 1. 进入packages目录，新增你的项目，示例：我们使用 npx create-react-app ice-mobile-start 生成项目 ice-mobile-start
 2. 我们在 ice-mobile-start -> package.json 下增加一个配置 iceeConfig，hoistDependencies 字段指示是否将引用的模块复制到入口模块的node_modules下
 ```json
@@ -66,15 +99,12 @@ ModuleFactory.register(Module, [CoreModule]);
         ...
     },
     "iceeConfig": {
-		"dependencies": [
-            "ice-core"
-		],
 		"hoistDependencies": false
 	},
 }
 ```
-3. 删除 ice-mobile-start -> src 目录下所用文件
-4. ice-mobile-start -> package.json -> dependencies 下添加包依赖 "react-router-dom": "^5.2.0" 和 "ice-core": "^1.0.0"
+3. ice-mobile-start -> package.json -> dependencies 下添加包依赖 "react-router-dom": "^5.2.0" 和 "ice-core": "^1.0.0"
+4. 删除 ice-mobile-start -> src 目录下所用文件
 5. 添加 ice-mobile-start -> src -> index.js 文件
 ```javascript
 import React from 'react';
@@ -107,7 +137,7 @@ ReactDOM.render(
 ```javascript
 import React from 'react';
 import {PageProvider, Page, BaseModule, ModuleFactory, MiddlewareFactory} from 'icetf';
-import ModuleList from './ModuleList';
+import { Module as CoreModule } from 'ice-core';
 
 export default class StartModule extends BaseModule
 {
@@ -122,21 +152,13 @@ export default class StartModule extends BaseModule
 }
 
 // ModuleList 为当前区域的所有模块，ModuleList 在 js 编译阶段生成
-ModuleFactory.register(StartModule, [...ModuleList]);
+ModuleFactory.register(StartModule, [
+    CoreModule
+]);
 ```
-7. 添加 ice-mobile-start -> src -> ModuleList.js 文件
-```javascript
-// -----该文件由 Webpack 编译时动态生成，请勿直接更改-----
-
-import { Module as icecore } from "ice-core";
-
-const moduleList = [icecore,];
-export default moduleList;
-
-```
-8. 执行yarn install
-9. 至此，我们已经添加了一个入口项目，你可以执行 node icee -s 'yarn start' ice-mobile-start 运行新项目
-10. 最后想说的是，其实你可以复制一份 ice-react-start 并改个名就可以了，不需要上面这么多步骤
+7. 执行yarn install
+8. 至此，我们已经添加了一个入口项目，你可以执行 node icee -s 'yarn start' ice-mobile-start 运行新项目
+9. 最后想说的是，其实你可以复制一份 ice-react-start 并改个名就可以了，不需要上面这么多步骤
 
 ## 命令
 **执行如下命令查看所有命令** </br>
@@ -148,14 +170,8 @@ node icee -s "入口模块运行命令" "入口模块名"
 **创建包** </br>
 node icee -c "模块名"
 
-**引用包** </br>
-node icee -q "模块名" "入口模块名"
-
 **babel 编译项目所依赖的包** </br>
 node icee -b "入口模块名"
-
-**生成 ModuleList.js 文件** </br>
-node icee -ml "入口模块名"
 </br></br>
 
 ## 打包
@@ -172,8 +188,7 @@ node icee -ml "入口模块名"
 ### ice-common
 #### 安装
 1. 添加包 yarn workspace ice-core add ice-common </br>
-2. 引入模块 node icee -q ice-common ice-react-start </br>
-3. 在 ice-react-start 中注册缓存方法（ice-common 需要用到缓存，所以需要在入口处设置缓存方法） </br>
+2. 在 ice-react-start 中注册缓存方法（ice-common 需要用到缓存，所以需要在入口处设置缓存方法） </br>
 ```javascript
 import { Storage } from 'ice-common';
 
@@ -194,7 +209,7 @@ export default class StartModule extends BaseModule {
     }
 }
 ```
-4. 在 ice-core 中添加依赖关系
+3. 在 ice-core 中添加依赖关系
 ```javascript
 import { BaseModule, ModuleFactory } from 'icetf';
 import { Module as IceModule } from 'ice-common';
@@ -208,7 +223,7 @@ ModuleFactory.register(Module, [
     IceModule
 ]);
 ```
-5. 运行项目 yarn start:web </br>
+4. 运行项目 yarn start:web </br>
 
 #### 功能介绍
 1. Storage 提供缓存 </br>

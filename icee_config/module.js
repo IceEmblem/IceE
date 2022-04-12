@@ -1,6 +1,26 @@
 const { paths, getPackagePath } = require('./paths');
 const fs = require('fs');
 
+// 获取packages目录下的所有包
+const packages = (function() {
+    let arrs = [];
+    let src = paths.rootPath + '/packages';
+
+    // 读取目录中的所有文件/目录
+    fs.readdirSync(src).forEach(function (path) {
+        const _src = src + '/' + path;
+
+        let st = fs.statSync(_src);
+
+        // 判断是否为文件
+        if (st.isDirectory()) {
+            arrs.push(path);
+        }
+    });
+    
+    return arrs;
+})()
+
 // 检查模式是否存在
 function checkModuleExit(module) {
     let path = `${getPackagePath(module)}/package.json`;
@@ -13,33 +33,26 @@ function checkModuleExit(module) {
 }
 module.exports.checkModuleExit = checkModuleExit;
 
-// 获取模块列表
-function getModules(module) {
-    return require(`${getPackagePath(module)}/package.json`).iceeConfig.dependencies;
-}
-
-// 生成模块列表文件
-function buildModuleListFile(startModule) {
-    let modules = getModules(startModule);
-
-    let moduleOutputPath = `${getPackagePath(startModule)}/src/ModuleList.js`;
-
-    let importListStr = "// -----该文件由 Webpack 编译时动态生成，请勿直接更改-----\n\n";
-    let moduleListStr = "";
-
-    modules.forEach((module) => {
-        let moduleName = module.replace(/-/g, '');
-        importListStr = importListStr + `import { Module as ${moduleName} } from "${module}";\n`;
-        moduleListStr = moduleListStr + moduleName + ",";
+// 获取需要编译的模块
+function getNeedCompileModules(module) {
+    let arr = [];
+    let dependencies = Object.keys(require(`${getPackagePath(module)}/package.json`).dependencies);
+    let needCompiles = packages.filter(e => dependencies.some(ie => e == ie));
+    needCompiles.forEach(needCompile => {
+        if(arr.some(e => e == needCompile)){
+            return;
+        }
+        arr.push(needCompile);
+        getNeedCompileModules(needCompile).forEach(child => {
+            if(arr.some(e => e == child)){
+                return;
+            }
+            arr.push(child);
+        })
     });
 
-    importListStr = `${importListStr}\n`;
-    moduleListStr = `const moduleList = [${moduleListStr}];\n`;
-    moduleListStr = moduleListStr + `export default moduleList;\n`;
-
-    fs.writeFileSync(moduleOutputPath, importListStr + moduleListStr);
+    return arr;
 }
-module.exports.buildModuleListFile = buildModuleListFile;
 
 // 监听模块
 function compileModule(module, customizeOutDir, iswatch, onexit) {
@@ -84,7 +97,7 @@ module.exports.compileModule = compileModule;
 
 // 监听入口模块所依赖的的模块列表
 function watchModules(startModule, customizeOutDir = null) {
-    let modules = getModules(startModule);
+    let modules = getNeedCompileModules(startModule);
     modules.forEach(module => {
         compileModule(module, customizeOutDir, true);
     });
@@ -93,7 +106,7 @@ module.exports.watchModules = watchModules;
 
 // 打包入口模块所依赖的的模块列表
 function compileModules(startModule, onexitCallback) {
-    let modules = getModules(startModule);
+    let modules = getNeedCompileModules(startModule);
     let runingNum = modules.length;
     let onexit = () => {
         runingNum--;
@@ -111,7 +124,7 @@ module.exports.compileModules = compileModules;
 function copyModules(startModule) {
     const { copyDir, rmdir } = require('./utiliy');
 
-    let modules = getModules(startModule);
+    let modules = getNeedCompileModules(startModule);
 
     modules.forEach((module) => {
         let source = getPackagePath(module);
@@ -137,19 +150,3 @@ function copyModules(startModule) {
     });
 }
 module.exports.copyModules = copyModules;
-
-// 入口模块引用模块
-function quoteModule(startModule, module) {
-    let startPackageFilePath = `${getPackagePath(startModule)}/package.json`;
-    let startPackage = require(startPackageFilePath);
-    if(!startPackage.dependencies[module] && checkModuleExit(module)){
-        let modulePackage = require(`${getPackagePath(module)}/package.json`);
-        startPackage.dependencies[module] = `^${modulePackage.version}`;
-    }
-    startPackage.iceeConfig.dependencies.push(module);
-
-    fs.writeFileSync(startPackageFilePath, JSON.stringify(startPackage, null, "\t"));
-
-    buildModuleListFile(startModule);
-}
-module.exports.quoteModule = quoteModule;

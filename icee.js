@@ -1,9 +1,12 @@
-const {start, createModule, compileStartModule, buildModuleListFile, quoteModule} = require('./icee_config/start');
+const { start, createModule, compileStartModule } = require('./icee_config/start');
 
-// 命令提示
-if(process.argv.length <= 2){
-    console.log(
-`
+(function () {
+    // 命令提示
+    if (process.argv.length <= 2) {
+        console.log(
+            `
+欢迎使用IceE，版本 0.47
+
 # 调试
 node icee -s "入口模块运行命令" "入口模块名"
 
@@ -19,55 +22,37 @@ node icee -b "入口模块名"
 # 生成 ModuleList.js 文件
 node icee -ml "入口模块名"
 `
-    );
-    return;
-}
-
-if(process.argv[2] == '-s'){
-    if(process.argv <= 4){
-        console.error('无效的参数');
+        );
         return;
     }
 
-    start(process.argv[4], process.argv[3])
-    return;
-}
+    if (process.argv[2] == '-s') {
+        if (process.argv <= 4) {
+            console.error('无效的参数');
+            return;
+        }
 
-if(process.argv[2] == '-c'){
-    if(process.argv <= 3){
-        console.error('请输入包名');
-        return;
-    }
-    createModule(process.argv[3]);
-    return;
-}
-
-if(process.argv[2] == '-q'){
-    if(process.argv <= 4){
-        console.error('无效的参数');
+        start(process.argv[4], process.argv[3])
         return;
     }
 
-    quoteModule(process.argv[4], process.argv[3])
-    return;
-}
-
-if(process.argv[2] == '-b'){
-    if(process.argv <= 3){
-        console.error('请输入包名');
+    if (process.argv[2] == '-c') {
+        if (process.argv <= 3) {
+            console.error('请输入包名');
+            return;
+        }
+        createModule(process.argv[3]);
         return;
     }
-    compileStartModule(process.argv[3]);
-    return;
-}
 
-if(process.argv[2] == '-ml'){
-    if(process.argv <= 3){
-        console.error('请输入包名');
+    if (process.argv[2] == '-b') {
+        if (process.argv <= 3) {
+            console.error('请输入包名');
+            return;
+        }
+        compileStartModule(process.argv[3]);
         return;
     }
-    buildModuleListFile(process.argv[3]);
-    return;
-}
 
-console.log('无效的命令');
+    console.log('无效的命令');
+})();

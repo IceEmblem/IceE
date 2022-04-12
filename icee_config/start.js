@@ -1,4 +1,4 @@
-const { watchModules, copyModules, compileModules, buildModuleListFile, quoteModule, checkModuleExit } = require('./module');
+const { watchModules, copyModules, compileModules, checkModuleExit } = require('./module');
 const { getPackagePath } = require('./paths');
 const { execCmd } = require('./utiliy');
 const {createModule} = require('./createModule');
@@ -61,23 +61,3 @@ function compileStartModule(startModule) {
     }
 }
 module.exports.compileStartModule = compileStartModule;
-
-// 生成模块的 ModuleList 文件
-module.exports.buildModuleListFile = function(startModule) {
-    if(!checkModuleExit(startModule)){
-        console.log(`${startModule}不存在，请检查模块名是否正确`);
-        return;
-    }
-
-    buildModuleListFile(startModule)
-}
-
-// 入口模块引用模块
-module.exports.quoteModule = function(startModule, module) {
-    if(!checkModuleExit(startModule)){
-        console.log(`${startModule}不存在，请检查模块名是否正确`);
-        return;
-    }
-    
-    quoteModule(startModule, module)
-}

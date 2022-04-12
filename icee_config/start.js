@@ -3,7 +3,6 @@ const { getPackagePath } = require('./paths');
 const { execCmd } = require('./utiliy');
 const {createModule} = require('./createModule');
 const fs = require("fs");
-const { watchIcetf } = require('./watchIcetf');
 
 // 调试
 function start(startModule, startCmd) {
@@ -29,9 +28,6 @@ function start(startModule, startCmd) {
     else {
         watchModules(startModule)
     }
-
-    // 监听icetf
-    watchIcetf(startModule);
 
     execCmd(`cd ${getPackagePath(startModule)} && ${startCmd}`);
 }

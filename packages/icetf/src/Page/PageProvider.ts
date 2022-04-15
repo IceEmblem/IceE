@@ -5,7 +5,6 @@ class PageProvider {
 
     register(page: Page) {
         this.addAndSort(page);
-        console.log(this.pages);
     }
 
     private addAndSort(page: Page) {

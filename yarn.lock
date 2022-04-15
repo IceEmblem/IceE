@@ -2745,7 +2745,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.9, @babel/runtime@npm:^7.7.6":
+"@babel/runtime@npm:^7.14.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.17.2, @babel/runtime@npm:^7.17.9, @babel/runtime@npm:^7.7.6":
   version: 7.17.9
   resolution: "@babel/runtime@npm:7.17.9"
   dependencies:
@@ -9273,6 +9273,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"html-parse-stringify@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "html-parse-stringify@npm:3.0.1"
+  dependencies:
+    void-elements: 3.1.0
+  checksum: 26de837d271ef79e8c54fc50c17ab1f870b539202d2a593905d3933484bd5b9c30afe57d23a7e0468ef370573e6c0e83b8d8e81bd803858a27ff5acbaa1d9032
+  languageName: node
+  linkType: hard
+
 "html-webpack-plugin@npm:^5.5.0":
   version: 5.5.0
   resolution: "html-webpack-plugin@npm:5.5.0"
@@ -9464,7 +9473,32 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"icetf@npm:^0.4.7":
+"ice-react-test@workspace:packages/ice-react-test":
+  version: 0.0.0-use.local
+  resolution: "ice-react-test@workspace:packages/ice-react-test"
+  dependencies:
+    ice-core: ^1.0.0
+  languageName: unknown
+  linkType: soft
+
+"ice-rn-test@workspace:packages/ice-rn-test":
+  version: 0.0.0-use.local
+  resolution: "ice-rn-test@workspace:packages/ice-rn-test"
+  dependencies:
+    ice-core: ^1.0.0
+  languageName: unknown
+  linkType: soft
+
+"ice-route-dom@workspace:packages/ice-route-dom":
+  version: 0.0.0-use.local
+  resolution: "ice-route-dom@workspace:packages/ice-route-dom"
+  dependencies:
+    icetf: ^0.4.7
+    react-router-dom: ^6.3.0
+  languageName: unknown
+  linkType: soft
+
+"icetf@npm:^0.4.0, icetf@npm:^0.4.7":
   version: 0.4.7
   resolution: "icetf@npm:0.4.7"
   dependencies:
@@ -9479,6 +9513,21 @@ __metadata:
   checksum: 8daa21f7d36797509fe7c8b837b0f40f8cf38ed289444fbac10b78f345a8780845666d5ee925d9b9de48d9bea81c319f8386001cabcfa9e9d08f75cb73b8a283
   languageName: node
   linkType: hard
+
+"icetf@workspace:packages/icetf":
+  version: 0.0.0-use.local
+  resolution: "icetf@workspace:packages/icetf"
+  dependencies:
+    "@ant-design/colors": ^6.0.0
+    "@types/react": ^17.0.5
+    "@types/react-redux": ^7.1.16
+    react: ^17.0.2
+    react-redux: ^7.0.2
+    redux: ^4.0.1
+    redux-thunk: ^2.3.0
+    typescript: ^4.2.4
+  languageName: unknown
+  linkType: soft
 
 "iconv-lite@npm:0.4.24":
   version: 0.4.24
@@ -14235,6 +14284,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-i18next@npm:^11.12.0":
+  version: 11.16.6
+  resolution: "react-i18next@npm:11.16.6"
+  dependencies:
+    "@babel/runtime": ^7.14.5
+    html-escaper: ^2.0.2
+    html-parse-stringify: ^3.0.1
+  peerDependencies:
+    i18next: ">= 19.0.0"
+    react: ">= 16.8.0"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: b61bcaba98ea415cbda2c710efaf3c0eb08f8ba58063a04a9215b3a59baa961dbdae76bf42854eeb056ef9e542562b38b5b7449b70c263f54458a21b762a0274
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.12.0 || ^17.0.0, react-is@npm:^17.0.1, react-is@npm:^17.0.2":
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
@@ -16939,6 +17007,13 @@ typescript@^4.2.4:
   version: 1.0.1
   resolution: "vlq@npm:1.0.1"
   checksum: a15c2b8ed499d7ebf16fb5826738988fe177fe9f47e79c5a90da49c0408fce1aab7d22d83101603ff6b64d158b1e0662506f3305ca50c7f36e34bf18da2e1b56
+  languageName: node
+  linkType: hard
+
+"void-elements@npm:3.1.0":
+  version: 3.1.0
+  resolution: "void-elements@npm:3.1.0"
+  checksum: ed0f78f1434f4a5588078861815b3ebdbb0913e5129c3f1b37a3408a9f7c772d28702846316734e758ba40cad4e85371e50160d92d7968b86f12bf7227a1c6c9
   languageName: node
   linkType: hard
 

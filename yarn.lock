@@ -9498,6 +9498,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"ice-router-native@workspace:packages/ice-router-native":
+  version: 0.0.0-use.local
+  resolution: "ice-router-native@workspace:packages/ice-router-native"
+  dependencies:
+    icetf: ^0.5.0
+    react-router-native: ^6.3.0
+  languageName: unknown
+  linkType: soft
+
 "icetf@^0.5.0, icetf@workspace:packages/icetf":
   version: 0.0.0-use.local
   resolution: "icetf@workspace:packages/icetf"

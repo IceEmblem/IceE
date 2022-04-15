@@ -1,4 +1,5 @@
 const { paths, getPackagePath } = require('./paths');
+const { execCmd } = require('./utiliy');
 const fs = require('fs');
 
 // 获取packages目录下的所有包
@@ -74,24 +75,9 @@ function compileModule(module, customizeOutDir, iswatch, onexit) {
     const cmd = `${paths.rootPath}/node_modules/.bin/babel ${source} ${iswatch ? '-w -s' : ''} --out-dir ${outDir} --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx`;
     console.log(`模块 ${module} :`, cmd);
 
-    const babel = exec(cmd, {
+    execCmd(cmd, {
         cwd: paths.rootPath,
-    });
-
-    babel.stdout.on('data', (data) => {
-        console.log(`模块 ${module} `, data);
-    });
-
-    babel.stderr.on('data', (data) => {
-        console.error(`模块 ${module} `, data);
-    });
-
-    babel.on('close', (code) => {
-        console.log(`模块 ${module} 已退出，退出码：${code}`);
-        if (onexit) {
-            onexit();
-        }
-    });
+    }, onexit);
 }
 module.exports.compileModule = compileModule;
 

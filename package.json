@@ -19,7 +19,7 @@
     "start:ios": "node icee -s 'yarn ios' ice-rn-start",
     "start:web": "node icee -s 'yarn start' ice-react-start"
   },
-  "version": "1.0.0",
+  "version": "0.5.0",
   "main": "index.js",
   "author": "cql <1373611035@qq.com>",
   "license": "MIT"

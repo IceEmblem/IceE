@@ -58,17 +58,17 @@ module.exports.rmdir = rmdir;
 
 function execCmd(cmd) {
     // 执行命令
-    const process = exec(cmd);
+    const cprocess = exec(cmd);
 
-    process.stdout.on('data', (data) => {
+    cprocess.stdout.on('data', (data) => {
         console.log(data);
     });
 
-    process.stderr.on('data', (data) => {
+    cprocess.stderr.on('data', (data) => {
         console.error('错误', data);
     });
 
-    process.on('close', (code) => {
+    cprocess.on('close', (code) => {
         console.log(`命令 ${cmd} 已退出，退出码：${code}`);
     });
 }

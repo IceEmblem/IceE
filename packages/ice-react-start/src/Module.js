@@ -1,5 +1,5 @@
 import React from 'react';
-import {PageProvider, Page, BaseModule, ModuleFactory, MiddlewareFactory} from 'icetf';
+import {PageProvider, Page, BaseModule, ModuleFactory} from 'icetf';
 import { Module as CoreModule } from 'ice-core';
 
 export default class StartModule extends BaseModule

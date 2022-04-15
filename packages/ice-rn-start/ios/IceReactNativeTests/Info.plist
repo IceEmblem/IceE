@@ -20,8 +20,5 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<!-- react-native-camera 所需权限 -->
-	<key>NSCameraUsageDescription</key>
-	<string>Your own description of the purpose</string>
 </dict>
 </plist>

@@ -9429,7 +9429,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ice-core@workspace:packages/ice-core"
   dependencies:
-    icetf: ^0.4.7
+    icetf: ^0.5.0
   languageName: unknown
   linkType: soft
 
@@ -9438,36 +9438,20 @@ __metadata:
   resolution: "ice-react-start@workspace:packages/ice-react-start"
   dependencies:
     ice-core: ^1.0.0
-    ice-route-dom: ^0.5.0
+    ice-router-dom: ^0.5.0
     react: ^17.0.2
     react-dom: ^17.0.2
     react-scripts: 5.0.1
   languageName: unknown
   linkType: soft
 
-"ice-route-dom@npm:^0.5.0":
+"ice-router-dom@npm:^0.5.0":
   version: 0.5.0
-  resolution: "ice-route-dom@npm:0.5.0"
+  resolution: "ice-router-dom@npm:0.5.0"
   dependencies:
     icetf: ^0.5.0
     react-router-dom: ^6.3.0
-  checksum: 9d5a9aa6a0badfe432e504c6476fc0d4a1088000d28c0c15d9378b0cdab72370dbfc0eaeab22d791772bbd3a352a6d5f6f5ee06e4c69a696fb5f08fe645b59cf
-  languageName: node
-  linkType: hard
-
-"icetf@npm:^0.4.7":
-  version: 0.4.7
-  resolution: "icetf@npm:0.4.7"
-  dependencies:
-    "@ant-design/colors": ^6.0.0
-    "@types/react": ^17.0.5
-    "@types/react-redux": ^7.1.16
-    react: ^17.0.2
-    react-redux: ^7.0.2
-    redux: ^4.0.1
-    redux-thunk: ^2.3.0
-    typescript: ^4.2.4
-  checksum: 8daa21f7d36797509fe7c8b837b0f40f8cf38ed289444fbac10b78f345a8780845666d5ee925d9b9de48d9bea81c319f8386001cabcfa9e9d08f75cb73b8a283
+  checksum: e5c66a4c4c47d594ba28fa6ee5c754957ea269b023af686412e187eb4be8b0a1389043bce6495071c3cbe1e16e5018b95bd1eab21b95e958679f85058507e535
   languageName: node
   linkType: hard
 

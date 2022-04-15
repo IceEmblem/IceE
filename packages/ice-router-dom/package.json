@@ -1,5 +1,5 @@
 {
-	"name": "ice-route-dom",
+	"name": "ice-router-dom",
 	"version": "0.5.0",
 	"main": "dist/index.js",
 	"types": "types/index.d.ts",

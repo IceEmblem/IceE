@@ -9457,7 +9457,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ice-core@workspace:packages/ice-core"
   dependencies:
-    icetf: ^0.4.7
+    icetf: ^0.5.0
   languageName: unknown
   linkType: soft
 
@@ -9466,7 +9466,7 @@ __metadata:
   resolution: "ice-react-start@workspace:packages/ice-react-start"
   dependencies:
     ice-core: ^1.0.0
-    ice-route-dom: ^0.5.0
+    ice-router-dom: ^0.5.0
     react: ^17.0.2
     react-dom: ^17.0.2
     react-scripts: 5.0.1
@@ -9489,9 +9489,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"ice-route-dom@^0.5.0, ice-route-dom@workspace:packages/ice-route-dom":
+"ice-router-dom@^0.5.0, ice-router-dom@workspace:packages/ice-router-dom":
   version: 0.0.0-use.local
-  resolution: "ice-route-dom@workspace:packages/ice-route-dom"
+  resolution: "ice-router-dom@workspace:packages/ice-router-dom"
   dependencies:
     icetf: ^0.5.0
     react-router-dom: ^6.3.0
@@ -9513,7 +9513,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"icetf@npm:^0.4.0, icetf@npm:^0.4.7":
+"icetf@npm:^0.4.0":
   version: 0.4.7
   resolution: "icetf@npm:0.4.7"
   dependencies:

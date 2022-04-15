@@ -4707,11 +4707,11 @@ __metadata:
     babel-jest: ^27.5.1
     eslint: ^8.13.0
     ice-core: ^1.0.0
+    ice-router-native: ^0.5.0
     jest: ^27.5.1
     metro-react-native-babel-preset: ^0.70.1
     react: 17.0.2
     react-native: 0.68.1
-    react-router-native: ^6.3.0
     react-test-renderer: 17.0.2
   languageName: unknown
   linkType: soft
@@ -9498,18 +9498,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"ice-router-native@workspace:packages/ice-router-native":
-  version: 0.0.0-use.local
-  resolution: "ice-router-native@workspace:packages/ice-router-native"
+"ice-router-native@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "ice-router-native@npm:0.5.0"
   dependencies:
     icetf: ^0.5.0
     react-router-native: ^6.3.0
-  languageName: unknown
-  linkType: soft
+  checksum: 1636e824ba428cc19035e1288529c768d363d1311c66640bb7980aa112398061a73e53b118652dad0a7814429fb15926c1fc3edeaa50c792211d49da9a3f5228
+  languageName: node
+  linkType: hard
 
-"icetf@^0.5.0, icetf@workspace:packages/icetf":
-  version: 0.0.0-use.local
-  resolution: "icetf@workspace:packages/icetf"
+"icetf@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "icetf@npm:0.5.0"
   dependencies:
     "@ant-design/colors": ^6.0.0
     "@types/react": ^17.0.5

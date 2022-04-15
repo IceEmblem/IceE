@@ -1,5 +1,6 @@
 import React from 'react';
 import {PageProvider, Page, BaseModule, ModuleFactory} from 'icetf';
+import { Module as RouteModule } from 'ice-route-dom';
 import { Module as CoreModule } from 'ice-core';
 
 export default class StartModule extends BaseModule
@@ -16,5 +17,6 @@ export default class StartModule extends BaseModule
 
 // ModuleList 为当前区域的所有模块，ModuleList 在 js 编译阶段生成
 ModuleFactory.register(StartModule, [
-    CoreModule
+    CoreModule,
+    RouteModule
 ]);

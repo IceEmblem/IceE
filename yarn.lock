@@ -9466,39 +9466,24 @@ __metadata:
   resolution: "ice-react-start@workspace:packages/ice-react-start"
   dependencies:
     ice-core: ^1.0.0
+    ice-route-dom: ^0.5.0
     react: ^17.0.2
     react-dom: ^17.0.2
-    react-router-dom: ^6.3.0
     react-scripts: 5.0.1
   languageName: unknown
   linkType: soft
 
-"ice-react-test@workspace:packages/ice-react-test":
-  version: 0.0.0-use.local
-  resolution: "ice-react-test@workspace:packages/ice-react-test"
+"ice-route-dom@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "ice-route-dom@npm:0.5.0"
   dependencies:
-    ice-core: ^1.0.0
-  languageName: unknown
-  linkType: soft
-
-"ice-rn-test@workspace:packages/ice-rn-test":
-  version: 0.0.0-use.local
-  resolution: "ice-rn-test@workspace:packages/ice-rn-test"
-  dependencies:
-    ice-core: ^1.0.0
-  languageName: unknown
-  linkType: soft
-
-"ice-route-dom@workspace:packages/ice-route-dom":
-  version: 0.0.0-use.local
-  resolution: "ice-route-dom@workspace:packages/ice-route-dom"
-  dependencies:
-    icetf: ^0.4.7
+    icetf: ^0.5.0
     react-router-dom: ^6.3.0
-  languageName: unknown
-  linkType: soft
+  checksum: 9d5a9aa6a0badfe432e504c6476fc0d4a1088000d28c0c15d9378b0cdab72370dbfc0eaeab22d791772bbd3a352a6d5f6f5ee06e4c69a696fb5f08fe645b59cf
+  languageName: node
+  linkType: hard
 
-"icetf@npm:^0.4.0, icetf@npm:^0.4.7":
+"icetf@npm:^0.4.7":
   version: 0.4.7
   resolution: "icetf@npm:0.4.7"
   dependencies:
@@ -9514,9 +9499,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"icetf@workspace:packages/icetf":
-  version: 0.0.0-use.local
-  resolution: "icetf@workspace:packages/icetf"
+"icetf@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "icetf@npm:0.5.0"
   dependencies:
     "@ant-design/colors": ^6.0.0
     "@types/react": ^17.0.5
@@ -9526,8 +9511,9 @@ __metadata:
     redux: ^4.0.1
     redux-thunk: ^2.3.0
     typescript: ^4.2.4
-  languageName: unknown
-  linkType: soft
+  checksum: d1cbc6138d49ca389ba7df7326d4bfc0af33eeab3bdea91ba81c5be376826608b2ec90398f47dc5e4a8ed7926be07c896221bda2376eacf0115fc32fe271ab77
+  languageName: node
+  linkType: hard
 
 "iconv-lite@npm:0.4.24":
   version: 0.4.24

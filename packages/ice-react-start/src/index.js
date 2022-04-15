@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IEApp } from 'icetf';
-import { Router } from 'ice-route-dom';
+import { Router } from 'ice-router-dom';
 
 // 导入当前模块
 import './Module'

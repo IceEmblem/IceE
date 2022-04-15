@@ -1,6 +1,6 @@
 import React from 'react';
 import {PageProvider, Page, BaseModule, ModuleFactory} from 'icetf';
-import { Module as RouteModule } from 'ice-route-dom';
+import { Module as RouteModule } from 'ice-router-dom';
 import { Module as CoreModule } from 'ice-core';
 
 export default class StartModule extends BaseModule

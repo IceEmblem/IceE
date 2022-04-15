@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "ice-core": "^1.0.0",
+    "ice-router-native": "^0.5.0",
     "react": "17.0.2",
-    "react-native": "0.68.1",
-    "react-router-native": "^6.3.0"
+    "react-native": "0.68.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",

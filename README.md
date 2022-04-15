@@ -1,6 +1,6 @@
 # IceE
 
-[![icee version](https://img.shields.io/badge/icee-0.4.7-red)](https://github.com/IceEmblem/IceE)
+[![icee version](https://img.shields.io/badge/icee-0.5.0-red)](https://github.com/IceEmblem/IceE)
 [![icetf version](https://img.shields.io/badge/icetf-0.4.7-yellowgreen)](https://www.npmjs.com/package/icetf)
 
 IceE 是一个基于 React 的多项目框架，你可以在该框架中添加多个启动项目（如：create-react-app，react-native 等），IceE 基于模块化的设计，monorepo 项目，其项目结构如下：
@@ -89,9 +89,10 @@ ModuleFactory.register(Module, [CoreModule]);
 </br></br>
 
 ## 新增一个入口项目
-你已经有了PC和RN端程序，现在想要新增一个H5端程序，如何实现？跟着如下示例走起
-在开始示例之前，我们先删除 ice-react-start 和 ice-rn-start 2个入口项目（因为目前这2个入口项目使用的react还是17版本，现在的react已经18了，为防止版本冲突，直接删除），删除并不会对框架造成任何影响
-1. 进入packages目录，新增你的项目，示例：我们使用 npx create-react-app ice-mobile-start 生成项目 ice-mobile-start
+你已经有了PC和RN端程序，现在想要新增一个H5端程序，如何实现？跟着如下示例走起 </br>
+在开始示例之前，我们先删除 ice-react-start 和 ice-rn-start 2个入口项目，删除并不会对框架造成任何影响 </br>
+注：目前 icetf 还不支持 React18， </br>
+1. 进入packages目录，新增一个项目 ice-mobile-start
 2. 我们在 ice-mobile-start -> package.json 下增加一个配置 iceeConfig，hoistDependencies 字段指示是否将引用的模块复制到入口模块的node_modules下
 ```json
 {
@@ -103,9 +104,8 @@ ModuleFactory.register(Module, [CoreModule]);
 	},
 }
 ```
-3. ice-mobile-start -> package.json -> dependencies 下添加包依赖 "react-router-dom": "^5.2.0" 和 "ice-core": "^1.0.0"
-4. 删除 ice-mobile-start -> src 目录下所用文件
-5. 添加 ice-mobile-start -> src -> index.js 文件
+3. ice-mobile-start -> package.json -> dependencies 下添加包依赖 "react-router-dom": "^5.2.0" 和 "ice-core": "^1.0.0"，执行 yarn install
+4. 添加 ice-mobile-start -> src -> index.js 文件
 ```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -133,7 +133,7 @@ ReactDOM.render(
     <App />,
     document.getElementById('root'));
 ```
-6. 添加 ice-mobile-start -> src -> Module.js 文件
+5. 添加 ice-mobile-start -> src -> Module.js 文件
 ```javascript
 import React from 'react';
 import {PageProvider, Page, BaseModule, ModuleFactory, MiddlewareFactory} from 'icetf';
@@ -156,9 +156,8 @@ ModuleFactory.register(StartModule, [
     CoreModule
 ]);
 ```
-7. 执行yarn install
-8. 至此，我们已经添加了一个入口项目，你可以执行 node icee -s 'yarn start' ice-mobile-start 运行新项目
-9. 最后想说的是，其实你可以复制一份 ice-react-start 并改个名就可以了，不需要上面这么多步骤
+6. 至此，我们已经添加了一个入口项目，你可以执行 node icee -s 'yarn start' ice-mobile-start 运行新项目，其中 yarn start 是项目的运行命令
+7. 最后想说的是，其实你可以复制一份 ice-react-start 并改个名就可以了，不需要上面这么多步骤
 
 ## 命令
 **执行如下命令查看所有命令** </br>

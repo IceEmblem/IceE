@@ -56,20 +56,19 @@ function rmdir(filePath) {
 }
 module.exports.rmdir = rmdir;
 
-function execCmd(cmd) {
+function execCmd(cmd, options, onexit) {
     // 执行命令
-    const process = exec(cmd);
+    const cprocess = exec(cmd, options);
 
-    process.stdout.on('data', (data) => {
-        console.log(data);
-    });
+    // 将输出重定向到主进程
+    cprocess.stdout.pipe(process.stdout);
+    cprocess.stderr.pipe(process.stderr);
 
-    process.stderr.on('data', (data) => {
-        console.error('错误', data);
-    });
-
-    process.on('close', (code) => {
+    cprocess.on('close', (code) => {
         console.log(`命令 ${cmd} 已退出，退出码：${code}`);
+        if (onexit) {
+            onexit();
+        }
     });
 }
 module.exports.execCmd = execCmd;

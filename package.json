@@ -23,7 +23,7 @@
     "build:icereacttest": "node_modules/.bin/babel packages/ice-react-test/src --out-dir packages/ice-react-test/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
     "build:icerntest": "node_modules/.bin/babel packages/ice-rn-test/src --out-dir packages/ice-rn-test/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx"
   },
-  "version": "1.0.0",
+  "version": "0.5.0",
   "main": "index.js",
   "author": "cql <1373611035@qq.com>",
   "license": "MIT"

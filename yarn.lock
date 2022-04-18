@@ -4691,7 +4691,7 @@ __metadata:
     babel-jest: ^27.5.1
     eslint: ^8.13.0
     ice-core: ^1.0.0
-    ice-router-native: ^0.5.0
+    ice-router-native: ^0.5.4
     jest: ^27.5.1
     metro-react-native-babel-preset: ^0.70.1
     react: 17.0.2
@@ -9450,46 +9450,30 @@ __metadata:
   resolution: "ice-react-start@workspace:packages/ice-react-start"
   dependencies:
     ice-core: ^1.0.0
-    ice-router-dom: ^0.5.0
+    ice-router-dom: ^0.5.4
     react: ^17.0.2
     react-dom: ^17.0.2
     react-scripts: 5.0.1
   languageName: unknown
   linkType: soft
 
-"ice-react-test@workspace:packages/ice-react-test":
-  version: 0.0.0-use.local
-  resolution: "ice-react-test@workspace:packages/ice-react-test"
+"ice-router-dom@npm:^0.5.4":
+  version: 0.5.4
+  resolution: "ice-router-dom@npm:0.5.4"
   dependencies:
-    ice-core: ^1.0.0
-  languageName: unknown
-  linkType: soft
-
-"ice-rn-test@workspace:packages/ice-rn-test":
-  version: 0.0.0-use.local
-  resolution: "ice-rn-test@workspace:packages/ice-rn-test"
-  dependencies:
-    ice-core: ^1.0.0
-  languageName: unknown
-  linkType: soft
-
-"ice-router-dom@^0.5.0, ice-router-dom@workspace:packages/ice-router-dom":
-  version: 0.0.0-use.local
-  resolution: "ice-router-dom@workspace:packages/ice-router-dom"
-  dependencies:
-    icetf: ^0.5.0
     react-router-dom: ^6.3.0
-  languageName: unknown
-  linkType: soft
+  checksum: 721e9eeaf35caa49231ef83b0238f7f1f11c019fa8578216590d5c24dcbca0d7f62c5f9fac9d156986bba813c34963538d1eccdf99619e191b78a9a1494cfc79
+  languageName: node
+  linkType: hard
 
-"ice-router-native@^0.5.0, ice-router-native@workspace:packages/ice-router-native":
-  version: 0.0.0-use.local
-  resolution: "ice-router-native@workspace:packages/ice-router-native"
+"ice-router-native@npm:^0.5.4":
+  version: 0.5.4
+  resolution: "ice-router-native@npm:0.5.4"
   dependencies:
-    icetf: ^0.5.0
     react-router-native: ^6.3.0
-  languageName: unknown
-  linkType: soft
+  checksum: 77595dc47772a3194899e15a7c956b1cb265e817aee6c3cd5a73b1ea6e42c2ebea232e61ecb89f2026f89e541ee099bd4a5bb01a434d6f648b635ff3819402b1
+  languageName: node
+  linkType: hard
 
 "icetf@^0.5.0, icetf@workspace:packages/icetf":
   version: 0.0.0-use.local

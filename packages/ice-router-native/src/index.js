@@ -8,5 +8,8 @@ export {
     Location, 
     useParams, 
     useMatch,
-    useRoutes
+    useRoutes,
+    Navigate,
+    Route,
+    Routes
 } from 'react-router-native';

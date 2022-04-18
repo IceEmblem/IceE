@@ -1,11 +1,13 @@
 {
 	"name": "ice-router-dom",
-	"version": "0.5.0",
+	"version": "0.5.4",
 	"main": "dist/index.js",
 	"types": "types/index.d.ts",
 	"license": "MIT",
 	"dependencies": {
-		"icetf": "^0.5.0",
 		"react-router-dom": "^6.3.0"
+	},
+	"devDependencies": {
+		"icetf": "^0.5.0"
 	}
 }

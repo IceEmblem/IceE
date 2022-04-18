@@ -4,12 +4,14 @@ import { useNavigate, NavigateFunction, useLocation, Location, useParams } from 
 export interface RouteComponentProps<
     Params extends { [K in keyof Params]?: string } = {}
 > {
-    navigate: NavigateFunction,
-    location: Location;
+    navigate: NavigateFunction;
+    location: Location & {
+        state: any
+    };
     params: Readonly<Params>;
 }
 
-export default <Props extends Object>(Component: React.ComponentType<Props & RouteComponentProps>) : React.ComponentType<Props> => {
+const withRouter = <Props extends RouteComponentProps>(Component: React.ComponentType<Props>) => {
     return (props: any) => {
         let routeParams: RouteComponentProps = {
             navigate: useNavigate(),
@@ -20,3 +22,5 @@ export default <Props extends Object>(Component: React.ComponentType<Props & Rou
         return <Component {...props} {...routeParams}/>
     }
 }
+
+export default withRouter;

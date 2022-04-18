@@ -19,9 +19,13 @@
     "start:ios": "node icee -s 'yarn ios' ice-rn-start",
     "start:web": "node icee -s 'yarn start' ice-react-start",
     "build:icetf": "npx tsc --project packages/icetf",
+    "publish:icetf": "yarn build:icetf && cd packages/icetf && npm publish",
     "build:icecommon": "node_modules/.bin/babel packages/ice-common/src --out-dir packages/ice-common/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
+    "publish:icecommon": "yarn build:icecommon && cd packages/ice-common && npm publish",
     "build:iceroutedom": "node_modules/.bin/babel packages/ice-router-dom/src --out-dir packages/ice-router-dom/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
+    "publish:iceroutedom": "yarn build:iceroutedom && cd packages/ice-router-dom && npm publish",
     "build:iceroutenative": "node_modules/.bin/babel packages/ice-router-native/src --out-dir packages/ice-router-native/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
+    "publish:iceroutenative": "yarn build:iceroutenative && cd packages/ice-router-native && npm publish",
     "build:icereacttest": "node_modules/.bin/babel packages/ice-react-test/src --out-dir packages/ice-react-test/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
     "build:icerntest": "node_modules/.bin/babel packages/ice-rn-test/src --out-dir packages/ice-rn-test/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx"
   },

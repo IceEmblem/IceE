@@ -4707,7 +4707,7 @@ __metadata:
     babel-jest: ^27.5.1
     eslint: ^8.13.0
     ice-core: ^1.0.0
-    ice-router-native: ^0.5.0
+    ice-router-native: ^0.5.4
     jest: ^27.5.1
     metro-react-native-babel-preset: ^0.70.1
     react: 17.0.2
@@ -9438,30 +9438,28 @@ __metadata:
   resolution: "ice-react-start@workspace:packages/ice-react-start"
   dependencies:
     ice-core: ^1.0.0
-    ice-router-dom: ^0.5.0
+    ice-router-dom: ^0.5.4
     react: ^17.0.2
     react-dom: ^17.0.2
     react-scripts: 5.0.1
   languageName: unknown
   linkType: soft
 
-"ice-router-dom@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "ice-router-dom@npm:0.5.0"
+"ice-router-dom@npm:^0.5.4":
+  version: 0.5.4
+  resolution: "ice-router-dom@npm:0.5.4"
   dependencies:
-    icetf: ^0.5.0
     react-router-dom: ^6.3.0
-  checksum: e5c66a4c4c47d594ba28fa6ee5c754957ea269b023af686412e187eb4be8b0a1389043bce6495071c3cbe1e16e5018b95bd1eab21b95e958679f85058507e535
+  checksum: 721e9eeaf35caa49231ef83b0238f7f1f11c019fa8578216590d5c24dcbca0d7f62c5f9fac9d156986bba813c34963538d1eccdf99619e191b78a9a1494cfc79
   languageName: node
   linkType: hard
 
-"ice-router-native@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "ice-router-native@npm:0.5.0"
+"ice-router-native@npm:^0.5.4":
+  version: 0.5.4
+  resolution: "ice-router-native@npm:0.5.4"
   dependencies:
-    icetf: ^0.5.0
     react-router-native: ^6.3.0
-  checksum: 1636e824ba428cc19035e1288529c768d363d1311c66640bb7980aa112398061a73e53b118652dad0a7814429fb15926c1fc3edeaa50c792211d49da9a3f5228
+  checksum: 77595dc47772a3194899e15a7c956b1cb265e817aee6c3cd5a73b1ea6e42c2ebea232e61ecb89f2026f89e541ee099bd4a5bb01a434d6f648b635ff3819402b1
   languageName: node
   linkType: hard
 

@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "ice-core": "^1.0.0",
-    "ice-router-native": "^0.5.0",
+    "ice-router-native": "^0.5.4",
     "react": "17.0.2",
     "react-native": "0.68.1"
   },

@@ -1,6 +1,6 @@
 {
 	"name": "ice-router-native",
-	"version": "0.5.4",
+	"version": "0.5.5",
 	"main": "dist/index.js",
 	"types": "types/index.d.ts",
 	"license": "MIT",
@@ -8,6 +8,7 @@
 		"react-router-native": "^6.3.0"
 	},
 	"devDependencies": {
+		"@types/react-native": "^0.67.4",
 		"icetf": "^0.5.0"
 	}
 }

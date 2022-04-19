@@ -11,7 +11,8 @@ export {
     useRoutes,
     Navigate,
     Route,
-    Routes
+    Routes,
+    Link
 } from 'react-router-dom';
 
 export declare class Module extends BaseModule {

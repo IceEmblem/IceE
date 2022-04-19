@@ -2,12 +2,27 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Page } from 'icetf';
 
-export default ({ pages }: {
+type Props = {
     pages: Array<Page>
-}) => (
-    <BrowserRouter>
-        <Routes>
-            {pages.map(item => (<Route key={item.url} path={item.url} element={<item.component />} />))}
-        </Routes>
-    </BrowserRouter>
-)
+};
+
+export default class extends React.Component<Props> {
+    pages
+
+    constructor(props: Props) {
+        super(props);
+
+        this.pages = props.pages.map(item => ({
+            ...item,
+            element: <item.component />
+        }))
+    }
+
+    render() {
+        return <BrowserRouter>
+            <Routes>
+                {this.pages.map(item => (<Route key={item.url} path={item.url} element={item.element} />))}
+            </Routes>
+        </BrowserRouter>
+    }
+}

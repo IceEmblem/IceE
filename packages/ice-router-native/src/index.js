@@ -11,5 +11,6 @@ export {
     useRoutes,
     Navigate,
     Route,
-    Routes
+    Routes,
+    Link,
 } from 'react-router-native';

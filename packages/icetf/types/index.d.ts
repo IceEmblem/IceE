@@ -59,7 +59,7 @@ export class BaseModule {
 }
 
 export namespace ModuleFactory {
-    function register(moduleType: any, dependModuleTypes: Array<any>): void;
+    function register(moduleType: any, dependModuleTypes: Array<any | Promise<any>>): void;
 }
 
 export declare class Page {

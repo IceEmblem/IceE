@@ -2,10 +2,17 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { ModuleFactory, IEStore, PageProvider, Page } from '.';
 
-export default class extends React.Component<{ 
-    router: React.ComponentType<{pages: Array<Page>}>,
+type Props = {
+    router: React.ComponentType<{ pages: Array<Page> }>,
+}
+
+export default class IEApp extends React.Component<Props & {
     loading: React.ReactNode
 }> {
+    static IEAppView: React.ComponentType<Props> = ({ router: Router }: Props) => <Provider store={IEStore.store}>
+        <Router pages={PageProvider.pages} />
+    </Provider>
+
     state = {
         isShow: false
     }
@@ -14,19 +21,15 @@ export default class extends React.Component<{
         // 运行所有模块
         ModuleFactory.init().then(() => {
             // 运行完成后
-            this.setState({isShow: true})
+            this.setState({ isShow: true })
         });
     }
-    
+
     render() {
-        if(!this.state.isShow){
+        if (!this.state.isShow) {
             return this.props.loading || <></>;
         }
 
-        let Router = this.props.router;
-
-        return <Provider store={IEStore.store}>
-            <Router pages={PageProvider.pages} />
-        </Provider>
+        return <IEApp.IEAppView router={this.props.router} />
     }
 }

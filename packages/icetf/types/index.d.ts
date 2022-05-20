@@ -86,4 +86,8 @@ export namespace IEStore {
 export class IEApp extends React.Component<{ 
     router: React.ComponentType<{pages: Array<Page>}>,
     loading: React.ReactNode
-}> {}
+}> {
+    static IEAppView : React.ComponentType<{
+        router: React.ComponentType<{ pages: Array<Page> }>,
+    }>
+}

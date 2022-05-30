@@ -78,6 +78,12 @@ class IceFetch<TAction extends { type: string }> {
         this.fetchFun = fetch;
     }
 
+    // 创建错误 Action
+    createErrorAction(error: string) {
+        this.fecthSign++;
+        return this.createError(error, this.fecthSign, new Error(error));
+    }
+
     // 创建 ThunkAction
     createThunkAction(fetchData: any, action: TAction) {
         return (dispatch: any) => {

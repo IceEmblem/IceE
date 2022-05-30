@@ -80,8 +80,11 @@ class IceFetch<TAction extends { type: string }> {
 
     // 创建错误 Action
     createErrorAction(error: string) {
-        this.fecthSign++;
-        return this.createError(error, this.fecthSign, new Error(error));
+        return (dispatch: any) => {
+            this.fecthSign++;
+            dispatch(this.createError(error, this.fecthSign, new Error(error)))
+            return Promise.reject(error);
+        }
     }
 
     // 创建 ThunkAction

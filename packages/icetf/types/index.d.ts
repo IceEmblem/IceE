@@ -42,7 +42,7 @@ export namespace IceFetch {
     let Receive: string;
 
     function registerFetch(fetch: (fetchData: any) => Promise<Response>): void;
-    function createErrorAction(error: string): FetchAction;
+    function createErrorAction(error: string): (dispatch: any) => Promise<any>;
     function createThunkAction<TAction extends { type: string }>(fetchData: any, action: TAction): (dispatch: any) => Promise<any>;
     function fetch(fetchData: any): Promise<any>;
 }

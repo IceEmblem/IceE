@@ -4700,7 +4700,7 @@ __metadata:
     babel-jest: ^27.5.1
     eslint: ^8.13.0
     ice-core: ^1.0.0
-    ice-router-native: ^0.5.4
+    ice-router-native: ^0.7.0
     jest: ^27.5.1
     metro-react-native-babel-preset: ^0.70.1
     react: 17.0.2
@@ -9450,7 +9450,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ice-core@workspace:packages/ice-core"
   dependencies:
-    icetf: ^0.5.0
+    icetf: ^0.7.1
   languageName: unknown
   linkType: soft
 
@@ -9459,89 +9459,40 @@ __metadata:
   resolution: "ice-react-start@workspace:packages/ice-react-start"
   dependencies:
     ice-core: ^1.0.0
-    ice-router-dom: ^0.5.4
+    ice-router-dom: ^0.7.0
     react: ^17.0.2
     react-dom: ^17.0.2
     react-scripts: 5.0.1
   languageName: unknown
   linkType: soft
 
-"ice-react-test@workspace:packages/ice-react-test":
-  version: 0.0.0-use.local
-  resolution: "ice-react-test@workspace:packages/ice-react-test"
-  dependencies:
-    ice-core: ^1.0.0
-  languageName: unknown
-  linkType: soft
-
-"ice-rn-test@workspace:packages/ice-rn-test":
-  version: 0.0.0-use.local
-  resolution: "ice-rn-test@workspace:packages/ice-rn-test"
-  dependencies:
-    ice-core: ^1.0.0
-  languageName: unknown
-  linkType: soft
-
-"ice-router-dom@npm:^0.5.4":
-  version: 0.5.5
-  resolution: "ice-router-dom@npm:0.5.5"
+"ice-router-dom@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "ice-router-dom@npm:0.7.0"
   dependencies:
     react-router-dom: ^6.3.0
-  checksum: 51367529675fb14fffa1b509e451fbb51b22ab5a6563f3bd78fb112ecb4a781eee1d512edb30ed233f9c8bb7a4dc30be7eac3042a6d9ff54db30f6453c7a1392
+  checksum: b2791fa2555746aaf7f4a54280af280efae0814e2b390506921b971bb964ba88f984bf1f4f7e63ffeace358eaf942d2f6bfde07abd8264e443a36bf18b2e31da
   languageName: node
   linkType: hard
 
-"ice-router-dom@workspace:packages/ice-router-dom":
-  version: 0.0.0-use.local
-  resolution: "ice-router-dom@workspace:packages/ice-router-dom"
-  dependencies:
-    icetf: ^0.7.0
-    react-router-dom: ^6.3.0
-  languageName: unknown
-  linkType: soft
-
-"ice-router-native@npm:^0.5.4":
-  version: 0.5.5
-  resolution: "ice-router-native@npm:0.5.5"
+"ice-router-native@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "ice-router-native@npm:0.7.0"
   dependencies:
     react-router-native: ^6.3.0
-  checksum: 37a4fdb5457e17edc354d6b7b18d56ab83f77f301736fad7f3081025e31b9c1b18efb26dcc704b51918d7cb4eb176cef8ff8bb36122fa50db4590c8d21860a41
+  checksum: 785ca36ec9e942f7030c9ee804ca9cd0e3705675245e96943869e467fe05cfda40728698d1b5db450ec5320e75d711744e51f1de94338b033be58782f9693123
   languageName: node
   linkType: hard
 
-"ice-router-native@workspace:packages/ice-router-native":
-  version: 0.0.0-use.local
-  resolution: "ice-router-native@workspace:packages/ice-router-native"
-  dependencies:
-    "@types/react-native": ^0.67.4
-    icetf: ^0.5.0
-    react-router-native: ^6.3.0
-  languageName: unknown
-  linkType: soft
-
-"icetf@^0.7.0, icetf@workspace:packages/icetf":
-  version: 0.0.0-use.local
-  resolution: "icetf@workspace:packages/icetf"
-  dependencies:
-    "@types/react": ^17.0.5
-    "@types/react-redux": ^7.1.16
-    react: ^17.0.2
-    react-redux: ^7.0.2
-    redux: ^4.0.1
-    redux-thunk: ^2.3.0
-    typescript: ^4.2.4
-  languageName: unknown
-  linkType: soft
-
-"icetf@npm:^0.5.0":
-  version: 0.5.4
-  resolution: "icetf@npm:0.5.4"
+"icetf@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "icetf@npm:0.7.1"
   dependencies:
     "@types/react-redux": ^7.1.16
     react-redux: ^7.0.2
     redux: ^4.0.1
     redux-thunk: ^2.3.0
-  checksum: b9abc07133a44a61d4c6b3a8d71b724f66a664a5651afb516e0214d37a4d3176cfc469b72b5ba4cfab0e8b84971dbbb1d45cb0f2d3e6b9c2fc5b030ada8fe954
+  checksum: 1e63b282ec7d567339a04746790197290b7d921542e728e3bb1c249994bbc52ab9da26a5f63f2315d173e9c7211b0c6019dcc68a3f0349c3c26252941d1478a4
   languageName: node
   linkType: hard
 

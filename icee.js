@@ -5,7 +5,7 @@ const { start, createModule, compileStartModule } = require('./icee_config/start
     if (process.argv.length <= 2) {
         console.log(
             `
-欢迎使用IceE，版本 0.5.0
+欢迎使用IceE，版本 0.7.0
 
 # 调试
 node icee -s "入口模块运行命令" "入口模块名"
@@ -13,14 +13,8 @@ node icee -s "入口模块运行命令" "入口模块名"
 # 创建包
 node icee -c "模块名"
 
-# 引用包
-node icee -q "模块名" "入口模块名"
-
 # babel 编译项目所依赖的包
 node icee -b "入口模块名"
-
-# 生成 ModuleList.js 文件
-node icee -ml "入口模块名"
 `
         );
         return;

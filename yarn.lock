@@ -14,15 +14,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ant-design/colors@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "@ant-design/colors@npm:6.0.0"
-  dependencies:
-    "@ctrl/tinycolor": ^3.4.0
-  checksum: 130e6af2cab5af6aa1df3ce261ff12fcbbab76ca35a23ef0cfaab252123d6b1796796cc3b17a604134c81dfd276a456494241f8dcf6de01c5bdf7b882926f44d
-  languageName: node
-  linkType: hard
-
 "@apideck/better-ajv-errors@npm:^0.3.1":
   version: 0.3.3
   resolution: "@apideck/better-ajv-errors@npm:0.3.3"
@@ -2935,13 +2926,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ctrl/tinycolor@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "@ctrl/tinycolor@npm:3.4.0"
-  checksum: 59a30b5d964edc06bf78bd36389326caffd2e29189270c75467afc160e8f2ddf89a5cbea70ab2463712aa5ca1b770988b7c0ea9dce3eb93f7928e8e5226efa28
-  languageName: node
-  linkType: hard
-
 "@eslint/eslintrc@npm:^1.2.1":
   version: 1.2.1
   resolution: "@eslint/eslintrc@npm:1.2.1"
@@ -4707,7 +4691,7 @@ __metadata:
     babel-jest: ^27.5.1
     eslint: ^8.13.0
     ice-core: ^1.0.0
-    ice-router-native: ^0.5.4
+    ice-router-native: ^0.7.0
     jest: ^27.5.1
     metro-react-native-babel-preset: ^0.70.1
     react: 17.0.2
@@ -9429,7 +9413,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ice-core@workspace:packages/ice-core"
   dependencies:
-    icetf: ^0.5.0
+    icetf: ^0.7.1
   languageName: unknown
   linkType: soft
 
@@ -9438,44 +9422,40 @@ __metadata:
   resolution: "ice-react-start@workspace:packages/ice-react-start"
   dependencies:
     ice-core: ^1.0.0
-    ice-router-dom: ^0.5.4
+    ice-router-dom: ^0.7.0
     react: ^17.0.2
     react-dom: ^17.0.2
     react-scripts: 5.0.1
   languageName: unknown
   linkType: soft
 
-"ice-router-dom@npm:^0.5.4":
-  version: 0.5.4
-  resolution: "ice-router-dom@npm:0.5.4"
+"ice-router-dom@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "ice-router-dom@npm:0.7.0"
   dependencies:
     react-router-dom: ^6.3.0
-  checksum: 721e9eeaf35caa49231ef83b0238f7f1f11c019fa8578216590d5c24dcbca0d7f62c5f9fac9d156986bba813c34963538d1eccdf99619e191b78a9a1494cfc79
+  checksum: b2791fa2555746aaf7f4a54280af280efae0814e2b390506921b971bb964ba88f984bf1f4f7e63ffeace358eaf942d2f6bfde07abd8264e443a36bf18b2e31da
   languageName: node
   linkType: hard
 
-"ice-router-native@npm:^0.5.4":
-  version: 0.5.4
-  resolution: "ice-router-native@npm:0.5.4"
+"ice-router-native@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "ice-router-native@npm:0.7.0"
   dependencies:
     react-router-native: ^6.3.0
-  checksum: 77595dc47772a3194899e15a7c956b1cb265e817aee6c3cd5a73b1ea6e42c2ebea232e61ecb89f2026f89e541ee099bd4a5bb01a434d6f648b635ff3819402b1
+  checksum: 785ca36ec9e942f7030c9ee804ca9cd0e3705675245e96943869e467fe05cfda40728698d1b5db450ec5320e75d711744e51f1de94338b033be58782f9693123
   languageName: node
   linkType: hard
 
-"icetf@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "icetf@npm:0.5.0"
+"icetf@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "icetf@npm:0.7.1"
   dependencies:
-    "@ant-design/colors": ^6.0.0
-    "@types/react": ^17.0.5
     "@types/react-redux": ^7.1.16
-    react: ^17.0.2
     react-redux: ^7.0.2
     redux: ^4.0.1
     redux-thunk: ^2.3.0
-    typescript: ^4.2.4
-  checksum: d1cbc6138d49ca389ba7df7326d4bfc0af33eeab3bdea91ba81c5be376826608b2ec90398f47dc5e4a8ed7926be07c896221bda2376eacf0115fc32fe271ab77
+  checksum: 1e63b282ec7d567339a04746790197290b7d921542e728e3bb1c249994bbc52ab9da26a5f63f2315d173e9c7211b0c6019dcc68a3f0349c3c26252941d1478a4
   languageName: node
   linkType: hard
 

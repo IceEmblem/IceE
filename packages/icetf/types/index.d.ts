@@ -1,3 +1,5 @@
+import { Store } from 'redux';
+
 type Reducer = (state: any, action: any) => any;
 
 export class BaseIceRedux {
@@ -12,7 +14,7 @@ export class BaseIceRedux {
     // 使用 BaseIERedux 应使用 BaseIERedux.connect 而不是 react-redux 的 connect 方法
     connect(
         mapStateToProps: (state: any, ownProps: any, globalState: any) => any,
-        mapDispatchToProps: (dispatch: (action: any) => any, ownProps: any) => any,
+        mapDispatchToProps: (dispatch: (action: any) => any, ownProps: any, store: Store) => any,
         mergeProps?: any,
         options?: any): any;
 }
@@ -43,7 +45,7 @@ export namespace IceFetch {
 
     function registerFetch(fetch: (fetchData: any) => Promise<Response>): void;
     function createErrorAction(error: string): (dispatch: any) => Promise<any>;
-    function createThunkAction<TAction extends { type: string }>(fetchData: any, action: TAction): (dispatch: any) => Promise<any>;
+    function createThunkAction(fetchData: any, backcall?: (dispatch: any, value: any) => void): (dispatch: any) => Promise<any>;
     function fetch(fetchData: any): Promise<any>;
 }
 
@@ -52,6 +54,8 @@ export namespace MiddlewareFactory {
 }
 
 export class BaseModule {
+    key: string | undefined;
+
     preInitialize(): Promise<any> | void;
 
     initialize(): Promise<any> | void;

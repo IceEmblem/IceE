@@ -1,7 +1,6 @@
-class BaseModule
+abstract class BaseModule
 {
-    constructor(){
-    }
+    key: string | undefined = undefined;
 
     preInitialize(){
     }

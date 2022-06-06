@@ -1,8 +1,10 @@
 import {BaseModule, ModuleFactory} from 'icetf';
 
-export default class Module extends BaseModule {
+class Module extends BaseModule {
     initialize() {
     }
 }
+const module = new Module();
+export default module;
 
-ModuleFactory.register(Module, []);
+ModuleFactory.register(module, []);

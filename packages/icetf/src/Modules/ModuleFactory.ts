@@ -1,31 +1,40 @@
-class ModuleFactory {
-    moduleDatas: Array<any> = [];
-    // 已排序的模块
-    sortedModuleDatas: Array<any> = [];
-    // 当前异步加载的任务
-    tasks: Array<Promise<any>> = [];
+import BaseModule from './BaseModule';
 
-    register(moduleType: any, dependModuleTypes: Array<any | Promise<any>>) {
+type ModuleData = {
+    module: BaseModule,
+    dependModules: Array<BaseModule>,
+    isPreInit: boolean,
+    isInit: boolean,
+    isPostInit: boolean
+}
+
+class ModuleFactory {
+    moduleDatas: Array<ModuleData> = [];
+    // 已排序的模块
+    sortedModuleDatas: Array<ModuleData> = [];
+    // 当前异步加载的任务
+    tasks: Array<Promise<BaseModule>> = [];
+
+    register<TModule extends BaseModule>(module: TModule, dependModules: Array<TModule | Promise<TModule>>) {
         let moduleData = {
-            module: null,
-            moduleType: moduleType,
-            dependModuleTypes: [] as Array<any>,
+            module: module,
+            dependModules: [] as Array<TModule>,
             isPreInit: false,
             isInit: false,
-            isPostInit: false
+            isPostInit: false,
         };
         this.moduleDatas.push(moduleData);
 
-        dependModuleTypes.forEach(dependModuleType => {
-            if (dependModuleType instanceof Promise) {
-                dependModuleType.then(e => {
-                    moduleData.dependModuleTypes.push(e);
+        dependModules.forEach(dependModule => {
+            if (dependModule instanceof Promise) {
+                dependModule.then(e => {
+                    moduleData.dependModules.push(e);
                 });
-                this.tasks.push(dependModuleType);
+                this.tasks.push(dependModule);
                 return;
             }
 
-            moduleData.dependModuleTypes.push(dependModuleType);
+            moduleData.dependModules.push(dependModule);
         });
     }
 
@@ -34,36 +43,36 @@ class ModuleFactory {
             for (let n = 0; n < this.moduleDatas.length; n++) {
                 this.moduleSort(this.moduleDatas[n]);
             }
-    
+
             let exec = Promise.resolve();
             for (let n = 0; n < this.sortedModuleDatas.length; n++) {
                 exec = exec.then(() => {
                     return this.preInitialize(this.sortedModuleDatas[n]);
                 })
             }
-    
+
             for (let n = 0; n < this.sortedModuleDatas.length; n++) {
                 exec = exec.then(() => {
                     return this.initialize(this.sortedModuleDatas[n]);
                 })
             }
-    
+
             for (let n = 0; n < this.sortedModuleDatas.length; n++) {
                 exec = exec.then(() => {
                     return this.postInitialize(this.sortedModuleDatas[n]);
                 })
             }
-    
+
             return exec;
         });
     }
 
-    moduleSort(moduleData: any) {
-        if (moduleData.dependModuleTypes) {
-            for (let n = 0; n < moduleData.dependModuleTypes.length; n++) {
-                let dependModuleData = this.moduleDatas.find(item => item.moduleType == moduleData.dependModuleTypes[n]);
+    moduleSort(moduleData: ModuleData) {
+        if (moduleData.dependModules) {
+            for (let n = 0; n < moduleData.dependModules.length; n++) {
+                let dependModuleData = this.moduleDatas.find(item => item.module == moduleData.dependModules[n]);
                 if (!dependModuleData) {
-                    throw new Error(`模块${moduleData.moduleType}所依赖的模块未注册，请注册其依赖的模块`);
+                    throw new Error(`模块${moduleData.module.key}所依赖的模块${moduleData.dependModules[n].key}未注册，请注册其依赖的模块`);
                 }
 
                 // dependModuleData 已在排序过的列表中，则表明已对 dependModuleData 以及 dependModuleData 的依赖进行过排序
@@ -75,12 +84,10 @@ class ModuleFactory {
             }
         }
 
-        moduleData.module = new moduleData.moduleType();
-
         this.sortedModuleDatas.push(moduleData);
     }
 
-    preInitialize(moduleData: any) {
+    preInitialize(moduleData: ModuleData) {
         if (moduleData.isPreInit) {
             return;
         }
@@ -90,7 +97,7 @@ class ModuleFactory {
         return moduleData.module.preInitialize();
     }
 
-    initialize(moduleData: any) {
+    initialize(moduleData: ModuleData) {
         if (moduleData.isInit) {
             return;
         }
@@ -100,7 +107,7 @@ class ModuleFactory {
         return moduleData.module.initialize();
     }
 
-    postInitialize(moduleData: any) {
+    postInitialize(moduleData: ModuleData) {
         if (moduleData.isPostInit) {
             return;
         }

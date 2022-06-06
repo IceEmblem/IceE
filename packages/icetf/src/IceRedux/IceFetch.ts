@@ -17,7 +17,7 @@ export interface FetchAction {
 
 // Icetf fetch 请求封装
 // IceFetch 发送请求时会向 redux 发送 action
-class IceFetch<TAction extends { type: string }> {
+class IceFetch {
 
     // 请求 action 的类型
     readonly Request = "IEFecth_Request";
@@ -62,9 +62,9 @@ class IceFetch<TAction extends { type: string }> {
     }
 
     // 生成接收 action
-    private createReceive(data: any, action: TAction, fecthSign: number): FetchAction {
+    private createReceive(data: any, fecthSign: number): FetchAction {
         return {
-            ...action,
+            type: this.Receive,
             data: data,
             error: null,
             ex: null,
@@ -88,7 +88,7 @@ class IceFetch<TAction extends { type: string }> {
     }
 
     // 创建 ThunkAction
-    createThunkAction(fetchData: any, action: TAction) {
+    createThunkAction(fetchData: any, backcall?: (dispatch: any, value: any) => void) {
         return (dispatch: any) => {
             let curFecthSign = this.fecthSign++;
             dispatch(this.createRequest(fetchData, curFecthSign));
@@ -100,7 +100,8 @@ class IceFetch<TAction extends { type: string }> {
                 }
             ).then(
                 value => {
-                    dispatch(this.createReceive(value, action, curFecthSign));
+                    dispatch(this.createReceive(value, curFecthSign));
+                    backcall?.(dispatch, value);
                     return value;
                 }
             )
@@ -109,7 +110,7 @@ class IceFetch<TAction extends { type: string }> {
 
     // 普通的 fetch 请求，该方法在请求和接受时也会向 redux 发送 action
     fetch(fetchData: any) {
-        return this.createThunkAction(fetchData, { type: this.Receive } as TAction)(IEStore.store.dispatch);
+        return this.createThunkAction(fetchData)(IEStore.store!.dispatch);
     }
 }
 

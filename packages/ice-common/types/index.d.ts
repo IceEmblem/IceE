@@ -38,3 +38,6 @@ export namespace Token {
     function init(): Promise<void>;
     function setToken(token: string): void;
 }
+
+export * from '../src/reduxs/Actions';
+export * from '../src/reduxs/Reducer';

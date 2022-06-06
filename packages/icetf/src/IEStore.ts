@@ -5,7 +5,7 @@ import IceReduxFactroy from './IceRedux/IceReduxFactroy'
 import BaseIceRedux from './IceRedux/BaseIceRedux';
 
 class IEStore  {
-    store: any = undefined;
+    store!: Store;
 
     createStore() {
         var middlewares = [

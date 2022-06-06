@@ -1,12 +1,15 @@
-import { BaseModule, ModuleFactory } from 'icetf';
+import { BaseModule, ModuleFactory, IEStore } from 'icetf';
 import Token from './Token';
 import Lang from './LangProvider';
+import Redux from './reduxs/Redux';
 
-export default class Module extends BaseModule {
+class Module extends BaseModule {
     preInitialize() {
     }
 
     initialize() {
+        IEStore.register(Redux);
+        
         return Promise.all([
             // 初始化Token
             Token.init(),
@@ -18,6 +21,8 @@ export default class Module extends BaseModule {
     postInitialize() {
     }
 }
+const module = new Module();
+export default module;
 
-ModuleFactory.register(Module, [
+ModuleFactory.register(module, [
 ]);

@@ -1,4 +1,6 @@
 import { connect } from 'react-redux';
+import IEStore from '../IEStore';
+import { Store } from 'redux';
 
 type Reducer = (state: any, action: any) => any;
 
@@ -18,7 +20,7 @@ export default abstract class BaseIERedux {
     // 使用 BaseIERedux 应使用 BaseIERedux.connect 而不是 react-redux 的 connect 方法
     connect(
         mapStateToProps: (state: any, ownProps: any, globalState: any) => any,
-        mapDispatchToProps: (dispatch: (action: any) => any, ownProps: any) => any,
+        mapDispatchToProps: (dispatch: (action: any) => any, ownProps: any, store?: Store) => any,
         mergeProps?: any,
         options?: any) {
         let ieMapStateToProps = (state: any, ownProps: any) => mapStateToProps(state[this.modelName], ownProps, state);
@@ -31,7 +33,7 @@ export default abstract class BaseIERedux {
                 action.__model__ = this.modelName;
                 return dispatch(action);
             }
-            return mapDispatchToProps(iedispatch, ownProps)
+            return mapDispatchToProps(iedispatch, ownProps, IEStore.store);
         }
 
         return connect(ieMapStateToProps, ieMapDispatchToProps, mergeProps, options)

@@ -1,6 +1,6 @@
 {
 	"name": "ice-router-native",
-	"version": "0.5.5",
+	"version": "0.7.0",
 	"main": "dist/index.js",
 	"types": "types/index.d.ts",
 	"license": "MIT",

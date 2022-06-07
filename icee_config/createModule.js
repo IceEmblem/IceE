@@ -13,7 +13,7 @@ const moduleTemplet =
 `import {BaseModule, ModuleFactory} from 'icetf';
 import {Module as CoreModule} from '${coreName}';
 
-export default class Module extends BaseModule {
+class Module extends BaseModule {
     initialize() {
     }
 }

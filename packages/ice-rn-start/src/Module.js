@@ -4,7 +4,7 @@ import { PageProvider, Page, BaseModule, ModuleFactory } from 'icetf'
 import { Module as CoreModule } from 'ice-core';
 import { Module as RouterModule } from 'ice-router-native';
 
-export default class Module extends BaseModule {
+class Module extends BaseModule {
     initialize() {
         // 注册首页
         PageProvider.register(new Page("Home", "/", () => (
@@ -15,7 +15,10 @@ export default class Module extends BaseModule {
     }
 }
 
-ModuleFactory.register(Module, [
+const module = new Module();
+export default module;
+
+ModuleFactory.register(module, [
     CoreModule,
     RouterModule
 ]);

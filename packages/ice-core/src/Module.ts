@@ -2,7 +2,7 @@ import { BaseModule, ModuleFactory, MiddlewareFactory, IEStore, IceFetch } from 
 import { fecthMiddlewares } from './Middlewares/FecthMiddlewares'
 import RootRedux from './IEReduxs/RootRedux'
 
-export default class Module extends BaseModule
+class Module extends BaseModule
 {
     preInitialize(){
         // 注册 fetch 后面可以使用 IceFetch 进行网络请求
@@ -26,5 +26,8 @@ export default class Module extends BaseModule
     }
 }
 
-ModuleFactory.register(Module, [
+const module = new Module();
+export default module;
+
+ModuleFactory.register(module, [
 ]);

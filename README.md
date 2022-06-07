@@ -31,15 +31,8 @@ yarn start:ios
 ```javascript
 import { Module as IceTestModule } from 'ice-react-test';
 
-export default class StartModule extends BaseModule
-{
-    initialize(){
-        ...
-    }
-}
-
 // 添加IceTestModule的依赖
-ModuleFactory.register(StartModule, [
+ModuleFactory.register(module, [
     ...
     IceTestModule
 ]);
@@ -55,15 +48,8 @@ ModuleFactory.register(StartModule, [
 ```javascript
 import { Module as MyTestModule } from 'ice-react-mytest';
 
-export default class StartModule extends BaseModule
-{
-    initialize(){
-        ...
-    }
-}
-
 // 添加MyTestModule的依赖
-ModuleFactory.register(StartModule, [
+ModuleFactory.register(module, [
     ...
     MyTestModule
 ]);
@@ -74,7 +60,7 @@ import React from 'react'
 import {BaseModule, PageProvider, ModuleFactory, Page} from 'icetf'
 import {Module as CoreModule} from 'ice-core';
 
-export default class Module extends BaseModule
+class Module extends BaseModule
 {
     initialize(){
         // 注册页面，访问 /mytest 将显示这个页面
@@ -82,7 +68,10 @@ export default class Module extends BaseModule
     }
 }
 
-ModuleFactory.register(Module, [CoreModule]);
+const module = new Module();
+export default module;
+
+ModuleFactory.register(module, [CoreModule]);
 ```
 5. 根目录执行 yarn start:web 运行web站点，访问 /mytest，就可以查看刚才的页面了
 6. 根目录执行 node icee -b "ice-react-start" 生成 ice-react-start 所依赖的报，进入到 ice-react-mytest 模块目录，执行 npm publish 发布你的模块，这样其他人就可以直接安装并使用你的模块了

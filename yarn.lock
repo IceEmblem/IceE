@@ -9469,16 +9469,12 @@ __metadata:
 "ice-react-test@workspace:packages/ice-react-test":
   version: 0.0.0-use.local
   resolution: "ice-react-test@workspace:packages/ice-react-test"
-  dependencies:
-    ice-core: ^1.0.0
   languageName: unknown
   linkType: soft
 
 "ice-rn-test@workspace:packages/ice-rn-test":
   version: 0.0.0-use.local
   resolution: "ice-rn-test@workspace:packages/ice-rn-test"
-  dependencies:
-    ice-core: ^1.0.0
   languageName: unknown
   linkType: soft
 

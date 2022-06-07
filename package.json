@@ -27,7 +27,9 @@
     "build:iceroutenative": "node_modules/.bin/babel packages/ice-router-native/src --out-dir packages/ice-router-native/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
     "publish:iceroutenative": "yarn build:iceroutenative && cd packages/ice-router-native && npm publish",
     "build:icereacttest": "node_modules/.bin/babel packages/ice-react-test/src --out-dir packages/ice-react-test/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
-    "build:icerntest": "node_modules/.bin/babel packages/ice-rn-test/src --out-dir packages/ice-rn-test/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx"
+    "publish:icereacttest": "yarn build:icereacttest && cd packages/ice-react-test && npm publish",
+    "build:icerntest": "node_modules/.bin/babel packages/ice-rn-test/src --out-dir packages/ice-rn-test/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
+    "publish:icerntest": "yarn build:icerntest && cd packages/ice-rn-test && npm publish"
   },
   "version": "0.5.0",
   "main": "index.js",

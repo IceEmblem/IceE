@@ -9496,7 +9496,7 @@ __metadata:
   resolution: "ice-router-native@workspace:packages/ice-router-native"
   dependencies:
     "@types/react-native": ^0.67.4
-    icetf: ^0.5.0
+    icetf: ^0.7.0
     react-router-native: ^6.3.0
   languageName: unknown
   linkType: soft
@@ -9514,18 +9514,6 @@ __metadata:
     typescript: ^4.2.4
   languageName: unknown
   linkType: soft
-
-"icetf@npm:^0.5.0":
-  version: 0.5.4
-  resolution: "icetf@npm:0.5.4"
-  dependencies:
-    "@types/react-redux": ^7.1.16
-    react-redux: ^7.0.2
-    redux: ^4.0.1
-    redux-thunk: ^2.3.0
-  checksum: b9abc07133a44a61d4c6b3a8d71b724f66a664a5651afb516e0214d37a4d3176cfc469b72b5ba4cfab0e8b84971dbbb1d45cb0f2d3e6b9c2fc5b030ada8fe954
-  languageName: node
-  linkType: hard
 
 "iconv-lite@npm:0.4.24":
   version: 0.4.24

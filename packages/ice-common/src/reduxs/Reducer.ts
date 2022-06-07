@@ -10,7 +10,7 @@ export type PaginationStateType = {
     page: number,
     pageSize: number,
     total: number,
-    list: Array<any>
+    list: Array<any>,
 }
 
 export const reduxHelper = {
@@ -55,32 +55,44 @@ export const reduxHelper = {
 
 function pagesReducer(state: any = {}, action: any) {
     if (action.type == SetPageDatas) {
-        if (!state[action.tabelName]) {
-            state[action.tabelName] = {
-                page: action.page,
-                pageSize: action.pageSize,
+        let { 
+            type,
+            tabelName, 
+            page, 
+            pageSize, 
+            total, 
+            list, 
+            ...otherDatas 
+        } = action;
+
+        if (!state[tabelName]) {
+            state[tabelName] = {
+                ...otherDatas,
+                page: page,
+                pageSize: pageSize,
                 total: -1,
                 list: [],
             }
         }
         else {
-            state[action.tabelName] = {
-                page: action.page,
-                pageSize: action.pageSize,
-                total: state[action.tabelName].total,
-                list: [...state[action.tabelName].list],
+            state[tabelName] = {
+                ...otherDatas,
+                page: page,
+                pageSize: pageSize,
+                total: state[tabelName].total,
+                list: [...state[tabelName].list],
             }
         }
 
-        if (action.total) {
-            state[action.tabelName].total = action.total;
+        if (total) {
+            state[tabelName].total = total;
         }
 
-        if (action.list) {
-            let list = state[action.tabelName].list;
-            let skipNum = (action.page - 1) * action.pageSize;
-            action.list.forEach((item: any, index: number) => {
-                list[skipNum + index] = item;
+        if (list) {
+            let oldlist = state[tabelName].list;
+            let skipNum = (page - 1) * pageSize;
+            list.forEach((item: any, index: number) => {
+                oldlist[skipNum + index] = item;
             });
         }
 

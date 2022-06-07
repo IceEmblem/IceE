@@ -1,12 +1,12 @@
 export const SetPageDatas = "_Ice_SetPageDatas_";
-export function setPageDatas(params: {
+export function setPageDatas<T extends {
     tabelName: string,
     key: string,
     page: number
     pageSize: number,
     total?: number,
     list?: Array<any>
-}) {
+}>(params: T) {
     return {
         ...params,
         type: SetPageDatas

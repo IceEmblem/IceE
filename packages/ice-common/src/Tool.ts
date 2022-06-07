@@ -105,11 +105,24 @@ export default class Tool {
     // 求和
     static sum(arr: Array<number>) {
         var s = 0;
-        
+
         for (var i = arr.length - 1; i >= 0; i--) {
             s += arr[i];
         }
 
         return s;
+    }
+
+    // 获取jwt token信息
+    static getJWTInfo(token: string) {
+        try{
+            var strings = token.split(".");
+            var userinfo = JSON.parse(decodeURIComponent(window.atob(strings[1].replace(/-/g, "+").replace(/_/g, "/"))));
+        }
+        catch {
+            return null;
+        }
+        
+        return userinfo;
     }
 }

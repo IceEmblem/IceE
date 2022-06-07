@@ -4,6 +4,8 @@ import Lang from './LangProvider';
 import Redux from './reduxs/Redux';
 
 class Module extends BaseModule {
+    key = 'ice-common';
+
     preInitialize() {
     }
 

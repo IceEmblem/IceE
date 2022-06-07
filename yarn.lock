@@ -9466,26 +9466,40 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"ice-router-dom@npm:^0.7.1":
-  version: 0.7.1
-  resolution: "ice-router-dom@npm:0.7.1"
+"ice-react-test@workspace:packages/ice-react-test":
+  version: 0.0.0-use.local
+  resolution: "ice-react-test@workspace:packages/ice-react-test"
+  dependencies:
+    ice-core: ^1.0.0
+  languageName: unknown
+  linkType: soft
+
+"ice-rn-test@workspace:packages/ice-rn-test":
+  version: 0.0.0-use.local
+  resolution: "ice-rn-test@workspace:packages/ice-rn-test"
+  dependencies:
+    ice-core: ^1.0.0
+  languageName: unknown
+  linkType: soft
+
+"ice-router-dom@^0.7.1, ice-router-dom@workspace:packages/ice-router-dom":
+  version: 0.0.0-use.local
+  resolution: "ice-router-dom@workspace:packages/ice-router-dom"
   dependencies:
     icetf: ^0.7.0
     react-router-dom: ^6.3.0
-  checksum: 07f107e40ba5ed6296e2f0cfa1dd9b68c411b602bb4b2ef5a4e0456830e3b9436cee097719c80d171ca5599857905debf0dc5a8349825ba0f89dbd43cac3093f
-  languageName: node
-  linkType: hard
+  languageName: unknown
+  linkType: soft
 
-"ice-router-native@npm:^0.7.1":
-  version: 0.7.1
-  resolution: "ice-router-native@npm:0.7.1"
+"ice-router-native@^0.7.1, ice-router-native@workspace:packages/ice-router-native":
+  version: 0.0.0-use.local
+  resolution: "ice-router-native@workspace:packages/ice-router-native"
   dependencies:
     "@types/react-native": ^0.67.4
     icetf: ^0.7.0
     react-router-native: ^6.3.0
-  checksum: aa3e58c736951b44715796035f9365d74180769187d96dc733a680d99d6cb08e90946dc9d43d887f6c93638cf57042ede4ac85128dcc2733321732578f223e60
-  languageName: node
-  linkType: hard
+  languageName: unknown
+  linkType: soft
 
 "icetf@^0.7.0, icetf@^0.7.1, icetf@workspace:packages/icetf":
   version: 0.0.0-use.local

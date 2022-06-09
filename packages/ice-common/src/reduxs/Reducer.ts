@@ -2,7 +2,8 @@ import {
     SetPageDatas,
     SetEntity,
     SetPageEntity,
-    ClearPageDatas
+    ClearPageDatas,
+    ClearAllDatas
 } from './Actions';
 
 export type PaginationStateType = {
@@ -13,7 +14,7 @@ export type PaginationStateType = {
     list: Array<any>,
 }
 
-export const reduxHelper = {
+export const Helper = {
     getPageDatas: (state: PaginationStateType) => {
         let list = [];
         let skipNum = (state.page - 1) * state.pageSize;
@@ -55,14 +56,14 @@ export const reduxHelper = {
 
 function pagesReducer(state: any = {}, action: any) {
     if (action.type == SetPageDatas) {
-        let { 
+        let {
             type,
-            tabelName, 
-            page, 
-            pageSize, 
-            total, 
-            list, 
-            ...otherDatas 
+            tabelName,
+            page,
+            pageSize,
+            total,
+            list,
+            ...otherDatas
         } = action;
 
         if (!state[tabelName]) {
@@ -120,6 +121,10 @@ function pagesReducer(state: any = {}, action: any) {
         return state;
     }
 
+    if (action.type == ClearAllDatas) {
+        return {};
+    }
+
     return state;
 }
 
@@ -155,6 +160,10 @@ function entitysReducer(state: any = {}, action: any) {
 
         state[action.tabelName][action.entity[action.key]] = action.entity;
         return state;
+    }
+
+    if (action.type == ClearAllDatas) {
+        return {};
     }
 
     return state;

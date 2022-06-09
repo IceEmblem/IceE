@@ -40,5 +40,5 @@ export namespace Token {
     function setToken(token: string): void;
 }
 
-export * from '../src/reduxs/Actions';
-export * from '../src/reduxs/Reducer';
+export * as actions from '../src/reduxs/Actions';
+export * as reducers from '../src/reduxs/Reducer';

@@ -46,3 +46,10 @@ export function setEntity(params: {
         type: SetEntity
     }
 }
+
+export const ClearAllDatas = "_Ice_ClearAllDatas_";
+export function clearAllDatas() {
+    return {
+        type: ClearAllDatas
+    }
+}

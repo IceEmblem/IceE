@@ -3,5 +3,5 @@ export { default as Lang } from './LangProvider'
 export { default as Storage } from './Storage'
 export { default as Tool } from './Tool'
 export { default as Token } from './Token'
-export * from './reduxs/Actions';
-export * from './reduxs/Reducer';
+export * as actions from './reduxs/Actions';
+export * as reducers from './reduxs/Reducer';

@@ -42,3 +42,4 @@ export namespace Token {
 
 export * as actions from '../src/reduxs/Actions';
 export * as reducers from '../src/reduxs/Reducer';
+export * as ReducerHelper from '../src/reduxs/ReducerHelper';

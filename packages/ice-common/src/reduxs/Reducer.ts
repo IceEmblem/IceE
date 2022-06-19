@@ -14,46 +14,6 @@ export type PaginationStateType = {
     list: Array<any>,
 }
 
-export const Helper = {
-    getPageDatas: (state: PaginationStateType) => {
-        let list = [];
-        let skipNum = (state.page - 1) * state.pageSize;
-        for (let n = 0; n < state.pageSize; n++) {
-            let data = state.list[skipNum + n];
-            if (data) {
-                list.push(data);
-            }
-        }
-
-        return list;
-    },
-    exitPageDatas: (state: PaginationStateType, page: number) => {
-        if (!state) {
-            return false;
-        }
-
-        let skipNum = (page - 1) * state.pageSize;
-        for (let n = 0; n < state.pageSize; n++) {
-            let pos = skipNum + n;
-            if (pos >= state.total) {
-                return true;
-            }
-
-            if (!state.list[pos]) {
-                return false;
-            }
-        }
-
-        return true;
-    },
-    canNextPage: (state: PaginationStateType) => {
-        return (state.page * state.pageSize) < state.total;
-    },
-    canPreviousPage: (state: PaginationStateType) => {
-        return state.page > 1;
-    }
-}
-
 function pagesReducer(state: any = {}, action: any) {
     if (action.type == SetPageDatas) {
         let {

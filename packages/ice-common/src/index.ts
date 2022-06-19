@@ -5,3 +5,4 @@ export { default as Tool } from './Tool'
 export { default as Token } from './Token'
 export * as actions from './reduxs/Actions';
 export * as reducers from './reduxs/Reducer';
+export * as ReducerHelper from './reduxs/ReducerHelper';

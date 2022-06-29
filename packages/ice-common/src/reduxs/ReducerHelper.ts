@@ -4,7 +4,8 @@ import {
     clearPageDatas,
     setPageEntity,
     setEntity,
-    clearAllDatas
+    clearAllDatas,
+    clearPageListDatas
 } from './Actions';
 import { IEStore } from 'icetf';
 
@@ -64,6 +65,13 @@ export function clearPageDatasEx(params: {
     tabelName: string,
 }) {
     return IEStore.store.dispatch(clearPageDatas(params));
+}
+
+export function clearPageListDatasEx(params: {
+    tabelName: string,
+}) {
+    debugger
+    return IEStore.store.dispatch(clearPageListDatas(params));
 }
 
 export function setPageEntityEx(params: {

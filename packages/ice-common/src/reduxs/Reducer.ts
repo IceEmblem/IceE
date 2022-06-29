@@ -3,6 +3,7 @@ import {
     SetEntity,
     SetPageEntity,
     ClearPageDatas,
+    ClearPageListDatas,
     ClearAllDatas
 } from './Actions';
 
@@ -78,6 +79,14 @@ function pagesReducer(state: any = {}, action: any) {
 
     if (action.type == ClearPageDatas) {
         state[action.tabelName] = undefined
+        return state;
+    }
+
+    if(action.type == ClearPageListDatas) {
+        state[action.tabelName] = {
+            ...state[action.tabelName],
+            list: []
+        }
         return state;
     }
 

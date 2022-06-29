@@ -23,6 +23,16 @@ export function clearPageDatas(params: {
     }
 }
 
+export const ClearPageListDatas = "_Ice_ClearPageListDatas_";
+export function clearPageListDatas(params: {
+    tabelName: string,
+}) {
+    return {
+        ...params,
+        type: ClearPageListDatas
+    }
+}
+
 export const SetPageEntity = "_Ice_SetPageEntity_";
 export function setPageEntity(params: {
     tabelName: string,

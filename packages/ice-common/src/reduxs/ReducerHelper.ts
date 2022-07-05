@@ -70,7 +70,6 @@ export function clearPageDatasEx(params: {
 export function clearPageListDatasEx(params: {
     tabelName: string,
 }) {
-    debugger
     return IEStore.store.dispatch(clearPageListDatas(params));
 }
 

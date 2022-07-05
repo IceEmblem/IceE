@@ -4,6 +4,7 @@ import {
     SetPageEntity,
     ClearPageDatas,
     ClearPageListDatas,
+    ClearCurrentPageDatas,
     ClearAllDatas
 } from './Actions';
 
@@ -82,11 +83,35 @@ function pagesReducer(state: any = {}, action: any) {
         return state;
     }
 
-    if(action.type == ClearPageListDatas) {
+    if (action.type == ClearPageListDatas) {
         state[action.tabelName] = {
             ...state[action.tabelName],
             list: []
         }
+        return state;
+    }
+
+    if (action.type == ClearCurrentPageDatas) {
+        let {
+            tabelName,
+        } = action;
+
+        if (!state[tabelName]) {
+            return state;
+        }
+
+        state[tabelName] = {
+            ...state[tabelName]
+        }
+
+        let page = state[tabelName].page;
+        let pageSize = state[tabelName].pageSize;
+        let skipNum = (page - 1) * pageSize;
+        let list = state[tabelName].list;
+        for (let n = 0; n < pageSize; n++) {
+            list[skipNum + n] = undefined;
+        }
+
         return state;
     }
 

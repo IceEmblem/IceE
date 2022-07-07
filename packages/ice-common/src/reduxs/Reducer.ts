@@ -84,6 +84,10 @@ function pagesReducer(state: any = {}, action: any) {
     }
 
     if (action.type == ClearPageListDatas) {
+        if (!state[action.tabelName]) {
+            return state;
+        }
+
         state[action.tabelName] = {
             ...state[action.tabelName],
             list: []

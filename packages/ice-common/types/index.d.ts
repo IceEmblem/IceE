@@ -31,7 +31,6 @@ export declare class Tool {
     static getUrlVariable(urlSearch: string, variable: string): string | undefined;
     static random(): number;
     static sum(arr: Array<number>);
-    static getJWTInfo(token: string): any | null;
 }
 
 export namespace Token {

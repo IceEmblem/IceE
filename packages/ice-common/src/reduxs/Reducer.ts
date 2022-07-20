@@ -5,6 +5,7 @@ import {
     ClearPageDatas,
     ClearPageListDatas,
     ClearCurrentPageDatas,
+    ClearEntitys,
     ClearAllDatas
 } from './Actions';
 
@@ -127,25 +128,6 @@ function pagesReducer(state: any = {}, action: any) {
 }
 
 function entitysReducer(state: any = {}, action: any) {
-    // if (action.type == SetPageDatas) {
-    //     if (!state[action.tabelName]) {
-    //         state[action.tabelName] = {}
-    //     }
-    //     else {
-    //         state[action.tabelName] = {
-    //             ...state[action.tabelName]
-    //         }
-    //     }
-
-    //     if (action.list) {
-    //         action.list.forEach((item: any, index: number) => {
-    //             state[action.tabelName][item[action.key]] = item;
-    //         });
-    //     }
-
-    //     return state;
-    // }
-
     if (action.type == SetEntity) {
         if (!state[action.tabelName]) {
             state[action.tabelName] = {}
@@ -157,6 +139,11 @@ function entitysReducer(state: any = {}, action: any) {
         }
 
         state[action.tabelName][action.entity[action.key]] = action.entity;
+        return state;
+    }
+
+    if (action.type == ClearEntitys) {
+        state[action.tabelName] = undefined;
         return state;
     }
 

@@ -112,17 +112,4 @@ export default class Tool {
 
         return s;
     }
-
-    // 获取jwt token信息
-    static getJWTInfo(token: string) {
-        try{
-            var strings = token.split(".");
-            var userinfo = JSON.parse(decodeURIComponent(window.atob(strings[1].replace(/-/g, "+").replace(/_/g, "/"))));
-        }
-        catch {
-            return null;
-        }
-        
-        return userinfo;
-    }
 }

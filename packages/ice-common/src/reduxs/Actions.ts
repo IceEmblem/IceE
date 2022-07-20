@@ -73,6 +73,17 @@ export function setEntity(params: {
     }
 }
 
+
+export const ClearEntitys = "_Ice_ClearEntitys_";
+export function clearEntitys(params: {
+    tabelName: string,
+}) {
+    return {
+        ...params,
+        type: ClearEntitys
+    }
+}
+
 // 清空所有数据
 export const ClearAllDatas = "_Ice_ClearAllDatas_";
 export function clearAllDatas() {

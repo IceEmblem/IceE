@@ -6,7 +6,8 @@ import {
     setEntity,
     clearAllDatas,
     clearPageListDatas,
-    clearCurrentPageDatas
+    clearCurrentPageDatas,
+    clearEntitys,
 } from './Actions';
 import { IEStore } from 'icetf';
 
@@ -94,6 +95,13 @@ export function setEntityEx(params: {
     entity: any
 }) {
     return IEStore.store.dispatch(setEntity(params));
+}
+
+
+export function clearEntitysEx(params: {
+    tabelName: string,
+}) {
+    return IEStore.store.dispatch(clearEntitys(params));
 }
 
 export function clearAllDatasEx() {

@@ -51,7 +51,7 @@ export function clearCurrentPageDatas(params: {
 export const SetPageEntity = "_Ice_SetPageEntity_";
 export function setPageEntity(params: {
     tabelName: string,
-    key: string,
+    id: string,
     entity: any
 }) {
     return {
@@ -64,7 +64,7 @@ export function setPageEntity(params: {
 export const SetEntity = "_Ice_SetEntity_";
 export function setEntity(params: {
     tabelName: string,
-    key: string,
+    id: string,
     entity: any
 }) {
     return {

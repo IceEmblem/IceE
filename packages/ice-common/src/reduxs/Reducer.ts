@@ -68,13 +68,22 @@ function pagesReducer(state: any = {}, action: any) {
             return state;
         }
 
-        let oldEntityIndex = state[action.tabelName].list.findIndex((item: any) => item[action.key] == action.entity[action.key]);
+        let key = state[action.tabelName].key;
+        let oldEntityIndex = state[action.tabelName].list.findIndex((item: any) => item[key] == action.id);
         if (oldEntityIndex < 0) {
             return state;
         }
 
         state[action.tabelName] = { ...state[action.tabelName] };
-        state[action.tabelName].list[oldEntityIndex] = action.entity;
+        // 如果实体不为空，则更新实体
+        if(action.entity){
+            state[action.tabelName].list[oldEntityIndex] = action.entity;
+            return state;
+        }
+
+        // 如果实体为空，则删除
+        state[action.tabelName].list.splice(oldEntityIndex, 1);
+        state[action.tabelName].total = state[action.tabelName].total - 1;
 
         return state;
     }
@@ -138,7 +147,7 @@ function entitysReducer(state: any = {}, action: any) {
             }
         }
 
-        state[action.tabelName][action.entity[action.key]] = action.entity;
+        state[action.tabelName][action.id] = action.entity;
         return state;
     }
 

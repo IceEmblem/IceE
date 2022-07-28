@@ -83,7 +83,7 @@ export function clearCurrentPageDatasEx(params: {
 
 export function setPageEntityEx(params: {
     tabelName: string,
-    key: string,
+    id: string,
     entity: any
 }) {
     return IEStore.store.dispatch(setPageEntity(params));
@@ -91,7 +91,7 @@ export function setPageEntityEx(params: {
 
 export function setEntityEx(params: {
     tabelName: string,
-    key: string,
+    id: string,
     entity: any
 }) {
     return IEStore.store.dispatch(setEntity(params));

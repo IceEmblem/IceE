@@ -1,7 +1,7 @@
 # IceE
 
-[![icee version](https://img.shields.io/badge/icee-0.5.0-red)](https://github.com/IceEmblem/IceE)
-[![icetf version](https://img.shields.io/badge/icetf-0.4.7-yellowgreen)](https://www.npmjs.com/package/icetf)
+[![icee version](https://img.shields.io/badge/icee-0.7.0-red)](https://github.com/IceEmblem/IceE)
+[![icetf version](https://img.shields.io/badge/icetf-0.7.0-yellowgreen)](https://www.npmjs.com/package/icetf)
 
 IceE 是一个基于 React 的多项目框架，你可以在该框架中添加多个启动项目（如：create-react-app，react-native 等），IceE 基于模块化的设计，monorepo 项目，其项目结构如下：
 ![](./images/icee.png)
@@ -78,75 +78,10 @@ ModuleFactory.register(module, [CoreModule]);
 </br></br>
 
 ## 新增一个入口项目
-你已经有了PC和RN端程序，现在想要新增一个H5端程序，如何实现？跟着如下示例走起 </br>
-在开始示例之前，我们先删除 ice-react-start 和 ice-rn-start 2个入口项目，删除并不会对框架造成任何影响 </br>
+你已经有了PC和RN端程序，现在想要新增一个H5端程序，如何实现？ </br>
+其实实现起来很简单，已可以参照 ice-react-start 模块的 index.js 和 module.js 代码（其代码量也就30行） </br>
+当然，更好的方法时复制一份 ice-react-start 并改个名就可以了 </br>
 注：目前 icetf 还不支持 React18， </br>
-1. 进入packages目录，新增一个项目 ice-mobile-start
-2. 我们在 ice-mobile-start -> package.json 下增加一个配置 iceeConfig，hoistDependencies 字段指示是否将引用的模块复制到入口模块的node_modules下
-```json
-{
-    "scripts": {
-        ...
-    },
-    "iceeConfig": {
-		"hoistDependencies": false
-	},
-}
-```
-3. ice-mobile-start -> package.json -> dependencies 下添加包依赖 "react-router-dom": "^5.2.0" 和 "ice-core": "^1.0.0"，执行 yarn install
-4. 添加 ice-mobile-start -> src -> index.js 文件
-```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { IEApp } from 'icetf';
-
-// 导入当前模块
-import './Module'
-
-const Router = ({pages}) => (
-    <BrowserRouter>
-        <Switch>
-            {pages.map(item => (<Route key={item.url} path={item.url} component={item.component} />))}
-        </Switch>
-    </BrowserRouter>
-)
-
-class App extends React.Component {
-    render() {
-        return <IEApp router={Router} />
-    }
-}
-
-ReactDOM.render(
-    <App />,
-    document.getElementById('root'));
-```
-5. 添加 ice-mobile-start -> src -> Module.js 文件
-```javascript
-import React from 'react';
-import {PageProvider, Page, BaseModule, ModuleFactory, MiddlewareFactory} from 'icetf';
-import { Module as CoreModule } from 'ice-core';
-
-export default class StartModule extends BaseModule
-{
-    initialize(){
-        // 注册首页
-        PageProvider.register(new Page("Home", "/", () => (
-            <div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <p>Hello World!!!</p>
-            </div>
-        )));
-    }
-}
-
-// ModuleList 为当前区域的所有模块，ModuleList 在 js 编译阶段生成
-ModuleFactory.register(StartModule, [
-    CoreModule
-]);
-```
-6. 至此，我们已经添加了一个入口项目，你可以执行 node icee -s 'yarn start' ice-mobile-start 运行新项目，其中 yarn start 是项目的运行命令
-7. 最后想说的是，其实你可以复制一份 ice-react-start 并改个名就可以了，不需要上面这么多步骤
 
 ## 命令
 **执行如下命令查看所有命令** </br>
@@ -169,11 +104,11 @@ node icee -b "入口模块名"
 </br></br>
 
 ## 文档
-框架文档：https://blog.csdn.net/dabusidede/article/details/119010741 (待更新)
+框架文档：https://blog.csdn.net/dabusidede/article/details/119010741 (已过时，待更新)
 </br></br>
 
 ## 现有的模块
-### ice-common
+### ice-common 模块
 #### 安装
 1. 添加包 yarn workspace ice-core add ice-common </br>
 2. 在 ice-react-start 中注册缓存方法（ice-common 需要用到缓存，所以需要在入口处设置缓存方法） </br>
@@ -279,7 +214,222 @@ export declare class Tool {
 }
 ```
 
-注：所有类的 init() 都不需要执行，ice-common 模块初始化时会自己执行 </br>
+5. Redux 实体和分页管理，模块提供了简单的 Redux 实体和分页管理，具体功能请查阅源码 </br>
+```javascript
+// 分页管理示例
+
+import React, { useState, useRef } from 'react';
+import {
+    Redux,
+    Lang,
+    PaginationStateType,
+    clearPageDatas,
+    setPageDatas,
+    reduxHelper,
+} from 'ice-common';
+import { IceFetch } from 'icetf';
+
+class User extends React.Component<{
+    users: PaginationStateType,
+    fetchUsers: (params: any, enforce?: boolean) => Promise<any>,
+}> {
+    componentDidMount() {
+        // 请求数据
+        this.props.fetchUsers({
+            page: this.props.users.page,
+            pageSize: this.props.users.pageSize,
+        }).finally(() => {
+        });
+    }
+
+    render() {
+        // 获取当前页数据
+        let curPageDatas = reduxHelper.getPageDatas(this.props.users);
+
+        return <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflowY: 'hidden' }}>
+        </div>
+    }
+}
+
+export default Redux.connect(
+    // redux mapState
+    (state, props, globalState) => ({
+        // 返回 redux 保存的分页数据，users 是自定义的名称
+        users: globalState.pagination.users || {
+            page: 1,
+            pageSize: 20,
+            total: -1,
+            list: [],
+            username: '',
+            status: '',
+        }
+    }),
+    // redux mapDispatch
+    (dispatch, ownProps, store) => {
+        // 请求用户分页数据，enforce 表示是否强制刷新
+        const fetchUsers = (params: any, enforce?: boolean) => {
+            // 获取当前分页数据
+            let users = store.getState().pagination.users;
+
+            // 如果分页数据已生成，且 params.page 页的数据已存在，那么直接改变页索引即可，不需要去服务请求
+            if (users && reduxHelper.exitPageDatas(users, params.page) && enforce != true) {
+                dispatch(setPageDatas({
+                    tabelName: 'users',
+                    key: 'id',
+                    page: params.page,
+                    pageSize: params.pageSize,
+                    username: params.username,
+                    status: params.status,
+                }));
+
+                return Promise.resolve();
+            }
+
+            // 否则去服务器获取数据
+            return dispatch(IceFetch.createThunkAction({
+                url: '/api/users/users',
+                method: 'GET',
+                urlParams: {
+                    ...params,
+                }
+            }, (dispatch, value) => {
+                // 设置数据
+                dispatch(setPageDatas({
+                    tabelName: 'users',
+                    key: 'id',
+                    page: params.page,
+                    pageSize: params.itemsPerPage,
+                    total: value.total,
+                    list: value.list,
+                }));
+            }));
+        }
+
+        return {
+            fetchUsers: fetchUsers,
+        }
+    })(User);
+```
+
+```javascript
+// 实体管理示例
+
+import React from "react";
+import { Redux, Storage, Token, Lang, Tool, setEntity, setPageEntity } from 'ice-common';
+import { IceFetch } from 'icetf';
+
+import './index.css';
+
+class EditUser extends React.Component<{
+    id: number,
+    user: any,
+    fetchUser: (params: any) => Promise<any>,
+    fetchEditUser: (params: any) => Promise<any>,
+    editUser: (user: any) => void,
+}> {
+    componentDidMount() {
+        this.props.fetchUser({
+            id: this.props.id
+        });
+    }
+
+    onCommit = () => {
+    }
+
+    render() {
+        return <div className="newuser" style={{ backgroundSize: '100% 100%' }}>
+        </div>;
+    }
+}
+
+export default Redux.connect(
+    (state, props, globalState) => {
+        let user = globalState.entitys.users?.[props.id] || {
+            id: props.id,
+            username: "",
+            password: "",
+            nickname: "",
+            telephone: "",
+            email: "",
+        };
+
+        return {
+            id: props.id,
+            user: user
+        }
+    },
+    (dispatch) => ({
+        // 请求用户数据
+        fetchUser: (params: any) => {
+            // 请求用户数据
+            return dispatch(IceFetch.createThunkAction({
+                url: `/api/users/users/${params.id}`,
+                method: 'GET',
+            }, (dispatch, value) => {
+                // 将获取的数据保存到实体中
+                dispatch(setEntity({
+                    tabelName: 'users',
+                    key: 'id',
+                    entity: value
+                }));
+                // 更新页面保存的实体（如果你使用的模块的分页功能，请发送该action，保证页面的数据和实体一致）
+                dispatch(setPageEntity({
+                    tabelName: 'users',
+                    key: 'id',
+                    entity: value
+                }));
+            }));
+        },
+        // 提交编辑
+        fetchEditUser: (params: any) => {
+            if (!params.user.username) {
+                return dispatch(IceFetch.createErrorAction(`请填写用户名称`));
+            }
+
+            return dispatch(IceFetch.createThunkAction({
+                url: `/api/users/users/${params.user.id}`,
+                method: 'PUT',
+                body: params.user
+            }, (dispatch, value) => {
+                // 将编辑后的数据保存到实体中中
+                dispatch(setEntity({
+                    tabelName: 'users',
+                    key: 'id',
+                    entity: value
+                }));
+                // 将编辑后的数据更新到分页中
+                dispatch(setPageEntity({
+                    tabelName: 'users',
+                    key: 'id',
+                    entity: value
+                }));
+            }));
+        },
+        // 编辑实体
+        editUser: (user: any) => {
+            // 如你更改了名称，但还没提交到服务时，请调用该action
+            return dispatch(setEntity({
+                tabelName: 'users',
+                key: 'id',
+                entity: user
+            }));
+        }
+    }))(EditUser)
+```
+
+注：所有类的 init() 都不需要要执行，ice-common 模块初始化时会自己执行 </br>
+
+### ice-router-dom 和 ice-router-native 模块
+ice-router-dom 和 ice-router-native 基于 react-router ，他们提供了 Router，你可以再入口项目的 index 直接使用这个 Router </br>
+```javascript
+class App extends React.Component {
+    render() {
+        return <IEApp router={Router} />
+    }
+}
+```
+同时，模块提供了被 react-router 抛弃的 withRouter，你可以使用它 </br>
+
 
 ## 关于 Ios
 由于我没有 ios 开发环境，所以 ios 的可能存在一些问题

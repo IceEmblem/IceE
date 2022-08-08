@@ -43,10 +43,8 @@ export namespace IceFetch {
     let ErrorAction: string;
     let Receive: string;
 
-    function registerFetch(fetch: (fetchData: any) => Promise<Response>): void;
     function createErrorAction(error: string): (dispatch: any) => Promise<any>;
-    function createThunkAction(fetchData: any, backcall?: (dispatch: any, value: any) => void): (dispatch: any) => Promise<any>;
-    function fetch(fetchData: any): Promise<any>;
+    function createThunkAction<TRespone>(fetchPromise: Promise<TRespone>, receiveDispatch?: (dispatch: any, value: any) => void, requestDispatch?: (dispatch: any) => void): (dispatch: any) => Promise<TRespone>;
 }
 
 export namespace MiddlewareFactory {

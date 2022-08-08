@@ -3,8 +3,6 @@ import { IEStore } from '../'
 export interface FetchAction {
     // 动作类型
     type: string,
-    // 发送数据或接收的数据
-    data: any,
     // 错误消息
     error: string | null,
     // 异常本体
@@ -38,10 +36,9 @@ class IceFetch {
     };
 
     // 生成请求 action
-    private createRequest(postData: any, fecthSign: number): FetchAction {
+    private createRequest(fecthSign: number): FetchAction {
         return {
             type: this.Request,
-            data: postData,
             error: null,
             ex: null,
             isFetch: true,
@@ -53,7 +50,6 @@ class IceFetch {
     private createError(error: string, fecthSign: number, ex: Error): FetchAction {
         return {
             type: this.ErrorAction,
-            data: null,
             error: error,
             ex: ex,
             isFetch: true,
@@ -62,20 +58,14 @@ class IceFetch {
     }
 
     // 生成接收 action
-    private createReceive(data: any, fecthSign: number): FetchAction {
+    private createReceive(fecthSign: number): FetchAction {
         return {
             type: this.Receive,
-            data: data,
             error: null,
             ex: null,
             isFetch: true,
             fecthSign: fecthSign
         }
-    }
-
-    // 注册 fetch
-    registerFetch(fetch: (fetchData: any) => Promise<Response>){
-        this.fetchFun = fetch;
     }
 
     // 创建错误 Action
@@ -88,29 +78,25 @@ class IceFetch {
     }
 
     // 创建 ThunkAction
-    createThunkAction(fetchData: any, backcall?: (dispatch: any, value: any) => void) {
+    createThunkAction<TRespone>(fetchPromise: Promise<TRespone>, receiveDispatch?: (dispatch: any, value: any) => void, requestDispatch?: (dispatch: any) => void) {
         return (dispatch: any) => {
             let curFecthSign = this.fecthSign++;
-            dispatch(this.createRequest(fetchData, curFecthSign));
+            dispatch(this.createRequest(curFecthSign));
+            requestDispatch?.(dispatch);
 
-            return this.fetchFun(fetchData).catch(
+            return fetchPromise.catch(
                 (errorData: Error) => {
                     dispatch(this.createError(errorData.message, curFecthSign, errorData));
                     throw errorData;
                 }
             ).then(
                 value => {
-                    dispatch(this.createReceive(value, curFecthSign));
-                    backcall?.(dispatch, value);
+                    dispatch(this.createReceive(curFecthSign));
+                    receiveDispatch?.(dispatch, value);
                     return value;
                 }
             )
         }
-    }
-
-    // 普通的 fetch 请求，该方法在请求和接受时也会向 redux 发送 action
-    fetch(fetchData: any) {
-        return this.createThunkAction(fetchData)(IEStore.store!.dispatch);
     }
 }
 

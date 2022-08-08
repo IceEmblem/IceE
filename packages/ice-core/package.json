@@ -5,6 +5,6 @@
   "types": "types/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "icetf": "^0.7.1"
+    "icetf": "^0.8.0"
   }
 }

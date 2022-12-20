@@ -11,26 +11,13 @@ import {
 } from './Actions';
 import { IEStore } from 'icetf';
 
-export const getPageDatas = (state: PaginationStateType) => {
-    let list = [];
-    let skipNum = (state.page - 1) * state.pageSize;
-    for (let n = 0; n < state.pageSize; n++) {
-        let data = state.list[skipNum + n];
-        if (data) {
-            list.push(data);
-        }
-    }
-
-    return list;
-}
-
-export const exitPageDatas = (state: PaginationStateType, page: number) => {
+export const exitPageDatas = (state: PaginationStateType, page: number, pageSize: number) => {
     if (!state) {
         return false;
     }
 
-    let skipNum = (page - 1) * state.pageSize;
-    for (let n = 0; n < state.pageSize; n++) {
+    let skipNum = (page - 1) * pageSize;
+    for (let n = 0; n < pageSize; n++) {
         let pos = skipNum + n;
         if (pos >= state.total) {
             return true;

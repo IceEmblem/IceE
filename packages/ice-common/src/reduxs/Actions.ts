@@ -52,6 +52,7 @@ export const SetPageEntity = "_Ice_SetPageEntity_";
 export function setPageEntity(params: {
     tabelName: string,
     id: string,
+    // 如果为空则删除实体
     entity: any
 }) {
     return {

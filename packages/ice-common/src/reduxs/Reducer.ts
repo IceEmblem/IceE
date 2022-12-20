@@ -15,6 +15,20 @@ export type PaginationStateType = {
     pageSize: number,
     total: number,
     list: Array<any>,
+    pageDatas: Array<any>
+}
+
+const getPageDatas = (state: PaginationStateType) => {
+    let list = [];
+    let skipNum = (state.page - 1) * state.pageSize;
+    for (let n = 0; n < state.pageSize; n++) {
+        let data = state.list[skipNum + n];
+        if (data) {
+            list.push(data);
+        }
+    }
+
+    return list;
 }
 
 function pagesReducer(state: any = {}, action: any) {
@@ -60,6 +74,7 @@ function pagesReducer(state: any = {}, action: any) {
             });
         }
 
+        state[tabelName].pageDatas = getPageDatas(state[action.tabelName]);
         return state;
     }
 
@@ -76,14 +91,15 @@ function pagesReducer(state: any = {}, action: any) {
 
         state[action.tabelName] = { ...state[action.tabelName] };
         // 如果实体不为空，则更新实体
-        if(action.entity){
+        if (action.entity) {
             state[action.tabelName].list[oldEntityIndex] = action.entity;
-            return state;
         }
-
-        // 如果实体为空，则删除
-        state[action.tabelName].list.splice(oldEntityIndex, 1);
-        state[action.tabelName].total = state[action.tabelName].total - 1;
+        else {
+            // 如果实体为空，则删除
+            state[action.tabelName].list.splice(oldEntityIndex, 1);
+            state[action.tabelName].total = state[action.tabelName].total - 1;
+        }
+        state[action.tabelName].pageDatas = getPageDatas(state[action.tabelName]);
 
         return state;
     }
@@ -100,7 +116,8 @@ function pagesReducer(state: any = {}, action: any) {
 
         state[action.tabelName] = {
             ...state[action.tabelName],
-            list: []
+            list: [],
+            pageDatas: []
         }
         return state;
     }
@@ -115,7 +132,8 @@ function pagesReducer(state: any = {}, action: any) {
         }
 
         state[tabelName] = {
-            ...state[tabelName]
+            ...state[tabelName],
+            pageDatas: []
         }
 
         let page = state[tabelName].page;

@@ -2,9 +2,11 @@
   "name": "ice-core",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "types": "types/index.d.ts",
+  "types": "src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "icetf": "^0.8.0"
+    "ice-common": "^0.10.0",
+    "icetf": "^0.10.0",
+    "react-router": "^6.12.1"
   }
 }

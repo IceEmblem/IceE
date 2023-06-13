@@ -1,23 +1,36 @@
 {
-  "name": "NewIceE",
+  "name": "icee",
   "workspaces": [
     "packages/*"
   ],
   "dependencies": {
-    "@babel/cli": "^7.14.3",
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.2",
-    "@babel/preset-react": "^7.13.13",
-    "@babel/preset-typescript": "^7.13.0",
-    "@types/react": "^17.0.5",
-    "babel-plugin-module-resolver": "^4.1.0",
-    "react": "^17.0.2",
-    "typescript": "^4.2.4"
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.21.0",
+    "@types/react": "^18.2.12",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.4.2"
   },
   "scripts": {
     "start:android": "node icee -s 'yarn android' ice-rn-start",
     "start:ios": "node icee -s 'yarn ios' ice-rn-start",
-    "start:web": "node icee -s 'yarn start' ice-react-start"
+    "start:web": "node icee -s 'yarn start' ice-react-start",
+    "build:icetf": "npx tsc --project packages/icetf",
+    "publish:icetf": "yarn build:icetf && cd packages/icetf && npm publish",
+    "build:icecommon": "node_modules/.bin/babel packages/ice-common/src --out-dir packages/ice-common/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
+    "publish:icecommon": "yarn build:icecommon && cd packages/ice-common && npm publish",
+    "build:iceroutedom": "node_modules/.bin/babel packages/ice-router-dom/src --out-dir packages/ice-router-dom/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
+    "publish:iceroutedom": "yarn build:iceroutedom && cd packages/ice-router-dom && npm publish",
+    "build:iceroutenative": "node_modules/.bin/babel packages/ice-router-native/src --out-dir packages/ice-router-native/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
+    "publish:iceroutenative": "yarn build:iceroutenative && cd packages/ice-router-native && npm publish",
+    "build:icereacttest": "node_modules/.bin/babel packages/ice-react-test/src --out-dir packages/ice-react-test/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
+    "publish:icereacttest": "yarn build:icereacttest && cd packages/ice-react-test && npm publish",
+    "build:icerntest": "node_modules/.bin/babel packages/ice-rn-test/src --out-dir packages/ice-rn-test/dist --copy-files --delete-dir-on-start --extensions .js,.jsx,.ts,.tsx",
+    "publish:icerntest": "yarn build:icerntest && cd packages/ice-rn-test && npm publish"
   },
   "version": "0.5.0",
   "main": "index.js",

@@ -37,7 +37,7 @@ module.exports.checkModuleExit = checkModuleExit;
 // 获取需要编译的模块
 function getNeedCompileModules(module) {
     let arr = [];
-    let dependencies = Object.keys(require(`${getPackagePath(module)}/package.json`).dependencies);
+    let dependencies = Object.keys(require(`${getPackagePath(module)}/package.json`).dependencies || {});
     let needCompiles = packages.filter(e => dependencies.some(ie => e == ie));
     needCompiles.forEach(needCompile => {
         if(arr.some(e => e == needCompile)){
@@ -124,7 +124,7 @@ function copyModules(startModule) {
         if (fs.existsSync(dist)) {
             try {
                 // 有可能dist是一个快捷方式，可以直接删除
-                fs.rmdirSync(dist);
+                fs.unlinkSync(dist);
             }
             catch {
                 // 否则递归删除

@@ -5,7 +5,7 @@ const { start, createModule, compileStartModule } = require('./icee_config/start
     if (process.argv.length <= 2) {
         console.log(
             `
-欢迎使用IceE，版本 0.10.0
+欢迎使用IceE，版本 0.11.0
 
 # 调试
 node icee -s "入口模块运行命令" "入口模块名"

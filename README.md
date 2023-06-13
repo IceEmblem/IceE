@@ -1,7 +1,7 @@
 # IceE
 
-[![icee version](https://img.shields.io/badge/icee-0.10.0-red)](https://github.com/IceEmblem/IceE)
-[![icetf version](https://img.shields.io/badge/icetf-0.10.0-yellowgreen)](https://www.npmjs.com/package/icetf)
+[![icee version](https://img.shields.io/badge/icee-0.11.0-red)](https://github.com/IceEmblem/IceE)
+[![icetf version](https://img.shields.io/badge/icetf-0.11.0-yellowgreen)](https://www.npmjs.com/package/icetf)
 
 IceE 是一个基于 React 的多项目框架，你可以在该框架中添加多个启动项目（如：create-react-app，react-native 等），IceE 基于模块化的设计，monorepo 项目，其项目结构如下：
 ![](./images/icee.png)

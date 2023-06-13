@@ -1,4 +1,4 @@
-import {iceFetch, BaseApi} from "ice-common";
+import { iceFetch, BaseApi } from "ice-common";
 
 type FilterValueType = undefined | boolean | number | string | Array<number | string | Date>;
 
@@ -10,7 +10,7 @@ export const toUrlParams = (
     sortDirection?: "ascend" | "descend") => {
     let urlParams = {
         page: page,
-        itemsPerPage: pageSize
+        pageSize: pageSize
     } as any;
 
     if (filters) {
@@ -23,15 +23,15 @@ export const toUrlParams = (
             if (Array.isArray(value) && value.length > 0) {
                 // 范围筛选
                 if (typeof (value[0]) == 'number' || typeof (value[1]) == 'number') {
-                    urlParams[`${key}%5Bgte%5D`] = value[0];
-                    urlParams[`${key}%5Blte%5D`] = value[1];
+                    urlParams[`${key}Min`] = value[0];
+                    urlParams[`${key}Max`] = value[1];
                     continue;
                 }
 
                 // 日期范围筛选
                 if (typeof (value[0]) == 'object' || typeof (value[1]) == 'object') {
-                    urlParams[`${key}%5Bafter%5D`] = (value[0] as Date)?.toISOString().substring(0, 19);
-                    urlParams[`${key}%5Bbefore%5D`] = (value[1] as Date)?.toISOString().substring(0, 19);
+                    urlParams[`${key}Mix`] = (value[0] as Date)?.toISOString().substring(0, 19);
+                    urlParams[`${key}Max`] = (value[1] as Date)?.toISOString().substring(0, 19);
                     continue;
                 }
 
@@ -47,7 +47,11 @@ export const toUrlParams = (
     }
 
     if (sortField) {
-        urlParams[`order%5B${sortField as string}%5D`] = sortDirection;
+        urlParams['sorting'] = sortField;
+    }
+
+    if (sortDirection) {
+        urlParams['sortDirection'] = sortDirection;
     }
 
     return urlParams;
@@ -90,7 +94,7 @@ export default abstract class Api<T extends Entity> extends BaseApi<T>  {
         pageSize: number,
         filters?: { [k in (keyof T)]: FilterValueType },
         sortField?: keyof T,
-        sortDirection?: "ascend" | "descend"): Promise<{total: number, datas: Array<T>}> {
+        sortDirection?: "ascend" | "descend"): Promise<{ total: number, datas: Array<T> }> {
 
         let urlParams = toUrlParams(page, pageSize, filters, sortField, sortDirection)
         let result = await iceFetch<{

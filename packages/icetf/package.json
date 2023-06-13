@@ -1,22 +1,14 @@
 {
   "name": "icetf",
-  "version": "0.8.0",
+  "version": "0.10.0",
   "description": "",
   "main": "dist/index.js",
-  "types": "types/index.d.ts",
+  "types": "src/index.ts",
   "scripts": {
     "build": "tsc"
   },
-  "dependencies": {
-    "@types/react-redux": "^7.1.16",
-    "react-redux": "^7.0.2",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
-  },
   "devDependencies": {
-    "@types/react": "^17.0.5",
-    "react": "^17.0.2",
-    "typescript": "^4.2.4"
+    "typescript": "^4.4.2"
   },
   "author": "ice-emblem",
   "license": "MIT"

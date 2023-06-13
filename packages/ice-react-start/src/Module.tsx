@@ -1,8 +1,27 @@
 import React from 'react';
 import { PageProvider, BaseModule, ModuleFactory } from 'icetf';
 import { Module as CoreModule } from 'ice-core';
+import { Storage, token } from 'ice-common';
 
 class Module extends BaseModule {
+    preInitialize() {
+        // 初始化 Storage
+        Storage.setItem = (key, value) => {
+            localStorage.setItem(key, value);
+            return Promise.resolve();
+        }
+        Storage.getItem = (key) => {
+            return Promise.resolve(localStorage.getItem(key));
+        }
+        Storage.removeItem = (key) => {
+            localStorage.removeItem(key);
+            return Promise.resolve();
+        }
+
+        // 初始化token
+        return token.init();
+    }
+
     initialize() {
         // 注册首页
         PageProvider.register({

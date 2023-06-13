@@ -9460,18 +9460,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ice-common@^0.10.0, ice-common@workspace:packages/ice-common":
-  version: 0.0.0-use.local
-  resolution: "ice-common@workspace:packages/ice-common"
+"ice-common@npm:^0.10.0":
+  version: 0.10.0
+  resolution: "ice-common@npm:0.10.0"
   dependencies:
     "@reduxjs/toolkit": ^1.9.3
-    icetf: ^0.10.0
     js-base64: ^3.7.2
     react-redux: ^8.0.5
-  languageName: unknown
-  linkType: soft
+  checksum: 85c6fecd22887a2fda15366eda9b2f0c9298c8132ddea0c081e865eda7d825807ba063990403b237b0b630f9828630046c3964a3ff79f034cd43e830f1d57012
+  languageName: node
+  linkType: hard
 
-"ice-core@^1.0.0, ice-core@workspace:packages/ice-core":
+"ice-core@workspace:^, ice-core@workspace:packages/ice-core":
   version: 0.0.0-use.local
   resolution: "ice-core@workspace:packages/ice-core"
   dependencies:
@@ -9488,7 +9488,7 @@ __metadata:
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.4.0
     "@testing-library/user-event": ^13.5.0
-    ice-core: ^1.0.0
+    ice-core: "workspace:^"
     react-router-dom: ^6.12.1
     react-scripts: 5.0.1
     web-vitals: ^2.1.4
@@ -9512,13 +9512,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"icetf@^0.10.0, icetf@workspace:packages/icetf":
-  version: 0.0.0-use.local
-  resolution: "icetf@workspace:packages/icetf"
-  dependencies:
-    typescript: ^4.4.2
-  languageName: unknown
-  linkType: soft
+"icetf@npm:^0.10.0":
+  version: 0.10.0
+  resolution: "icetf@npm:0.10.0"
+  checksum: 4fbdc7bb58a8c968373a74108a71ba7519cf2df1508f9723ff34038657c4b52d43af8cbde3935e794afa562d23c571356b305d2fdce38e5772e1606eea40636a
+  languageName: node
+  linkType: hard
 
 "iconv-lite@npm:0.4.24":
   version: 0.4.24

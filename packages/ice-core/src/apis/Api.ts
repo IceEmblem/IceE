@@ -7,7 +7,7 @@ export const toUrlParams = (
     pageSize?: number,
     filters?: any,
     sortField?: any,
-    sortDirection?: 'asc' | 'desc') => {
+    sortDirection?: 'ascend' | 'descend') => {
     let urlParams = {
         page: page,
         itemsPerPage: pageSize
@@ -90,7 +90,7 @@ export default abstract class Api<T extends Entity> extends BaseApi<T>  {
         pageSize: number,
         filters?: { [k in (keyof T)]: FilterValueType },
         sortField?: keyof T,
-        sortDirection?: 'asc' | 'desc'): Promise<{total: number, datas: Array<T>}> {
+        sortDirection?: 'ascend' | 'descend'): Promise<{total: number, datas: Array<T>}> {
 
         let urlParams = toUrlParams(page, pageSize, filters, sortField, sortDirection)
         let result = await iceFetch<{

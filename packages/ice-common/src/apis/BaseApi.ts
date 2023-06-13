@@ -18,5 +18,5 @@ export default abstract class BaseApi<T> {
         pageSize: number,
         filters?: { [k in (keyof T)]: FilterValueType },
         sortField?: keyof T,
-        sortDirection?: 'asc' | 'desc'): Promise<{total: number, datas: Array<T>}>;
+        sortDirection?: 'ascend' | 'descend'): Promise<{total: number, datas: Array<T>}>;
 }

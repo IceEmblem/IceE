@@ -14,7 +14,7 @@ function reducerPack(reducer: Reducer<IceSliceState, any>): Reducer<IceSliceStat
                 pageSize: 30,
                 filter: {} as any,
                 sortField: undefined,
-                sortDirection: 'desc',
+                sortDirection: 'descend',
                 total: 0,
                 datas: []
             };
@@ -32,7 +32,7 @@ const create = (name: string, api: BaseApi<any>) => {
             pageSize: number,
             filter?: any,
             sortField?: string,
-            sortDirection?: 'asc' | 'desc'
+            sortDirection?: 'ascend' | 'descend'
         }, thunkAPI) => {
             let list = await api.getList(params.page, params.pageSize, params.filter, params.sortField, params.sortDirection);
             return {
@@ -67,7 +67,7 @@ const create = (name: string, api: BaseApi<any>) => {
             pageSize: 30,
             filter: {} as any,
             sortField: undefined,
-            sortDirection: 'desc',
+            sortDirection: 'descend',
             total: 0,
             datas: []
         } as IceSliceState,
@@ -108,7 +108,7 @@ export type IceSliceState = {
     pageSize: number,
     filter: any,
     sortField?: string,
-    sortDirection?: 'asc' | 'desc'
+    sortDirection?: 'ascend' | 'descend'
     total: number,
     datas: Array<any>
 }

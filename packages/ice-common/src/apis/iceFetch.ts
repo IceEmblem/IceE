@@ -40,10 +40,12 @@ type InitType = RequestInit & {
 }
 
 class StatusError extends Error {
-    status: number
-    constructor(message: string, status: number) {
+    status: number;
+    responseData: any;
+    constructor(message: string, status: number, responseData?: any) {
         super(message);
         this.status = status;
+        this.responseData = responseData;
     }
 }
 
@@ -90,7 +92,7 @@ async function iceFetch<T>(input: string, init?: InitType | undefined): Promise<
 
     if (response.status >= 400 && response.status < 500) {
         let data = await response.json();
-        let error = new StatusError(`${data['hydra:description'] || 'unknown exception'}`, response.status);
+        let error = new StatusError(`${response.status} ${response.statusText}`, response.status, data);
         throw error;
     }
 

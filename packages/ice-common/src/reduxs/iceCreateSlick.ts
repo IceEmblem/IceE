@@ -8,7 +8,7 @@ const createClearReduxDatasAction = () => ({
 
 function reducerPack(reducer: Reducer<IceSliceState, any>): Reducer<IceSliceState, any> {
     return function (state: IceSliceState | undefined, actions: any) {
-        if(actions.type === ClearReduxDatasActionType){
+        if (actions.type === ClearReduxDatasActionType) {
             return {
                 page: -1,
                 pageSize: 30,
@@ -32,8 +32,45 @@ const create = (name: string, api: BaseApi<any>) => {
             pageSize: number,
             filter?: any,
             sortField?: string,
-            sortDirection?: 'ascend' | 'descend'
+            sortDirection?: 'ascend' | 'descend',
+            enforce?: boolean,
         }, thunkAPI) => {
+            const state: IceSliceState = (thunkAPI.getState() as IceSliceState)[name];
+            // 如果数据存在则不进行请求
+            if (
+                state &&
+                state.sortField == params.sortField &&
+                state.sortDirection == params.sortDirection &&
+                state.filter == params.filter &&
+                params.enforce !== true
+            ) {
+                let existDatas = true;
+                let skipNum = (state.page - 1) * state.pageSize;
+                for (let n = 0; n < state.pageSize; n++) {
+                    let pos = skipNum + n;
+                    if (pos >= state.total) {
+                        existDatas = false;
+                        break;
+                    }
+
+                    if (!state.datas[pos]) {
+                        existDatas = false;
+                        break;
+                    }
+                }
+                if (existDatas) {
+                    return {
+                        page: params.page,
+                        pageSize: params.pageSize,
+                        total: state.total,
+                        filter: state.filter,
+                        datas: state.datas,
+                        sortField: state.sortField,
+                        sortDirection: state.sortDirection,
+                    };
+                }
+            }
+
             let list = await api.getList(params.page, params.pageSize, params.filter, params.sortField, params.sortDirection);
             return {
                 page: params.page,
@@ -51,7 +88,7 @@ const create = (name: string, api: BaseApi<any>) => {
         `${name}/refreshPageDatas`,
         async (params: {
         }, thunkAPI) => {
-            const state = (thunkAPI.getState() as IceSliceState)[name];
+            const state: IceSliceState = (thunkAPI.getState() as IceSliceState)[name];
             let list = await api.getList(state.page, state.pageSize, state.filter, state.sortField, state.sortDirection);
             return {
                 total: list['hydra:totalItems'],
@@ -110,7 +147,7 @@ export type IceSliceState = {
     sortField?: string,
     sortDirection?: 'ascend' | 'descend'
     total: number,
-    datas: Array<any>
+    datas: Array<any>,
 }
 export type IceSlice = ReturnType<typeof create>;
 

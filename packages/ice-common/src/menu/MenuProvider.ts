@@ -8,9 +8,9 @@ export interface Menu {
 	// 多语言name
 	langName?: string;
 	// 菜单的组件
-	component: React.ComponentType;
+	component?: React.ComponentType<any>;
 	// 子菜单
-	menuItems: Array<Menu> | null;
+	menuItems?: Array<Menu> | null;
 	// 是否在菜单栏隐藏
 	hidden?: boolean;
 	// 允许访问

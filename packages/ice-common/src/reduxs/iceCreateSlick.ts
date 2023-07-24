@@ -91,8 +91,8 @@ const create = (name: string, api: BaseApi<any>) => {
             const state: IceSliceState = (thunkAPI.getState() as IceSliceState)[name];
             let list = await api.getList(state.page, state.pageSize, state.filter, state.sortField, state.sortDirection);
             return {
-                total: list['hydra:totalItems'],
-                datas: list['hydra:member']
+                total: list.total,
+                datas: list.datas
             };
         }
     );

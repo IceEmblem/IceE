@@ -1,5 +1,17 @@
-import { createSlice, createAsyncThunk, Reducer } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, Reducer, CreateSliceOptions, AsyncThunk } from '@reduxjs/toolkit';
 import BaseApi from '../apis/BaseApi';
+
+export type IceSliceState = {
+    page: number,
+    pageSize: number,
+    filter: any,
+    sortField?: string,
+    sortDirection?: 'ascend' | 'descend'
+    total: number,
+    datas: Array<any>,
+    curPageDatas: Array<any>,
+    [k : string]: any
+}
 
 const ClearReduxDatasActionType = 'ClearReduxDatas';
 const createClearReduxDatasAction = () => ({
@@ -16,25 +28,41 @@ function reducerPack(reducer: Reducer<IceSliceState, any>): Reducer<IceSliceStat
                 sortField: undefined,
                 sortDirection: 'descend',
                 total: 0,
-                datas: []
+                datas: [],
+                curPageDatas: []
             };
         }
         return reducer(state, actions);
     }
 }
 
-const create = (name: string, api: BaseApi<any>) => {
+type FetchPageDatasParamType = {
+    page: number,
+    pageSize: number,
+    filter?: any,
+    sortField?: string,
+    sortDirection?: 'ascend' | 'descend',
+    enforce?: boolean,
+}
+
+export interface IceSlickOptionType extends CreateSliceOptions<IceSliceState, {}, string> {
+    asyncActions: {
+        fetchPageDatas: AsyncThunk<any, FetchPageDatasParamType, any>,
+        refreshPageDatas: AsyncThunk<any, {}, any>,
+        [k: string]: AsyncThunk<any, any, any>
+    }
+}
+
+var fetchSign = 0;
+const create = (
+    name: string,
+    api: BaseApi<any>,
+    expand?: (option: IceSlickOptionType) => IceSlickOptionType) => {
+
     // First, create the thunk
     const fetchPageDatas = createAsyncThunk(
         `${name}/fetchPageDatas`,
-        async (params: {
-            page: number,
-            pageSize: number,
-            filter?: any,
-            sortField?: string,
-            sortDirection?: 'ascend' | 'descend',
-            enforce?: boolean,
-        }, thunkAPI) => {
+        async (params: FetchPageDatasParamType, thunkAPI) => {
             const state: IceSliceState = (thunkAPI.getState() as IceSliceState)[name];
             // 如果数据存在则不进行请求
             if (
@@ -45,11 +73,12 @@ const create = (name: string, api: BaseApi<any>) => {
                 params.enforce !== true
             ) {
                 let existDatas = true;
-                let skipNum = (state.page - 1) * state.pageSize;
-                for (let n = 0; n < state.pageSize; n++) {
+                let skipNum = (params.page - 1) * params.pageSize;
+                let curPageDatas = [] as Array<any>;
+                for (let n = 0; n < params.pageSize; n++) {
                     let pos = skipNum + n;
                     if (pos >= state.total) {
-                        existDatas = false;
+                        existDatas = true;
                         break;
                     }
 
@@ -57,6 +86,7 @@ const create = (name: string, api: BaseApi<any>) => {
                         existDatas = false;
                         break;
                     }
+                    curPageDatas.push(state.datas[pos]);
                 }
                 if (existDatas) {
                     return {
@@ -65,19 +95,32 @@ const create = (name: string, api: BaseApi<any>) => {
                         total: state.total,
                         filter: state.filter,
                         datas: state.datas,
+                        curPageDatas: curPageDatas,
                         sortField: state.sortField,
                         sortDirection: state.sortDirection,
                     };
                 }
             }
 
+            fetchSign++;
             let list = await api.getList(params.page, params.pageSize, params.filter, params.sortField, params.sortDirection);
+            // 给每一个请求的实体做一个标识
+            list.datas.forEach(item => {
+                item._fetchSign = fetchSign;
+            });
+            let datas = [...state.datas];
+            let skipNum = (params.page - 1) * params.pageSize;
+            for (let n = 0; n < params.pageSize; n++) {
+                let pos = skipNum + n;
+                datas[pos] = list.datas[n];
+            }
             return {
                 page: params.page,
                 pageSize: params.pageSize,
                 total: list.total,
                 filter: params.filter,
-                datas: list.datas,
+                datas: datas,
+                curPageDatas: list.datas,
                 sortField: params.sortField,
                 sortDirection: params.sortDirection,
             };
@@ -89,15 +132,21 @@ const create = (name: string, api: BaseApi<any>) => {
         async (params: {
         }, thunkAPI) => {
             const state: IceSliceState = (thunkAPI.getState() as IceSliceState)[name];
+            fetchSign++;
             let list = await api.getList(state.page, state.pageSize, state.filter, state.sortField, state.sortDirection);
+            // 给每一个请求的实体做一个标识
+            list.datas.forEach(item => {
+                item._fetchSign = fetchSign;
+            });
             return {
                 total: list.total,
-                datas: list.datas
+                datas: list.datas,
+                curPageDatas: list.datas
             };
         }
     );
 
-    var result = createSlice({
+    var option: IceSlickOptionType = {
         name: name,
         initialState: {
             page: -1,
@@ -106,8 +155,9 @@ const create = (name: string, api: BaseApi<any>) => {
             sortField: undefined,
             sortDirection: 'descend',
             total: 0,
-            datas: []
-        } as IceSliceState,
+            datas: [],
+            curPageDatas: []
+        },
         reducers: {
         },
         extraReducers: (builder) => {
@@ -120,34 +170,33 @@ const create = (name: string, api: BaseApi<any>) => {
                 state.datas = action.payload.datas;
                 state.sortField = action.payload.sortField;
                 state.sortDirection = action.payload.sortDirection;
+                state.curPageDatas = action.payload.curPageDatas;
             });
 
             builder.addCase(refreshPageDatas.fulfilled, (state, action) => {
                 state.total = action.payload.total;
                 state.datas = action.payload.datas;
+                state.curPageDatas = action.payload.curPageDatas;
             });
         },
-    });
+        asyncActions: {
+            fetchPageDatas: fetchPageDatas,
+            refreshPageDatas: refreshPageDatas
+        }
+    };
+
+    if (expand) {
+        option = expand(option);
+    }
+
+    var result = createSlice(option);
 
     result.reducer = reducerPack(result.reducer);
 
     return {
         ...result,
-        asyncActions: {
-            fetchPageDatas: fetchPageDatas,
-            refreshPageDatas: refreshPageDatas
-        }
+        asyncActions: option.asyncActions
     }
-}
-
-export type IceSliceState = {
-    page: number,
-    pageSize: number,
-    filter: any,
-    sortField?: string,
-    sortDirection?: 'ascend' | 'descend'
-    total: number,
-    datas: Array<any>,
 }
 export type IceSlice = ReturnType<typeof create>;
 

@@ -10,7 +10,7 @@ export type IceSliceState = {
     total: number,
     datas: Array<any>,
     curPageDatas: Array<any>,
-    [k : string]: any
+    [k: string]: any
 }
 
 const ClearReduxDatasActionType = 'ClearReduxDatas';
@@ -64,6 +64,9 @@ const create = (
         `${name}/fetchPageDatas`,
         async (params: FetchPageDatasParamType, thunkAPI) => {
             const state: IceSliceState = (thunkAPI.getState() as IceSliceState)[name];
+            // 当前保存的数据
+            let datas = [...state.datas];
+
             // 如果数据存在则不进行请求
             if (
                 state &&
@@ -82,11 +85,11 @@ const create = (
                         break;
                     }
 
-                    if (!state.datas[pos]) {
+                    if (!datas[pos]) {
                         existDatas = false;
                         break;
                     }
-                    curPageDatas.push(state.datas[pos]);
+                    curPageDatas.push(datas[pos]);
                 }
                 if (existDatas) {
                     return {
@@ -94,12 +97,16 @@ const create = (
                         pageSize: params.pageSize,
                         total: state.total,
                         filter: state.filter,
-                        datas: state.datas,
+                        datas: datas,
                         curPageDatas: curPageDatas,
                         sortField: state.sortField,
                         sortDirection: state.sortDirection,
                     };
                 }
+            }
+            else {
+                // 如果排序变了，或者筛选条件变了，或者执行强制操作，则需要清空旧数据
+                datas = [];
             }
 
             fetchSign++;
@@ -108,7 +115,7 @@ const create = (
             list.datas.forEach(item => {
                 item._fetchSign = fetchSign;
             });
-            let datas = [...state.datas];
+
             let skipNum = (params.page - 1) * params.pageSize;
             for (let n = 0; n < params.pageSize; n++) {
                 let pos = skipNum + n;

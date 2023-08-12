@@ -61,7 +61,7 @@ async function iceFetch<T>(input: string, init?: InitType | undefined): Promise<
         }
     }
 
-    if (token.token) {
+    if (!(newInit.headers as any).Authorization && token.token) {
         (newInit.headers as any)['Authorization'] = `Bearer ${token.token}`;
     }
 

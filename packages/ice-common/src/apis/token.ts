@@ -1,12 +1,13 @@
 import { encode, decode } from 'js-base64';
+import Storage from '../Storage';
 
 class Token {
     readonly tokenStorageKey: string = '_icetoken_';
     token: string | null = null;
     userInfo: any = null;
 
-    init() {
-        let token = window.localStorage.getItem(this.tokenStorageKey);
+    async init() {
+        let token = await Storage.getItem(this.tokenStorageKey);
         if (token) {
             this.setToken(token);
         }
@@ -18,13 +19,13 @@ class Token {
             this.userInfo = userInfo;
         }
         this.token = token;
-        window.localStorage.setItem(this.tokenStorageKey, token);
+        Storage.setItem(this.tokenStorageKey, token);
     }
 
     clearToken() {
         this.userInfo = null;
         this.token = null;
-        window.localStorage.removeItem(this.tokenStorageKey)
+        Storage.removeItem(this.tokenStorageKey);
     }
 
     private decodeUserInfo(token: string) {

@@ -2,6 +2,11 @@ import token from './token';
 
 const urlRegex = /\?[^\?]+$/;
 
+var domain = "";
+function setDomain(url: string) {
+    domain = url;
+}
+
 // 合并url参数到url上
 function mergeUrl(url: string, urlParams: any) {
     let newUrl = url;
@@ -26,7 +31,7 @@ function mergeUrl(url: string, urlParams: any) {
                 urlParamStr = urlParamStr + `${key}=${encodeURIComponent(item)}&`
             });
         }
-        else{
+        else {
             urlParamStr = urlParamStr + `${key}=${encodeURIComponent(param)}&`
         }
     });
@@ -65,7 +70,7 @@ async function iceFetch<T>(input: string, init?: InitType | undefined): Promise<
         (newInit.headers as any)['Authorization'] = `Bearer ${token.token}`;
     }
 
-    let response = await fetch(input, newInit);
+    let response = await fetch(domain + input, newInit);
 
     // 再这里处理 html 异步请求结果，如 404 等问题
     if (response.status >= 200 && response.status < 300) {
@@ -175,6 +180,7 @@ const iceFetchCallBack = {
 };
 
 export {
+    setDomain,
     iceFetchCallBack
 };
 export default iceFetchEx;

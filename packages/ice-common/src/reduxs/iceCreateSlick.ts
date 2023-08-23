@@ -139,6 +139,9 @@ const create = (
         async (params: {
         }, thunkAPI) => {
             const state: IceSliceState = (thunkAPI.getState() as IceSliceState)[name];
+            if (state.page < 0) {
+                return state;
+            }
             fetchSign++;
             let list = await api.getList(state.page, state.pageSize, state.filter, state.sortField, state.sortDirection);
             // 给每一个请求的实体做一个标识
